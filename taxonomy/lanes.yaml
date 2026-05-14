@@ -1,0 +1,53 @@
+# Lanes — every pattern is tagged with exactly one lane.
+# Lanes capture lab-specific doctrine.
+
+lanes:
+  - id: claude
+    name: Claude (Anthropic)
+    description: "Patterns optimized for Anthropic Claude models. Uses XML tags for structure, prefill for forced format, extended thinking for hard reasoning, and constitution-style virtue prompting for safety."
+    doctrine:
+      - "XML tags are first-class structured input (<document>, <instructions>, <example>)."
+      - "Prefill the start of Claude's reply to force JSON, format, or skip preamble."
+      - "Extended thinking signature is load-bearing — preserve when caching."
+      - "Virtue prompting beats compliance-only safety prompting."
+    specialist: "@prompt-claude-specialist"
+
+  - id: gpt
+    name: GPT (OpenAI)
+    description: "Patterns optimized for OpenAI GPT models, especially GPT-5. Uses developer role, reasoning_effort + verbosity controls, and Structured Outputs for programmatic consumption."
+    doctrine:
+      - "Use developer role for system-equivalent instructions."
+      - "reasoning_effort × verbosity is the main quality dial."
+      - "Structured Outputs > JSON-in-prose. Never extract JSON from free text."
+      - "Contradiction audit: GPT-5 sometimes contradicts its own constraints — audit explicitly."
+    specialist: "@prompt-gpt-specialist"
+
+  - id: gemini
+    name: Gemini (Google)
+    description: "Patterns optimized for Google Gemini models. Uses system-prompt-at-top placement, native grounding for retrieval, and the literal 'think very hard' trigger."
+    doctrine:
+      - "System prompt must be at the absolute top of the conversation."
+      - "'Think very hard' is a literal trigger that activates deeper reasoning."
+      - "Native grounding (Google Search) is first-class — design prompts that consume it."
+      - "Multimodal is a strength — patterns can mix text + image + audio inputs."
+    specialist: "@prompt-gemini-specialist"
+
+  - id: oss
+    name: Open-source (Llama / Mistral / Qwen / DeepSeek)
+    description: "Patterns optimized for open-source models. Uses apply_chat_template() conventions, model-specific special tokens, and <think> block conventions where applicable."
+    doctrine:
+      - "ALWAYS use the model's apply_chat_template() helper — special tokens differ per family."
+      - "ChatML (Qwen) vs Llama3 vs Mistral instruct formats are NOT interchangeable."
+      - "DeepSeek-R1 / Qwen-QwQ use <think>...</think> blocks for visible reasoning."
+      - "Some OSS models have weaker instruction-following; few-shot helps more here than with frontier closed models."
+    specialist: "@prompt-oss-specialist"
+
+  - id: cross-lab
+    name: Cross-lab
+    description: "Patterns that work across all model families with minimal adaptation. Avoid lab-specific tokens, syntax, or doctrine. Use techniques that are robust everywhere."
+    doctrine:
+      - "Use markdown headers and bullets, not XML tags (which only Claude prefers)."
+      - "Avoid prefill, special tokens, or lab-specific keywords."
+      - "Specify output format in plain language; expect to validate format yourself."
+      - "Test on at least 3 labs before tagging as cross-lab."
+    specialist: "(none — Architect handles directly)"

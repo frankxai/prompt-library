@@ -1,0 +1,63 @@
+# Cross-cutting techniques from the DAIR.AI Prompt Engineering Guide taxonomy.
+# Patterns can tag multiple techniques. These are orthogonal to categories.
+#
+# Source: https://github.com/dair-ai/Prompt-Engineering-Guide (MIT)
+
+techniques:
+  - id: chain-of-thought
+    aliases: [cot]
+    description: "Prompt the model to reason step-by-step before answering."
+    paper: "https://arxiv.org/abs/2201.11903"
+    use_when: "Multi-step reasoning, math, complex logic."
+
+  - id: tree-of-thought
+    aliases: [tot]
+    description: "Branch into multiple reasoning paths, evaluate, prune."
+    paper: "https://arxiv.org/abs/2305.10601"
+    use_when: "Problem has multiple plausible solution paths."
+
+  - id: react
+    description: "Reason + Act loop. Interleave thought with tool calls."
+    paper: "https://arxiv.org/abs/2210.03629"
+    use_when: "Agent needs to call external tools / APIs."
+
+  - id: constitutional
+    description: "Built-in principles that constrain output (Anthropic's Constitutional AI)."
+    paper: "https://arxiv.org/abs/2212.08073"
+    use_when: "Safety-critical outputs; values must be enforced."
+
+  - id: self-consistency
+    description: "Sample multiple reasoning paths, take majority answer."
+    paper: "https://arxiv.org/abs/2203.11171"
+    use_when: "Reasoning with verifiable single answer (math, logic)."
+
+  - id: atom-of-thoughts
+    aliases: [aot]
+    description: "Decompose problem into atomic sub-questions, solve each."
+    paper: "https://arxiv.org/abs/2502.12018"
+    use_when: "Complex queries that benefit from decomposition."
+
+  - id: few-shot
+    description: "Provide 1-5 input/output examples before the real query."
+    use_when: "Output format is non-obvious or model defaults are wrong."
+
+  - id: zero-shot
+    description: "No examples — pure instruction. Default mode for strong models."
+    use_when: "Task is well-specified; model has prior on the format."
+
+  - id: prefill
+    description: "Anthropic-specific: pre-fill the start of the model's reply to force format."
+    use_when: "Need to force JSON, force tone, or skip preamble (Claude)."
+
+  - id: xml-tags
+    description: "Wrap structured input in semantic XML tags (e.g. <document>, <instructions>)."
+    use_when: "Claude — Anthropic's preferred structured-input convention."
+
+  - id: structured-output
+    description: "Constrain output to a declared schema (JSON Schema, function spec)."
+    use_when: "Programmatic consumption of output; OpenAI Structured Outputs."
+
+  - id: retrieval-augmented
+    aliases: [rag]
+    description: "Retrieve relevant context before generation."
+    use_when: "Knowledge cutoff matters; private corpus; freshness required."

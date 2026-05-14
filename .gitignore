@@ -1,0 +1,26 @@
+# Node
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+
+# Env
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Promptfoo runtime outputs
+**/evals/results.json
+**/evals/output/
+.promptfoo/
+
+# Logs
+*.log

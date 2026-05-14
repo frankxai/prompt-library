@@ -1,0 +1,55 @@
+description: Evals for extract_wisdom pattern
+
+providers:
+  - anthropic:messages:claude-opus-4-7
+  - openai:gpt-5
+  - google:gemini-3-pro
+
+prompts:
+  - file://../pattern.md
+
+defaultTest:
+  assert:
+    # Brand-voice gate — these AI-slop phrases auto-fail
+    - type: not-contains
+      value: "delve"
+    - type: not-contains
+      value: "dive into"
+    - type: not-contains
+      value: "certainly"
+    - type: not-contains
+      value: "absolutely"
+    - type: not-contains
+      value: "it's worth noting"
+
+tests:
+  # Test 1 — structural compliance
+  - description: "Output contains all required sections"
+    vars:
+      input: "Sample podcast transcript about reading habits. Naval says volume compounds, three books are not enough, the 200th book teaches more than the third."
+    assert:
+      - type: contains-all
+        value:
+          - "SUMMARY"
+          - "IDEAS"
+          - "INSIGHTS"
+          - "QUOTES"
+      - type: llm-rubric
+        rubric: |
+          Output extracts 3-7 IDEAS items, each <=16 words.
+          No repetition across IDEAS.
+          INSIGHTS are one level more abstract than IDEAS.
+          QUOTES are verbatim from the input.
+        threshold: 0.8
+
+  # Test 2 — rubric on insight quality
+  - description: "Insights are abstracted patterns, not restatements"
+    vars:
+      input: "Academic abstract on sparse attention mechanisms in transformers. The paper proposes k-nearest-neighbor token restriction reducing complexity to O(n log n)."
+    assert:
+      - type: llm-rubric
+        rubric: |
+          INSIGHTS section contains 2+ items that are NOT direct restatements of IDEAS.
+          INSIGHTS surface patterns the author hints at but does not explicitly name.
+          No idea appears in both IDEAS and INSIGHTS sections.
+        threshold: 0.75

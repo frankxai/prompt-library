@@ -1,0 +1,70 @@
+# Pattern categories — verb-prefixed (Fabric convention).
+# Every pattern lives in exactly one category.
+
+categories:
+  - id: analyze
+    verb: analyze
+    description: "Pull out structure, meaning, or argument from input. Output is interpretive."
+    examples: [analyze_paper, analyze_argument, analyze_code]
+
+  - id: create
+    verb: create
+    description: "Generate something new from a brief. Output is novel artifact."
+    examples: [create_outline, create_persona, create_landing_page]
+
+  - id: extract
+    verb: extract
+    description: "Lift specific information out of input. Output is recall, not interpretation."
+    examples: [extract_wisdom, extract_quotes, extract_action_items]
+
+  - id: summarize
+    verb: summarize
+    description: "Condense input while preserving its key points. Output is shorter than input."
+    examples: [summarize_paper, summarize_meeting, summarize_thread]
+
+  - id: answer
+    verb: answer
+    description: "Respond to a question with a direct answer. Output is terse unless explicitly long-form."
+    examples: [answer_aloud, answer_terse, answer_with_sources]
+
+  - id: audit
+    verb: audit
+    description: "Quality-check an artifact against criteria. Output is verdict + findings."
+    examples: [audit_grammar, audit_bias, audit_security]
+
+  - id: check
+    verb: check
+    description: "Verify a fact, claim, or citation. Output is pass/fail with evidence."
+    examples: [check_citations, check_facts, check_links]
+
+  - id: compare
+    verb: compare
+    description: "Side-by-side analysis of 2+ items. Output is matrix or paired prose."
+    examples: [compare_solutions, compare_papers, compare_resumes]
+
+  - id: improve
+    verb: improve
+    description: "Refine an existing artifact. Output is diff + rationale."
+    examples: [improve_writing, improve_prompt, improve_resume]
+
+  - id: write
+    verb: write
+    description: "Author a long-form piece from a brief. Output is finished prose."
+    examples: [write_essay, write_article, write_email]
+
+  - id: rate
+    verb: rate
+    description: "Score against named criteria. Output is numeric score + breakdown."
+    examples: [rate_argument, rate_resume, rate_pitch]
+
+  - id: introspect
+    verb: introspect
+    description: "IFS / journaling / self-inquiry. Output is mirror or question, never advice. Carries hard boundaries — see README."
+    examples: [introspect_part, introspect_pattern, introspect_value]
+    boundary: maps-only
+
+  - id: profile
+    verb: profile
+    description: "Psychometric instrument administration. Output is lens, not verdict. Carries hard boundaries — see README."
+    examples: [profile_big_five, profile_attachment, profile_values]
+    boundary: instruments-only
