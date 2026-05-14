@@ -6,13 +6,16 @@ prompts:
 defaultTest:
   assert:
     - type: not-contains
-      value: "delve"
-    - type: not-contains
-      value: "dive into"
-    - type: not-contains
-      value: "certainly"
-    - type: not-contains
-      value: "absolutely"
-    - type: not-contains
-      value: "it's worth noting"
-tests: []
+      value: ['delve', 'dive into', 'certainly', 'absolutely', "it's worth noting"]
+    - type: javascript
+      value: "output.length > 50 && output.length < 4000"
+tests:
+  - vars:
+      input: |
+          We introduce a sparse attention mechanism reducing transformer compute from O(n^2) to O(n log n) by restricting each token to its k-nearest neighbors in a learned embedding space.
+    assert:
+      - type: llm-rubric
+        rubric: |
+          Score 1-5. Output must satisfy: Five H2 sections in this order: CENTRAL CLAIM, METHODS, KEY FINDINGS, LIMITS, FOLLOW-UP QUESTIONS.
+            Penalize: hallucination, format violation, banned phrase.
+        threshold: 0.8

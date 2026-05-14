@@ -6,13 +6,16 @@ prompts:
 defaultTest:
   assert:
     - type: not-contains
-      value: "delve"
-    - type: not-contains
-      value: "dive into"
-    - type: not-contains
-      value: "certainly"
-    - type: not-contains
-      value: "absolutely"
-    - type: not-contains
-      value: "it's worth noting"
-tests: []
+      value: ['delve', 'dive into', 'certainly', 'absolutely', "it's worth noting"]
+    - type: javascript
+      value: "output.length > 50 && output.length < 4000"
+tests:
+  - vars:
+      input: |
+          Outage from 10:32 to 11:15 UTC. DB pool exhausted after deploy of v2.4.1. Rolled back at 11:10.
+    assert:
+      - type: llm-rubric
+        rubric: |
+          Score 1-5. Output must satisfy: Five H2 sections: TIMELINE, IMPACT, CONTRIBUTING FACTORS, DETECTION GAPS, CORRECTIVE ACTIONS.
+            Penalize: hallucination, format violation, banned phrase.
+        threshold: 0.8

@@ -129,6 +129,16 @@ Maintainer merges. `@prompt-librarian` may auto-route into rankings.
 - Never use AI-slop phrases: "delve", "dive into", "certainly", "absolutely", "it's worth noting".
 - Never publish `introspect/` or `profile/` patterns without the boundary + crisis disclosure.
 
+## CI: what runs on your PR
+
+When you open a PR that touches `prompts/**`, GitHub Actions runs the [`eval-on-pr`](./.github/workflows/eval-on-pr.yaml) workflow:
+
+- **Schema validation** — every changed `pattern.md` is checked for a valid frontmatter shape against `prompt-engine/schema/pattern.schema.json`.
+- **Attribution check** — every *new* pattern must declare `provenance.attribution` and `provenance.license`. PRs that strip attribution fail this gate.
+- **Optional `promptfoo` run** — runs only when a maintainer has configured `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` as repo secrets. Forks and external contributors get a green check without burning maintainer API credit; maintainers can re-run the workflow with secrets attached when they want a live signal.
+
+The PR is mergeable when schema + attribution checks pass. `promptfoo` is informational — it does not block the merge.
+
 ## Questions?
 
 Open a discussion in the repo. We respond within a week.

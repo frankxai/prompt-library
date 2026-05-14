@@ -15,11 +15,17 @@ provenance:
 eval:
   score: null
   last_run: null
-  test_count: 0
+  test_count: 1
+  skeleton_complete: true
+  skeleton_date: 2026-05-14
 red_team:
-  status: needs-audit
-  audited: null
-  notes: "Imported in seed batch — Red Team gate pending."
+  status: warn
+  audited: 2026-05-14
+  auditor: '@prompt-red-team (static probe v1)'
+  notes: "declares output format without naming sections."
+  probes_run: 4
+  probes_static: true
+  probes_static: true
 psyche:
   applicable: false
   boundary: n/a

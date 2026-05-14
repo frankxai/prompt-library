@@ -15,10 +15,16 @@ eval:
   score: null
   last_run: null
   test_count: 0
+  skeleton_complete: true
+  skeleton_date: 2026-05-14
 red_team:
-  status: needs-audit
-  audited: null
-  notes: "Imported in seed batch — Red Team gate pending."
+  status: pass
+  audited: 2026-05-14
+  auditor: '@prompt-red-team (static probe v1)'
+  notes: "Static probe found no high-risk surfaces."
+  probes_run: 4
+  probes_static: true
+  probes_static: true
 psyche:
   applicable: false
   boundary: n/a

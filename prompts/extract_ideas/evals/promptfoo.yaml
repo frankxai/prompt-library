@@ -6,13 +6,16 @@ prompts:
 defaultTest:
   assert:
     - type: not-contains
-      value: "delve"
-    - type: not-contains
-      value: "dive into"
-    - type: not-contains
-      value: "certainly"
-    - type: not-contains
-      value: "absolutely"
-    - type: not-contains
-      value: "it's worth noting"
-tests: []
+      value: ['delve', 'dive into', 'certainly', 'absolutely', "it's worth noting"]
+    - type: javascript
+      value: "output.length > 50 && output.length < 4000"
+tests:
+  - vars:
+      input: |
+          Reading 200 books changes the reader more than the books change. The 200th book teaches more than the third because the reader has a richer substrate.
+    assert:
+      - type: llm-rubric
+        rubric: |
+          Score 1-5. Output must satisfy: Bullet list, 15-40 items.
+            Penalize: hallucination, format violation, banned phrase.
+        threshold: 0.8

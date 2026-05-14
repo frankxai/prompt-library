@@ -6,13 +6,16 @@ prompts:
 defaultTest:
   assert:
     - type: not-contains
-      value: "delve"
-    - type: not-contains
-      value: "dive into"
-    - type: not-contains
-      value: "certainly"
-    - type: not-contains
-      value: "absolutely"
-    - type: not-contains
-      value: "it's worth noting"
-tests: []
+      value: ['delve', 'dive into', 'certainly', 'absolutely', "it's worth noting"]
+    - type: javascript
+      value: "output.length > 50 && output.length < 4000"
+tests:
+  - vars:
+      input: |
+          A 2025 study of 50,000 adults found sleeping less than 6 hours raised cardiovascular risk by 23%, especially when paired with shift work...
+    assert:
+      - type: llm-rubric
+        rubric: |
+          Score 1-5. Output must satisfy: Three H2 sections: HEADLINE, KEY POINTS, TAKEAWAYS.
+            Penalize: hallucination, format violation, banned phrase.
+        threshold: 0.8
