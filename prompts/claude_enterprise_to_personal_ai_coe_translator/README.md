@@ -1,0 +1,3 @@
+# claude_enterprise_to_personal_ai_coe_translator
+
+Take any enterprise AI Center of Excellence framework and translate it into a personal implementation — governance becomes habits, committees become automations. Use when: Professionals who understand enterprise AI frameworks and want to apply the same rigor to their personal AI adoption. Migrated from the FrankX prompt corpus (`lib/prompts.ts`). Lane: claude. Brand-voice scrubbed on import. Examples are pending — capture real input/output pairs before evals run. Pair with the evals skeleton in evals/promptfoo.yaml to wire CI checks once examples land.

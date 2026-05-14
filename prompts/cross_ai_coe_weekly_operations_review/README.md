@@ -1,0 +1,3 @@
+# cross_ai_coe_weekly_operations_review
+
+A structured weekly review prompt that evaluates your AI system performance, identifies improvements, and plans next week — the personal equivalent of an enterprise ops review. Use when: Anyone running a personal AI system who wants to systematically improve their AI effectiveness week over week. Migrated from the FrankX prompt corpus (`lib/prompts.ts`). Lane: cross-lab. Brand-voice scrubbed on import. Examples are pending — capture real input/output pairs before evals run. Pair with the evals skeleton in evals/promptfoo.yaml to wire CI checks once examples land.

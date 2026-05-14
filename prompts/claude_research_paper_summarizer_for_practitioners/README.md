@@ -1,0 +1,3 @@
+# claude_research_paper_summarizer_for_practitioners
+
+Summarize any research paper into a practitioner-friendly brief — key findings, methodology assessment, practical applications, and limitations. Use when: Anyone who reads research papers and needs to translate findings into practical, shareable insights — especially fitness, health, and AI practitioners. Migrated from the FrankX prompt corpus (`lib/prompts.ts`). Lane: claude. Brand-voice scrubbed on import. Examples are pending — capture real input/output pairs before evals run. Pair with the evals skeleton in evals/promptfoo.yaml to wire CI checks once examples land.

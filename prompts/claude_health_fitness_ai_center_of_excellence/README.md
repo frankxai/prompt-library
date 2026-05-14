@@ -1,0 +1,3 @@
+# claude_health_fitness_ai_center_of_excellence
+
+Design an AI-powered health optimization system — training programming, nutrition planning, sleep analysis, and recovery tracking with measurable outcomes. Use when: Anyone serious about health and fitness who wants to apply systematic AI-assisted optimization to their training, nutrition, and recovery. Migrated from the FrankX prompt corpus (`lib/prompts.ts`). Lane: claude. Brand-voice scrubbed on import. Examples are pending — capture real input/output pairs before evals run. Pair with the evals skeleton in evals/promptfoo.yaml to wire CI checks once examples land.

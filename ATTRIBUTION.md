@@ -19,15 +19,36 @@ This file is the master provenance map. Every upstream source we import from is 
 - **Project**: [danielmiessler/fabric](https://github.com/danielmiessler/fabric)
 - **Author**: Daniel Miessler
 - **License**: MIT
-- **What we use**: Folder-per-pattern shape + selected high-value patterns lifted with attribution
-- **Patterns imported**:
+- **What we use**: Folder-per-pattern shape + selected high-value patterns paraphrased with attribution
+- **Patterns imported** (21 total):
   - `extract_wisdom` — from `data/patterns/extract_wisdom/`
+  - `analyze_prose` — from `data/patterns/analyze_prose/` (paraphrased)
+  - `analyze_paper` — from `data/patterns/analyze_paper/` (paraphrased)
+  - `analyze_threat_report` — from `data/patterns/analyze_threat_report/` (paraphrased)
+  - `analyze_logs` — from `data/patterns/analyze_logs/` (paraphrased)
+  - `analyze_claims` — from `data/patterns/analyze_claims/` (paraphrased)
+  - `analyze_incident` — from `data/patterns/analyze_incident/` (paraphrased)
+  - `create_quiz` — from `data/patterns/create_quiz/` (paraphrased)
+  - `create_summary` — from `data/patterns/create_summary/` (paraphrased)
+  - `create_micro_summary` — from `data/patterns/create_micro_summary/` (paraphrased)
+  - `create_5_sentence_summary` — from `data/patterns/create_5_sentence_summary/` (paraphrased)
+  - `create_outline` — from `data/patterns/create_outline/` (paraphrased)
+  - `extract_ideas` — from `data/patterns/extract_ideas/` (paraphrased)
+  - `extract_insights` — from `data/patterns/extract_insights/` (paraphrased)
+  - `extract_quotes` — from `data/patterns/extract_quotes/` (paraphrased)
+  - `summarize` — from `data/patterns/summarize/` (paraphrased)
+  - `summarize_micro` — from `data/patterns/summarize_micro/` (paraphrased)
+  - `summarize_paper` — from `data/patterns/summarize_paper/` (paraphrased)
+  - `improve_writing` — from `data/patterns/improve_writing/` (paraphrased)
+  - `improve_prompt` — from `data/patterns/improve_prompt/` (paraphrased)
+  - `compare_and_contrast` — from `data/patterns/compare_and_contrast/` (paraphrased)
 
 When importing a Fabric pattern, we always:
 1. Set `provenance.source: fabric`.
 2. Link the specific pattern directory in `provenance.source_url`.
 3. Credit Daniel Miessler in `provenance.attribution`.
 4. Preserve the MIT license declaration.
+5. **Paraphrase** — never verbatim copy. Intent preserved, wording original.
 
 ---
 
@@ -36,10 +57,20 @@ When importing a Fabric pattern, we always:
 - **Project**: [f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
 - **Author**: f (Fatih Kadir Akın)
 - **License**: code MIT, data CC0 (public domain)
-- **What we use**: High-vote-count community prompts, especially role-based ones
-- **Patterns imported**: (pending Harvester run)
+- **What we use**: High-vote-count functional community prompts, paraphrased
+- **Patterns imported** (10 total):
+  - `check_plagiarism` (paraphrased)
+  - `check_grammar` (paraphrased)
+  - `audit_resume` (paraphrased)
+  - `audit_security_config` (paraphrased)
+  - `rate_content` (paraphrased)
+  - `rate_argument` (paraphrased)
+  - `write_essay` (paraphrased)
+  - `write_cover_letter` (paraphrased)
+  - `answer_interview_question` (paraphrased)
+  - `answer_eli5` (paraphrased)
 
-CC0 data means we can adapt freely, but we still attribute as a courtesy.
+CC0 data means we can adapt freely, but we still attribute as a courtesy. Functional prompts only — stylized identity prompts (role-play, persona) are out of scope for this corpus.
 
 ---
 
@@ -99,6 +130,19 @@ Same paraphrase-+-cite rule.
 - **What we use**: The technique taxonomy (CoT, ReAct, self-consistency, etc.) as cross-cutting `techniques:` tags only — not pattern bodies.
 
 We import vocabulary, not prompts. See [`taxonomy/techniques.yaml`](./taxonomy/techniques.yaml).
+
+---
+
+## FrankX Prompt Corpus
+
+- **Source**: `frankxai/FrankX` repo, `lib/prompts.ts`
+- **Author**: Frank Riemer (FrankX)
+- **License**: original — re-licensed MIT on release of this library
+- **What we use**: Working prompt collection used in FrankX content + product workflows
+- **Patterns imported**: 0 (0 skipped — image/video/music tools route to dedicated pillars)
+- **Brand-voice scrub** applied on import (banned phrases removed: delve, dive into, certainly, absolutely, it's worth noting)
+
+Migration report: `seed-batch-report.json` (per-pattern lane mapping + skip reasons).
 
 ---
 

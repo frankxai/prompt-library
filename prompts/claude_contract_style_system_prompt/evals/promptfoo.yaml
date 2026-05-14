@@ -1,0 +1,18 @@
+description: Evals for claude_contract_style_system_prompt
+providers:
+  - anthropic:messages:claude-opus-4-7
+prompts:
+  - file://../pattern.md
+defaultTest:
+  assert:
+    - type: not-contains
+      value: "delve"
+    - type: not-contains
+      value: "dive into"
+    - type: not-contains
+      value: "certainly"
+    - type: not-contains
+      value: "absolutely"
+    - type: not-contains
+      value: "it's worth noting"
+tests: []

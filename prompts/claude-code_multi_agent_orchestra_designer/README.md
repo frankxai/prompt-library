@@ -1,0 +1,3 @@
+# claude-code_multi_agent_orchestra_designer
+
+Design a personal multi-agent system where specialized AI agents handle different life domains — with handoff protocols, shared memory, and orchestration logic. Use when: Power users who want to design a coordinated system of AI agents that work together across different life and work domains. Migrated from the FrankX prompt corpus (`lib/prompts.ts`). Lane: cross-lab. Brand-voice scrubbed on import. Examples are pending — capture real input/output pairs before evals run. Pair with the evals skeleton in evals/promptfoo.yaml to wire CI checks once examples land.
