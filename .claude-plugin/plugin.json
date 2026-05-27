@@ -1,0 +1,59 @@
+{
+  "name": "prompt-library",
+  "version": "0.1.0",
+  "description": "Prompt Library — a Library-of-Alexandria node aggregating elite prompts across labs (Anthropic, OpenAI, Google, OSS) with full attribution, licensing, evaluation scores, and red-team verdicts. Composes the Starlight Intelligence Protocol (SIP).",
+  "author": {
+    "name": "Frank Riemer",
+    "email": "frank@frankx.ai",
+    "url": "https://frankx.ai"
+  },
+  "homepage": "https://github.com/frankxai/prompt-library",
+  "repository": "https://github.com/frankxai/prompt-library",
+  "license": "MIT",
+  "keywords": [
+    "prompt-library",
+    "prompts",
+    "prompt-engineering",
+    "alexandria",
+    "anthropic",
+    "openai",
+    "gemini",
+    "claude",
+    "evaluations",
+    "red-team",
+    "prompt-attestation",
+    "sip"
+  ],
+  "categories": [
+    "prompt-engineering",
+    "evaluation",
+    "red-team",
+    "knowledge-system",
+    "agent-orchestration"
+  ],
+  "platforms": [
+    "claude-code",
+    "cursor",
+    "cline",
+    "codex",
+    "gemini-cli"
+  ],
+  "engines": {
+    "claude-code": ">=2.0.0",
+    "node": ">=20"
+  },
+  "compose": {
+    "extends": [
+      "sip-protocol"
+    ],
+    "absorbs": []
+  },
+  "principles": [
+    "Provenance is non-negotiable — every prompt cites its origin",
+    "Evaluation before promotion — prompts ship with scores, not vibes",
+    "Red-team before publish — jailbreak resistance is a quality dimension",
+    "Cross-model attribution — same prompt may carry different verdicts per model family",
+    "Open-source by default — proprietary prompts marked clearly"
+  ],
+  "attestation": "Built on SIP — Starlight Intelligence Protocol v1.1.1. License: MIT for the library framework. Individual prompts under their attributed licenses (MIT / CC0 / CC-BY / CC-BY-NC depending on source)."
+}
