@@ -9,10 +9,10 @@ jobs:
   schema-validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '24'
       - name: Install ajv-cli
@@ -70,11 +70,11 @@ jobs:
             echo "Add OPENAI_API_KEY or ANTHROPIC_API_KEY to repo secrets to enable."
             exit 0
           fi
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: env.HAS_API_KEY == 'true'
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: env.HAS_API_KEY == 'true'
         with:
           node-version: '24'
