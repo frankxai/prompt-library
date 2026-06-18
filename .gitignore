@@ -32,3 +32,7 @@ Desktop.ini
 temp-*.json
 link-checker-report.json
 link-checker-report.txt
+
+# Starlight/ACOS temporary files
+.starlight/
+.gemini/
