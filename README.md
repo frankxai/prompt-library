@@ -52,6 +52,16 @@ Pattern frontmatter validates against [`prompt-engine/schema/pattern.schema.json
 
 See [`prompts/extract_wisdom/`](./prompts/extract_wisdom/) for a complete worked example.
 
+## Prompt Books
+
+Prompt books live in [`books/`](./books/) and group related patterns into reusable operating playbooks. Use them when Frank provides a raw prompt that should be preserved, refined, evaluated, and packaged without losing the original seed.
+
+Prompt books do not replace `prompts/`. A book can contain capture notes, variants, manual rubrics, and packaging guidance, while each reusable standalone prompt still gets its own `prompts/<verb>_<topic>/` folder.
+
+### Default Prompt Delivery
+
+When someone asks for a prompt, return an `Original Prompt` and an `Optimized Prompt` by default. The optimized version should apply the local Prompt Optimizer checklist, current official model guidance when "latest" is requested, and a quick eval rubric. When the prompt is saved, preserve the raw capture in `books/` and scaffold a standalone pattern when reusable.
+
 ---
 
 ## Lanes
@@ -67,6 +77,17 @@ Every pattern is tagged with exactly one lane. Lanes capture lab-specific doctri
 | **cross-lab** | Lab-neutral patterns that work everywhere with minimal adaptation |
 
 See [`taxonomy/lanes.yaml`](./taxonomy/lanes.yaml) for full descriptions.
+
+## Scopes
+
+Scopes tell product surfaces where a prompt belongs:
+
+- `general` — portable prompt-library assets.
+- `starlight` — swarms, repo work, SIS, MCP, project leadership, and operating loops.
+- `arcanea` — worldbuilding, lore, canon, APL, media, and studio workflows.
+- `frankx` — commercial strategy, content, revenue, creator products, and public education.
+
+See [`taxonomy/scopes.yaml`](./taxonomy/scopes.yaml) for routing rules.
 
 ---
 
@@ -175,8 +196,15 @@ Two ranking views:
 
 - [`rankings/top-50.md`](./rankings/top-50.md) — Editorial picks, curated by `@prompt-librarian`.
 - [`rankings/by-eval-score.md`](./rankings/by-eval-score.md) — Auto-generated from promptfoo eval scores.
+- [`rankings/by-rank.md`](./rankings/by-rank.md) — Auto-generated first-pass rank from eval, red-team, recency, provenance, and editor-pick signals.
 
 Re-run `pnpm rank` to rebuild the auto-generated view.
+
+To rebuild the local registry and `by-rank` view without extra dependencies:
+
+```bash
+node scripts/build-registry.mjs
+```
 
 ---
 

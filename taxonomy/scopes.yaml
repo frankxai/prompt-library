@@ -1,0 +1,27 @@
+# Prompt scopes separate product/world domains from operating-system domains.
+# A prompt still has one model lane and one category; scope tells product surfaces
+# where it belongs.
+
+scopes:
+  - id: general
+    name: General Prompt Library
+    description: Lab-neutral or broadly useful prompts that do not belong to a specific brand, world, or operating system.
+    product_surface: prompt-library
+
+  - id: starlight
+    name: Starlight Prompt Books
+    description: General swarms, agent operations, project leadership, repo execution, SIS governance, MCP/tool retrieval, and cross-project command loops.
+    product_surface: starlight-prompt-books
+    tags: [starlight, swarm, sis, queen, mcp, orchestration, repo-ops]
+
+  - id: arcanea
+    name: Arcanea Prompt Books
+    description: Worldbuilding, lore, mythic creative systems, media prompts, character/canon work, Arcanean Prompt Language, and studio workflows.
+    product_surface: arcanea-prompt-books
+    tags: [arcanea, worldbuilding, lore, media, canon, apl, studio]
+
+  - id: frankx
+    name: FrankX Prompt Books
+    description: Commercial strategy, content, founder operations, products, revenue systems, public education, and creator business workflows.
+    product_surface: frankx-prompt-books
+    tags: [frankx, business, revenue, creator, content, product]

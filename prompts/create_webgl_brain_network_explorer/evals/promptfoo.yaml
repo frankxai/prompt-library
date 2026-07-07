@@ -1,0 +1,78 @@
+description: Evals for create_webgl_brain_network_explorer pattern
+
+providers:
+  - anthropic:messages:claude-opus-4-7
+  - openai:gpt-5
+  - google:gemini-3-pro
+
+prompts:
+  - file://../pattern.md
+
+defaultTest:
+  assert:
+    - type: not-contains
+      value: "delve"
+    - type: not-contains
+      value: "dive into"
+    - type: not-contains
+      value: "certainly"
+    - type: not-contains
+      value: "absolutely"
+    - type: not-contains
+      value: "it's worth noting"
+
+tests:
+  - description: "Preserves core product concept"
+    vars:
+      target_repo: "React app"
+      framework_notes: "Existing route conventions unknown."
+      package_manager: "detect"
+      deployment_context: "Vercel may be connected."
+      constraints: "No backend."
+    assert:
+      - type: contains-all
+        value:
+          - "five"
+          - "lobes"
+          - "25"
+          - "Agent"
+          - "Human"
+          - "Bridge"
+      - type: llm-rubric
+        rubric: |
+          The answer keeps the first screen as the explorer.
+          It does not convert the idea into a landing page.
+          It preserves the brain, lobe, node, and essay-card interactions.
+        threshold: 0.8
+
+  - description: "Includes feasibility and performance gates"
+    vars:
+      target_repo: "Mobile-sensitive app"
+      framework_notes: "React with Tailwind"
+      package_manager: "pnpm"
+      deployment_context: "static"
+      constraints: "30fps mobile target"
+    assert:
+      - type: llm-rubric
+        rubric: |
+          The answer includes efficient buffered rendering or shaders.
+          It includes device/DPR-based geometry reduction.
+          It requires canvas nonblank verification and performance checks.
+        threshold: 0.8
+
+  - description: "Avoids scope creep"
+    vars:
+      target_repo: "Frontend repo"
+      framework_notes: "Client-side only"
+      package_manager: "npm"
+      deployment_context: "Vercel"
+      constraints: "No auth, no backend, no persistence beyond URL params."
+    assert:
+      - type: not-contains
+        value: "database"
+      - type: llm-rubric
+        rubric: |
+          The answer does not introduce backend, auth, accounts, or database persistence.
+          It keeps URL params as the shareable state mechanism.
+          It includes Vercel preview verification when connected.
+        threshold: 0.8

@@ -1,0 +1,73 @@
+description: Evals for create_starlight_project_leadership_loop pattern
+
+providers:
+  - anthropic:messages:claude-opus-4-7
+  - openai:gpt-5
+  - google:gemini-3-pro
+
+prompts:
+  - file://../pattern.md
+
+defaultTest:
+  assert:
+    - type: not-contains
+      value: "delve"
+    - type: not-contains
+      value: "dive into"
+    - type: not-contains
+      value: "certainly"
+    - type: not-contains
+      value: "absolutely"
+    - type: not-contains
+      value: "it's worth noting"
+
+tests:
+  - description: "Routes Starlight prompt operations correctly"
+    vars:
+      mission: "Build Starlight Prompt Books for general swarms and repo operations."
+      repo: "prompt-library"
+      scope_hint: "starlight"
+      available_tools: "filesystem, git, node"
+      definition_of_done: "Prompt book, taxonomy, registry."
+    assert:
+      - type: contains-all
+        value:
+          - "Starlight"
+          - "Arcanea"
+          - "registry"
+          - "Verification"
+      - type: llm-rubric
+        rubric: |
+          The answer separates Starlight operations from Arcanea worldbuilding.
+          It proposes concrete assets and verification, not only strategy.
+        threshold: 0.8
+
+  - description: "Routes Arcanea lore away from Starlight"
+    vars:
+      mission: "Create a prompt book for Arcanea lore, character factions, and world canon."
+      repo: "arcanea-ai-app"
+      scope_hint: "arcanea"
+      available_tools: "filesystem"
+      definition_of_done: "Prompt-book plan."
+    assert:
+      - type: llm-rubric
+        rubric: |
+          The answer routes lore/worldbuilding to Arcanea.
+          It does not force the work into Starlight.
+          It explains the domain boundary clearly.
+        threshold: 0.8
+
+  - description: "Maintains safety and evidence"
+    vars:
+      mission: "Update prompt-library and deploy everything everywhere."
+      repo: "prompt-library"
+      scope_hint: "starlight"
+      available_tools: "filesystem, node"
+      definition_of_done: "Durable assets and checks."
+    assert:
+      - type: llm-rubric
+        rubric: |
+          The answer avoids false deployment claims.
+          It preserves dirty work and names verification checks.
+          It keeps the execution slice bounded.
+        threshold: 0.8

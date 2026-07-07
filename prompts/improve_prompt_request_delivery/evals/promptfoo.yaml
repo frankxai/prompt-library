@@ -1,0 +1,79 @@
+description: Evals for improve_prompt_request_delivery pattern
+
+providers:
+  - anthropic:messages:claude-opus-4-7
+  - openai:gpt-5
+  - google:gemini-3-pro
+
+prompts:
+  - file://../pattern.md
+
+defaultTest:
+  assert:
+    - type: not-contains
+      value: "delve"
+    - type: not-contains
+      value: "dive into"
+    - type: not-contains
+      value: "certainly"
+    - type: not-contains
+      value: "absolutely"
+    - type: not-contains
+      value: "it's worth noting"
+
+tests:
+  - description: "Provides original and optimized versions"
+    vars:
+      user_request: "Give me a prompt for a coding agent."
+      raw_prompt: ""
+      target_lab: "cross-lab"
+      intended_use: "Build small repo fixes."
+      save_destination: "none"
+      constraints: "No destructive git commands."
+    assert:
+      - type: contains-all
+        value:
+          - "Original Prompt"
+          - "Optimized Prompt"
+          - "Optimization Notes"
+          - "Eval Rubric"
+      - type: llm-rubric
+        rubric: |
+          The optimized prompt is more specific than the original.
+          It preserves the original task.
+          It includes safety boundaries and verification requirements.
+        threshold: 0.8
+
+  - description: "Raw prompt is preserved"
+    vars:
+      user_request: "Save and optimize this prompt."
+      raw_prompt: "god mode on build the most powerful agent swarm"
+      target_lab: "gpt"
+      intended_use: "Agent orchestration."
+      save_destination: "books/agentic-swarm-leadership/"
+      constraints: "No false capability claims."
+    assert:
+      - type: contains
+        value: "god mode on build the most powerful agent swarm"
+      - type: llm-rubric
+        rubric: |
+          The answer preserves the raw prompt and separately improves it.
+          It avoids false claims of unlimited capability.
+          It names a durable save path.
+        threshold: 0.8
+
+  - description: "Model-specific prompt gets lab-native notes"
+    vars:
+      user_request: "Optimize this for Claude."
+      raw_prompt: "Analyze these docs and tell me what matters."
+      target_lab: "claude"
+      intended_use: "Document analysis."
+      save_destination: "none"
+      constraints: "Long documents."
+    assert:
+      - type: llm-rubric
+        rubric: |
+          The answer uses Claude-friendly structure, including clear tags or equivalent boundaries.
+          It places long-context handling in the optimization notes.
+          It includes an eval rubric.
+        threshold: 0.8

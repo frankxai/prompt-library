@@ -1,0 +1,71 @@
+description: Evals for create_arcanea_worldbuilding_canon_loop pattern
+
+providers:
+  - anthropic:messages:claude-opus-4-7
+  - openai:gpt-5
+  - google:gemini-3-pro
+
+prompts:
+  - file://../pattern.md
+
+defaultTest:
+  assert:
+    - type: not-contains
+      value: "delve"
+    - type: not-contains
+      value: "dive into"
+    - type: not-contains
+      value: "certainly"
+    - type: not-contains
+      value: "absolutely"
+    - type: not-contains
+      value: "it's worth noting"
+
+tests:
+  - description: "Creates canon-safe Arcanea worldbuilding"
+    vars:
+      mission: "Create a faction compact for a skybound archive guild."
+      canon_sources: "Existing Arcanea guardian and mythic knowledge notes."
+      constraints: "Do not overwrite existing guardian names."
+      target_artifact: "Faction compact"
+      intended_use: "World bible and concept art"
+    assert:
+      - type: contains-all
+        value:
+          - "Arcanea"
+          - "Canon Source Inventory"
+          - "Canon Ledger"
+          - "Production Hooks"
+      - type: llm-rubric
+        rubric: |
+          The answer separates confirmed, inferred, and invented material.
+          It preserves continuity and creates usable worldbuilding rather than vague atmosphere.
+        threshold: 0.8
+
+  - description: "Routes repo operations away from Arcanea"
+    vars:
+      mission: "Create a queue-ready task for a worker to update registry scripts."
+      canon_sources: "none"
+      constraints: "Preserve dirty files."
+      target_artifact: "Swarm task"
+      intended_use: "Repo operations"
+    assert:
+      - type: llm-rubric
+        rubric: |
+          The answer routes general repo or swarm operations to Starlight.
+          It does not force operational work into Arcanea worldbuilding.
+        threshold: 0.8
+
+  - description: "Handles missing canon safely"
+    vars:
+      mission: "Invent a magic-system rule for memory crystals."
+      canon_sources: "No direct source provided."
+      constraints: "Keep it reversible."
+      target_artifact: "Magic-system rule"
+      intended_use: "Lore exploration"
+    assert:
+      - type: llm-rubric
+        rubric: |
+          The answer states assumptions and marks invention clearly.
+          It avoids presenting unsourced invention as confirmed canon.
+        threshold: 0.8
