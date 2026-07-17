@@ -118,11 +118,11 @@ Pull requests welcome. Quick path:
    - `evals/promptfoo.yaml` (at least 3 test cases)
    - `README.md` (80-word human summary)
 4. Submit PR.
-5. CI runs:
-   - Schema validation (`promptfoo validate`)
-   - Eval execution (`promptfoo eval`)
-   - Attribution check (frontmatter `provenance` required)
-   - Brand-voice gate (no banned phrases)
+5. CI (`.github/workflows/eval-on-pr.yaml`) runs on any PR touching `prompts/**`:
+   - Attribution check — new `pattern.md` files must declare `attribution:` and `license:`; missing either fails the PR.
+   - Schema validation — currently a stub that lists changed patterns but does not yet enforce `pattern.schema.json` (see the `TODO` in the workflow). Validate manually until this lands.
+   - promptfoo eval — only runs if the repo has `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` configured as a secret; otherwise this step is skipped, not failed.
+   - There is no automated brand-voice/banned-phrase gate yet — check manually against the Anti-patterns list below.
 6. Two reviewers must sign off before merge.
 
 ### Required frontmatter
@@ -176,7 +176,7 @@ Two ranking views:
 - [`rankings/top-50.md`](./rankings/top-50.md) — Editorial picks, curated by `@prompt-librarian`.
 - [`rankings/by-eval-score.md`](./rankings/by-eval-score.md) — Auto-generated from promptfoo eval scores.
 
-Re-run `pnpm rank` to rebuild the auto-generated view.
+This repo has no `package.json` or build script today, so both views are maintained by hand — update them directly in the same PR that adds or re-scores a pattern.
 
 ---
 
