@@ -15,8 +15,8 @@ This is the curated, machine-readable corpus of elite prompts — attributed, li
 | Path | What |
 |---|---|
 | `prompts/<verb>_<topic>/` | One folder per pattern: `pattern.md` (frontmatter + prompt), `examples.md`, `evals/promptfoo.yaml`, `README.md` |
-| `taxonomy/lanes.yaml`, `categories.yaml`, `scopes.yaml` | Controlled vocab a pattern's frontmatter must draw from |
-| `rankings/top-50.md`, `by-eval-score.md`, `by-rank.md` | Hand-maintained ranking views — update in the same PR as the pattern change |
+| `taxonomy/lanes.yaml`, `categories.yaml`, `techniques.yaml` | Controlled vocab a pattern's frontmatter must draw from |
+| `rankings/top-50.md`, `by-eval-score.md` | Hand-maintained ranking views — update in the same PR as the pattern change |
 | `ATTRIBUTION.md` | Master provenance map for imported (non-original) patterns |
 | `contributing.md`, `CODE_OF_CONDUCT.md` | Contribution process and community norms |
 | `.github/workflows/eval-on-pr.yaml` | The only CI in this repo — read it before claiming "CI validates X" |
