@@ -174,7 +174,7 @@ See [`ATTRIBUTION.md`](./ATTRIBUTION.md) for the full provenance map.
 Two ranking views:
 
 - [`rankings/top-50.md`](./rankings/top-50.md) — Editorial picks, curated by `@prompt-librarian`.
-- [`rankings/by-eval-score.md`](./rankings/by-eval-score.md) — Auto-generated from promptfoo eval scores.
+- [`rankings/by-eval-score.md`](./rankings/by-eval-score.md) — Hand-maintained from promptfoo eval scores.
 
 This repo has no `package.json` or build script today, so both views are maintained by hand — update them directly in the same PR that adds or re-scores a pattern.
 
