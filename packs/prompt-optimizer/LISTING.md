@@ -45,9 +45,13 @@ It adapts the prompt to the model you use: Claude, GPT or Gemini.
 
 ## Before publish (fast lane)
 
-- [ ] Eval run on all three models; SCORECARD.md written with date, model ids, outcome score for pattern vs baseline, and failures
-- [ ] Pattern beats baseline on the `outcome` metric. If it does not, do not publish; revise and re-run
+- [ ] Add a third prompt to the eval: the strongest free prompt-improver we can find, so the scorecard compares against it as well as the plain baseline
+- [ ] Add 3+ held-out cases written by a different agent and provider, kept out of the builder's context
+- [ ] Check the grader: a human verdict on 5 sampled outputs agrees with the `llm-rubric` verdict
+- [ ] Eval run on all three models; SCORECARD.md written with date, model ids, outcome score for pattern vs both baselines, and failures
+- [ ] Pattern beats both baselines on the `outcome` metric. If it does not, do not publish; revise and re-run
 - [ ] G1: install tested in Claude Code and one other tool, log attached
+- [ ] Mini G2: a fresh agent with no estate context uses the skill on 3 real prompts; outputs judged better than the unaided version
 - [ ] G3: Codex review as a buyer who declined; findings fixed
-- [ ] G4: one real €1 test purchase; receipt, download and refund path checked
+- [ ] G4: one real €1 test purchase: VAT shown correctly (Gumroad adds it on top), receipt, download, refund path, and the EU notice that immediate download ends the 14-day withdrawal right, with consent captured
 - [ ] Frank sets price and clicks publish
