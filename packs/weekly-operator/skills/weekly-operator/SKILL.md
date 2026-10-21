@@ -1,6 +1,6 @@
 ---
 name: weekly-operator
-description: Runs your week from a plain folder of Markdown files you own (life/goals.md, life/habits.md, life/week-YYYY-WW.md). Each run reads last week's file and adjusts, so unfinished items get a decision, the plan fits the time you actually had, and habits shrink or grow on evidence. Use when the user says weekly review, plan my week, Sunday reset, morning, plan my day, habit check-in, quarterly goals, set goals, or asks what to focus on this week.
+description: Runs your week from a plain folder of Markdown files you own (life/goals.md, life/habits.md, one life/week-2026-W43.md style file per week). Each run reads last week's file and adjusts, so unfinished items get a decision, the plan fits the time you actually had, and habits shrink or grow on evidence. Use when the user says weekly review, plan my week, Sunday reset, morning, plan my day, habit check-in, quarterly goals, set goals, or asks what to focus on this week.
 license: MIT
 metadata:
   version: "1.0.0"
@@ -23,7 +23,7 @@ life/
   week-2026-W43.md    one file per ISO week: Plan, Days, Review
 ```
 
-Week files use the ISO week of the Monday that starts the week: `week-YYYY-WW.md`, two-digit week, `W53` exists in some years. Find today's date from the system (`date`) or the conversation. If you cannot tell the date, ask.
+Week files are named after the ISO week that starts on Monday: `week-<ISO year>-W<two-digit week>.md`, for example `week-2026-W43.md`. Some years have a week 53, and the ISO year can differ from the calendar year in late December and early January. If the folder already names week files another way (for example `week-2026-43.md`), keep its naming. Find today's date from the system (`date`) or the conversation. If you cannot tell the date, ask.
 
 If `life/` sits somewhere else (the person's notes folder, a synced drive), use that path and say which one you used.
 

@@ -20,7 +20,7 @@ life/
   week-2026-W43.md    one file per ISO week: Plan, Days, Review
 ```
 
-Week files use the ISO week of the Monday that starts the week: `week-YYYY-WW.md`, two-digit week, `W53` exists in some years. Find today's date from the system (`date`) or the conversation. If you cannot tell the date, ask.
+Week files are named after the ISO week that starts on Monday: `week-<ISO year>-W<two-digit week>.md`, for example `week-2026-W43.md`. Some years have a week 53, and the ISO year can differ from the calendar year in late December and early January. If the folder already names week files another way (for example `week-2026-43.md`), keep its naming. Find today's date from the system (`date`) or the conversation. If you cannot tell the date, ask.
 
 If `life/` sits somewhere else (the person's notes folder, a synced drive), use that path and say which one you used.
 

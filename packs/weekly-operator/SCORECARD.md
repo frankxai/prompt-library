@@ -15,7 +15,7 @@ AI_GATEWAY_API_KEY=... npx promptfoo@latest eval -j 2 -o results.json
 npx promptfoo@latest view
 ```
 
-Size of a full run: 16 builder cases + held-out cases, 3 arms (weekly-operator, gtd-weekly-review, no-skill), 3 models, plus one grader call per `llm-rubric`.
+Size of a full run: 16 builder cases + 6 held-out cases (22), 3 arms (weekly-operator, gtd-weekly-review, no-skill), 3 models, plus one grader call per `llm-rubric`.
 
 ## What to report here
 

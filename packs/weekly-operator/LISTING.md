@@ -25,7 +25,7 @@ Each time you run it, it reads those files first. So when you plan a new week it
 
 Five short flows: plan the week, morning, weekly review, habit check-in and quarterly goals.
 
-**Tested against the alternatives, with the numbers shown.** We run it on 16 cases of our own plus held-out cases written by a different AI provider, against no skill and against the most popular free weekly-review skill. The scorecard in the download shows every result. [SCORECARD SUMMARY GOES HERE AFTER THE RUN]
+**Tested against the alternatives, with the numbers shown.** We run it on 16 cases of our own plus 6 held-out cases written by a different AI provider, against no skill and against the most popular free weekly-review skill. The scorecard in the download shows every result. [SCORECARD SUMMARY GOES HERE AFTER THE RUN]
 
 **Your files, your agent.** No account, no app, no subscription, no extra API key. The files stay where you put them.
 
@@ -42,7 +42,7 @@ Five short flows: plan the week, morning, weekly review, habit check-in and quar
 | Five flows: plan, morning, review, habits, quarterly | one or more cases per flow in `evals/cases.yaml` |
 | Plain Markdown files you own | `example/life/`; true by construction |
 | Works in Claude Code, Codex CLI, Gemini CLI, browser chat | G1 install log (pending) |
-| Tested on 16 + held-out cases vs no skill and the most popular free skill | `evals/promptfooconfig.yaml`, `evals/heldout/`, SCORECARD.md (pending) |
+| Tested on 16 + 6 held-out cases vs no skill and the most popular free skill | `evals/promptfooconfig.yaml`, `evals/heldout/`, SCORECARD.md (pending) |
 | No health, diet or mental-health advice | cases "Diet pressure", "Distress during a review", "Habit check-in"; SKILL.md Boundaries |
 | No account, no subscription, no extra API key | runs inside the buyer's own agent; true by construction |
 

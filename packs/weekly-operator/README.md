@@ -42,7 +42,7 @@ Then open your agent in the folder where you want `life/` to live and say "set m
 
 ## Re-run the tests
 
-The `evals/` folder holds the suite we score it with: 16 cases we wrote and held-out cases written by a different AI provider (Codex) that we did not tune against. Each case runs three ways: with Weekly Operator, with no skill, and with the strongest free alternative we found (the MIT-licensed `weekly-review` skill from alirezarezvani/claude-skills). The same rubric grades all three.
+The `evals/` folder holds the suite we score it with: 16 cases we wrote and 6 held-out cases written by a different AI provider (Codex) that we did not tune against. Each case runs three ways: with Weekly Operator, with no skill, and with the strongest free alternative we found (the MIT-licensed `weekly-review` skill from alirezarezvani/claude-skills). The same rubric grades all three.
 
 ```bash
 cd evals
