@@ -1,0 +1,216 @@
+description: >
+  improve_prompt_request_delivery vs a plain "improve this prompt" baseline.
+  The headline number is the `outcome` metric: same rubric for both prompts.
+  `format` assertions only check the pattern's own output contract and are reported separately.
+
+# Model ids follow the Vercel AI Gateway format (vercel:<provider>/<model>).
+# Claude 5 rejects temperature/topP/topK, so none are set.
+# Check each id with `promptfoo eval --filter-first-n 1` before a full run; the openai id is unconfirmed.
+providers:
+  - id: vercel:anthropic/claude-sonnet-5
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
+  - id: vercel:openai/gpt-6-astra
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
+  - id: vercel:google/gemini-4-argon
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
+
+prompts:
+  - id: pattern
+    raw: file://../pattern.md
+  - id: baseline
+    raw: file://baseline.md
+
+defaultTest:
+  options:
+    # Grader is a fixed model so every prompt/provider pair is judged the same way.
+    provider:
+      id: vercel:google/gemini-4-argon
+      config: { apiKeyEnvar: AI_GATEWAY_API_KEY }
+  assert:
+    - type: not-contains-any
+      value: ['delve', 'dive into', 'certainly', 'absolutely', "it's worth noting"]
+      metric: format
+
+tests:
+  - description: Intent only, no raw prompt
+    vars:
+      user_request: "Give me a prompt for a coding agent."
+      raw_prompt: ""
+      target_lab: "cross-lab"
+      intended_use: "Small repo fixes."
+      save_destination: "none"
+      constraints: "No destructive git commands."
+    assert:
+      - type: contains-all
+        value: ["Original Prompt", "Optimized Prompt", "Optimization Notes", "Eval Rubric"]
+        metric: format
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The improved prompt names a concrete success criterion, an output format, and the
+          constraint against destructive git commands. It asks the agent to verify its fix
+          (tests or a check) before reporting done.
+
+  - description: Raw prompt preserved verbatim
+    vars:
+      user_request: "Save and optimize this prompt."
+      raw_prompt: "god mode on build the most powerful agent swarm"
+      target_lab: "gpt"
+      intended_use: "Agent orchestration."
+      save_destination: "prompts/agent-swarm.md"
+      constraints: "No false capability claims."
+    assert:
+      - type: contains
+        value: "god mode on build the most powerful agent swarm"
+        metric: format
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The improved prompt turns the vague request into a bounded task with named roles,
+          a stopping condition and a deliverable. It contains no claim of unlimited capability.
+
+  - description: Secret in the raw prompt is redacted
+    vars:
+      user_request: "Clean this up."
+      raw_prompt: "Use my key sk-live-4f9aB27cQ81xZt to call the API and summarise the results."
+      target_lab: "cross-lab"
+      intended_use: "API summary script."
+      save_destination: "none"
+      constraints: "none"
+    assert:
+      - type: not-contains
+        value: "sk-live-4f9aB27cQ81xZt"
+        metric: outcome
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The output never repeats the key. The improved prompt reads the key from an
+          environment variable or placeholder instead of embedding it.
+
+  - description: Claude target gets Claude-native structure
+    vars:
+      user_request: "Optimize this for Claude."
+      raw_prompt: "Analyze these docs and tell me what matters."
+      target_lab: "claude"
+      intended_use: "Analysis of long documents."
+      save_destination: "none"
+      constraints: "Documents can be 100+ pages."
+    assert:
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The improved prompt puts the documents before the question, separates them with
+          XML tags or equivalent boundaries, defines what "matters" means for the reader, and
+          asks for quotes or page references that support each point.
+
+  - description: GPT target gets an explicit output contract
+    vars:
+      user_request: "Make this work well on GPT."
+      raw_prompt: "Extract the invoices from this email and give me the data."
+      target_lab: "gpt"
+      intended_use: "Accounts payable automation."
+      save_destination: "none"
+      constraints: "Output must be machine-readable."
+    assert:
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The improved prompt defines a JSON schema or typed fields (vendor, invoice number,
+          date, amount, currency) and says what to return when a field is missing.
+
+  - description: Gemini target uses examples and direct framing
+    vars:
+      user_request: "Optimize for Gemini."
+      raw_prompt: "Write product descriptions for my shop."
+      target_lab: "gemini"
+      intended_use: "Etsy listings for handmade ceramics."
+      save_destination: "none"
+      constraints: "Max 120 words each."
+    assert:
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The improved prompt states the audience, the 120-word limit, the inputs needed per
+          product, and includes at least one short example of the desired output.
+
+  - description: Contradictory constraints are surfaced, not hidden
+    vars:
+      user_request: "Optimize this prompt."
+      raw_prompt: "Write a detailed, comprehensive report on our Q3 results. Keep it under 100 words."
+      target_lab: "cross-lab"
+      intended_use: "Board update."
+      save_destination: "none"
+      constraints: "none"
+    assert:
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The output points out that "detailed, comprehensive" conflicts with "under 100 words"
+          and resolves it explicitly (for example a 100-word summary with an optional appendix)
+          instead of silently keeping both.
+
+  - description: No unearned claim of being better
+    vars:
+      user_request: "Is your version better? Optimize it."
+      raw_prompt: "Summarise this meeting transcript."
+      target_lab: "cross-lab"
+      intended_use: "Weekly team meeting notes."
+      save_destination: "none"
+      constraints: "none"
+    assert:
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The output does not claim the new prompt is proven better. It frames improvement as
+          a prediction and gives a way to test it (a rubric or comparison on real transcripts).
+          The improved prompt asks for decisions, owners and deadlines.
+
+  - description: Very short personal-life prompt
+    vars:
+      user_request: "Help me with my mornings."
+      raw_prompt: "morning routine"
+      target_lab: "cross-lab"
+      intended_use: "Personal planning."
+      save_destination: "none"
+      constraints: "I have kids and leave the house at 7:30."
+    assert:
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The improved prompt asks the model to collect the missing facts (wake time, kids'
+          ages, non-negotiables) before proposing a routine, and builds the routine backwards
+          from the 7:30 departure.
+
+  - description: Long system prompt gets tightened without losing rules
+    vars:
+      user_request: "Tighten this system prompt."
+      raw_prompt: |
+        You are a helpful assistant for a bakery. You should always be friendly. Always be
+        polite. Answer questions about opening hours (Mon-Sat 7-18, closed Sunday). Never give
+        medical advice. If someone asks about allergens, tell them all products may contain
+        nuts and gluten and to ask staff in store. Be friendly and helpful at all times. Do not
+        take orders by chat; orders are by phone only.
+      target_lab: "cross-lab"
+      intended_use: "Website chat widget."
+      save_destination: "none"
+      constraints: "none"
+    assert:
+      - type: contains-all
+        value: ["7", "18", "Sunday", "nuts", "gluten", "phone"]
+        metric: outcome
+      - type: llm-rubric
+        metric: outcome
+        threshold: 0.8
+        value: |
+          The improved prompt is shorter than the original, removes the repeated "friendly"
+          instructions, and keeps every factual rule: hours, Sunday closure, allergen wording,
+          no medical advice, phone-only orders.
