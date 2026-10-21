@@ -5,9 +5,11 @@ description: >
 
 # Model ids follow the Vercel AI Gateway format (vercel:<provider>/<model>).
 # Claude 5 rejects temperature/topP/topK, so none are set.
-# Check each id with `promptfoo eval --filter-first-n 1` before a full run; the openai id is unconfirmed.
+# Ids checked against OpenRouter's model list on 2026-10-21. To run through OpenRouter instead:
+#   promptfoo eval -r openrouter:anthropic/claude-sonnet-5.5 -r openrouter:openai/gpt-6-astra \
+#     -r openrouter:google/gemini-4-argon --grader openrouter:google/gemini-4-argon -j 2
 providers:
-  - id: vercel:anthropic/claude-sonnet-5
+  - id: vercel:anthropic/claude-sonnet-5.5
     config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
   - id: vercel:openai/gpt-6-astra
     config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
