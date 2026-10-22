@@ -10,11 +10,11 @@ description: >
 #     -r openrouter:google/gemini-4-argon --grader openrouter:google/gemini-4-argon -j 2
 providers:
   - id: vercel:anthropic/claude-sonnet-5.5
-    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 12000 }
   - id: vercel:openai/gpt-6-astra
-    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 12000 }
   - id: vercel:google/gemini-4-argon
-    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 4000 }
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 12000 }
 
 prompts:
   - id: pattern
