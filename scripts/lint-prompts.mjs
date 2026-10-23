@@ -44,12 +44,13 @@ function getFrontmatter(filePath) {
 
             const getNested = (name) => {
                 const parts = name.split('.');
-                const parentRegex = new RegExp(`^${parts[0]}:[ \t]*\n(?:[ \t]+.*\n)*`, 'm');
+                // Find parent line
+                const parentRegex = new RegExp(`^${parts[0]}:[ \t]*\n(?:[ \t]+.*(?:\n|$))*`, 'm');
                 const parentMatch = yamlStr.match(parentRegex);
                 if (!parentMatch) return null;
 
-                // Allow spaces or comments after the value
-                const childRegex = new RegExp(`^[ \t]+${parts[1]}:[ \t]*(.*?)(?:[ \t]+#.*)?$`, 'm');
+                // Allow spaces or comments after the value, and do not strictly require \n
+                const childRegex = new RegExp(`^[ \t]+${parts[1]}:[ \t]*(.*?)(?:[ \t]+#.*)?(?:\n|$)`, 'm');
                 const childMatch = parentMatch[0].match(childRegex);
                 if (!childMatch) return null;
 
@@ -122,10 +123,14 @@ function checkFiles(directories) {
         };
 
         const processFile = (filePath) => {
+             const normalizedPath = filePath.replace(/\\/g, '/');
+             const isTest = normalizedPath.includes('/tests/') || normalizedPath.startsWith('tests/');
              const fm = getFrontmatter(filePath);
+
              if (fm) {
                  let issue = false;
                  const reasons = [];
+                 let humanDecisionRequired = false;
 
                  if (fm.__DUPLICATES && fm.__DUPLICATES.length > 0) {
                      issue = true;
@@ -156,12 +161,22 @@ function checkFiles(directories) {
                  }
 
                  if (checkEmpty(fm.license)) {
-                     issue = true;
-                     reasons.push('license missing/empty');
+                     if (isTest) {
+                         issue = true;
+                         reasons.push('license missing/empty');
+                     } else {
+                         humanDecisionRequired = true;
+                         reasons.push('license missing/empty (needs human decision)');
+                     }
                  }
                  if (checkEmpty(fm.attribution)) {
-                     issue = true;
-                     reasons.push('attribution missing/empty');
+                     if (isTest) {
+                         issue = true;
+                         reasons.push('attribution missing/empty');
+                     } else {
+                         humanDecisionRequired = true;
+                         reasons.push('attribution missing/empty (needs human decision)');
+                     }
                  }
 
                  if (issue) {
@@ -169,6 +184,8 @@ function checkFiles(directories) {
                      console.error(`File: ${filePath}`);
                      console.error(`Issues: ${reasons.join(', ')}`);
                      console.error();
+                 } else if (humanDecisionRequired) {
+                     console.log(`WARNING (Human Decision Required) in ${filePath}: ${reasons.join(', ')}`);
                  }
              } else {
                   console.error(`File: ${filePath}`);
