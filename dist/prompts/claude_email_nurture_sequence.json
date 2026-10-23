@@ -1,0 +1,16 @@
+{
+  "id": "claude_email_nurture_sequence",
+  "title": "Email Nurture Sequence",
+  "category": "create",
+  "tags": [
+    "email-marketing",
+    "nurture",
+    "automation",
+    "conversion"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_email_nurture_sequence/pattern.md"
+}

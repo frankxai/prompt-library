@@ -1,0 +1,16 @@
+{
+  "id": "claude_explicit_scope_discipline_prompt",
+  "title": "Explicit Scope Discipline Prompt",
+  "category": "create",
+  "tags": [
+    "scope-discipline",
+    "anti-drift",
+    "focus-maintenance",
+    "task-boundaries"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_explicit_scope_discipline_prompt/pattern.md"
+}

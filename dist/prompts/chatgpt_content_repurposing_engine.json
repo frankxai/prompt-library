@@ -1,0 +1,15 @@
+{
+  "id": "chatgpt_content_repurposing_engine",
+  "title": "Content Repurposing Engine",
+  "category": "create",
+  "tags": [
+    "repurposing",
+    "content",
+    "multi-platform"
+  ],
+  "model_targets": [
+    "gpt"
+  ],
+  "license": "original",
+  "path": "prompts/chatgpt_content_repurposing_engine/pattern.md"
+}

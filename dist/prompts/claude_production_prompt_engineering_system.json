@@ -1,0 +1,16 @@
+{
+  "id": "claude_production_prompt_engineering_system",
+  "title": "Production Prompt Engineering System",
+  "category": "create",
+  "tags": [
+    "prompt-engineering",
+    "production",
+    "system-design",
+    "llm"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_production_prompt_engineering_system/pattern.md"
+}

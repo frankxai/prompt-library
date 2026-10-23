@@ -1,0 +1,15 @@
+{
+  "id": "audit_security_config",
+  "title": "Audit Security Config",
+  "category": "audit",
+  "tags": [
+    "security",
+    "devops",
+    "review"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/audit_security_config/pattern.md"
+}

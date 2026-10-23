@@ -1,0 +1,15 @@
+{
+  "id": "analyze_threat_report",
+  "title": "Analyze Threat Report",
+  "category": "analyze",
+  "tags": [
+    "security",
+    "threat-intel",
+    "structured-output"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/analyze_threat_report/pattern.md"
+}

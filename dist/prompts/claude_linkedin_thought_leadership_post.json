@@ -1,0 +1,16 @@
+{
+  "id": "claude_linkedin_thought_leadership_post",
+  "title": "LinkedIn Thought Leadership Post",
+  "category": "create",
+  "tags": [
+    "linkedin",
+    "thought-leadership",
+    "personal-brand",
+    "engagement"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_linkedin_thought_leadership_post/pattern.md"
+}

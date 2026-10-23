@@ -1,0 +1,15 @@
+{
+  "id": "summarize_paper",
+  "title": "Summarize Paper",
+  "category": "summarize",
+  "tags": [
+    "research",
+    "paper-summary",
+    "structured-output"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/summarize_paper/pattern.md"
+}

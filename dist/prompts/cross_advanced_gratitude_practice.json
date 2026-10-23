@@ -1,0 +1,16 @@
+{
+  "id": "cross_advanced_gratitude_practice",
+  "title": "Advanced Gratitude Practice",
+  "category": "create",
+  "tags": [
+    "gratitude",
+    "abundance",
+    "positivity",
+    "mindset"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cross_advanced_gratitude_practice/pattern.md"
+}

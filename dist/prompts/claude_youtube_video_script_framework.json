@@ -1,0 +1,16 @@
+{
+  "id": "claude_youtube_video_script_framework",
+  "title": "YouTube Video Script Framework",
+  "category": "create",
+  "tags": [
+    "youtube",
+    "video-script",
+    "content-creation",
+    "tutorial"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_youtube_video_script_framework/pattern.md"
+}

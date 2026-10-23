@@ -1,0 +1,16 @@
+{
+  "id": "claude_manifestation_intention_setting",
+  "title": "Manifestation & Intention Setting",
+  "category": "create",
+  "tags": [
+    "manifestation",
+    "intention",
+    "law-of-attraction",
+    "visualization"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_manifestation_intention_setting/pattern.md"
+}

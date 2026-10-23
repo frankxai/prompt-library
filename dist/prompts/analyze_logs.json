@@ -1,0 +1,15 @@
+{
+  "id": "analyze_logs",
+  "title": "Analyze Logs",
+  "category": "analyze",
+  "tags": [
+    "ops",
+    "observability",
+    "triage"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/analyze_logs/pattern.md"
+}

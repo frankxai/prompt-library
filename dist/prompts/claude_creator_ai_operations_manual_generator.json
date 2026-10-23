@@ -1,0 +1,17 @@
+{
+  "id": "claude_creator_ai_operations_manual_generator",
+  "title": "Creator AI Operations Manual Generator",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "creator-ops",
+    "content-pipeline",
+    "workflow-design",
+    "operations-manual"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_creator_ai_operations_manual_generator/pattern.md"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "analyze_claims",
+  "title": "Analyze Claims",
+  "category": "analyze",
+  "tags": [
+    "critical-thinking",
+    "fact-checking",
+    "epistemics"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/analyze_claims/pattern.md"
+}

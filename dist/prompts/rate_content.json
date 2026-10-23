@@ -1,0 +1,15 @@
+{
+  "id": "rate_content",
+  "title": "Rate Content",
+  "category": "rate",
+  "tags": [
+    "evaluation",
+    "feedback",
+    "rubric"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/rate_content/pattern.md"
+}

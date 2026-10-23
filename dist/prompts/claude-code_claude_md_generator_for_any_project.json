@@ -1,0 +1,17 @@
+{
+  "id": "claude-code_claude_md_generator_for_any_project",
+  "title": "CLAUDE.md Generator for Any Project",
+  "category": "create",
+  "tags": [
+    "CLAUDE.md",
+    "claude-code",
+    "setup",
+    "configuration",
+    "ai-development"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/claude-code_claude_md_generator_for_any_project/pattern.md"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "extract_quotes",
+  "title": "Extract Quotes",
+  "category": "extract",
+  "tags": [
+    "extraction",
+    "quotes",
+    "citation"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/extract_quotes/pattern.md"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "cross_ai_pair_programming_session",
+  "title": "AI Pair Programming Session",
+  "category": "create",
+  "tags": [
+    "pair-programming",
+    "workflow",
+    "productivity",
+    "coding"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cross_ai_pair_programming_session/pattern.md"
+}

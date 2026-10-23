@@ -1,0 +1,16 @@
+{
+  "id": "claude_annual_goal_setting_system",
+  "title": "Annual Goal Setting System",
+  "category": "create",
+  "tags": [
+    "goals",
+    "planning",
+    "annual-review",
+    "productivity"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_annual_goal_setting_system/pattern.md"
+}

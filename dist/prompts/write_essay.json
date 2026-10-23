@@ -1,0 +1,15 @@
+{
+  "id": "write_essay",
+  "title": "Write Essay",
+  "category": "create",
+  "tags": [
+    "writing",
+    "essay",
+    "long-form"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/write_essay/pattern.md"
+}

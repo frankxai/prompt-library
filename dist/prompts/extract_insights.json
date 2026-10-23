@@ -1,0 +1,15 @@
+{
+  "id": "extract_insights",
+  "title": "Extract Insights",
+  "category": "extract",
+  "tags": [
+    "extraction",
+    "insight",
+    "pattern-recognition"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/extract_insights/pattern.md"
+}
