@@ -1,37 +1,48 @@
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import assert from 'assert';
 
 console.log("Running lint-prompts.mjs on valid prompts/ directory...");
-try {
-    const stdout = execSync('node scripts/lint-prompts.mjs prompts/', { encoding: 'utf8' });
-    console.log("Output:");
-    console.log(stdout);
-    console.log("✅ Passed: Exited 0 for valid corpus as expected.");
-} catch (err) {
+let result = spawnSync('node', ['scripts/lint-prompts.mjs', 'prompts/'], { encoding: 'utf8' });
+if (result.status !== 0) {
     console.error("❌ Failed: Exited non-zero for valid corpus!");
-    console.error("Output:", err.stdout);
-    console.error("Error:", err.stderr);
+    console.error("Output:", result.stdout);
+    console.error("Error:", result.stderr);
     process.exit(1);
 }
+console.log("✅ Passed: Exited 0 for valid corpus as expected.");
 
 console.log("--------------------------------------------------");
 
-console.log("Running lint-prompts.mjs on intentionally bad fixture tests/bad_prompt.md...");
-let failedAsExpected = false;
-try {
-    execSync('node scripts/lint-prompts.mjs tests/bad_prompt.md', { encoding: 'utf8', stdio: 'pipe' });
-} catch (err) {
-    failedAsExpected = true;
-    console.log("Output from failing test:");
-    console.log(err.stderr || err.stdout);
+const fixtures = [
+    { file: 'tests/bad_title.md', expected: 'title missing/empty' },
+    { file: 'tests/bad_title_comment.md', expected: 'title missing/empty' },
+    { file: 'tests/bad_category.md', expected: 'category invalid (invalid_category)' },
+    { file: 'tests/bad_tags.md', expected: 'tags missing/empty' },
+    { file: 'tests/bad_license.md', expected: 'license missing/empty' },
+    { file: 'tests/bad_attribution.md', expected: 'attribution missing/empty' },
+    { file: 'tests/duplicate_key.md', expected: 'duplicate top-level keys found: category' }
+];
 
-    assert(err.status !== 0, "Process should have exited non-zero");
-    console.log("✅ Passed: Exited non-zero for bad fixture as expected.");
+for (const fix of fixtures) {
+    console.log(`Running lint-prompts.mjs on intentionally bad fixture ${fix.file}...`);
+    result = spawnSync('node', ['scripts/lint-prompts.mjs', fix.file], { encoding: 'utf8' });
+
+    if (result.status !== 1) {
+        console.error(`❌ Failed: Process exited with status ${result.status} (expected 1) for bad fixture ${fix.file}!`);
+        console.error("Stdout:", result.stdout);
+        console.error("Stderr:", result.stderr);
+        process.exit(1);
+    }
+
+    const output = (result.stderr + "\n" + result.stdout).trim();
+    if (!output.includes(fix.expected)) {
+        console.error(`❌ Failed: Output did not contain expected diagnostic '${fix.expected}' for ${fix.file}!`);
+        console.error("Actual output:", output);
+        process.exit(1);
+    }
+
+    console.log(`✅ Passed: Exited 1 and found expected diagnostic for ${fix.file}.`);
 }
 
-if (!failedAsExpected) {
-    console.error("❌ Failed: Process incorrectly exited 0 for bad fixture!");
-    process.exit(1);
-}
-
+console.log("--------------------------------------------------");
 console.log("All tests passed.");

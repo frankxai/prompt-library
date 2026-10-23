@@ -9,30 +9,55 @@ const validCategories = [
 
 function getFrontmatter(filePath) {
     let content = fs.readFileSync(filePath, 'utf8');
-    // Normalize CRLF to LF
     content = content.replace(/\r\n/g, '\n');
 
     if (content.startsWith('---')) {
         const match = content.match(/^---\n([\s\S]*?)\n---/);
         if (match) {
             const yamlStr = match[1];
-            const result = {};
+            const result = { __DUPLICATES: [] };
+
+            const lines = yamlStr.split('\n');
+            const seenKeys = new Set();
+            for (const line of lines) {
+                const keyMatch = line.match(/^([a-zA-Z0-9_]+):/);
+                if (keyMatch) {
+                    const key = keyMatch[1];
+                    if (seenKeys.has(key)) {
+                        result.__DUPLICATES.push(key);
+                    }
+                    seenKeys.add(key);
+                }
+            }
 
             const getField = (name) => {
-                // Restrict whitespace to the same line to avoid consuming newlines
-                const regex = new RegExp(`^${name}:[ \t]*(.*)$`, 'm');
+                const regex = new RegExp(`^${name}:[ \t]*(.*?)(?:[ \t]+#.*)?$`, 'm');
                 const m = yamlStr.match(regex);
-                return m ? m[1].trim() : null;
+                if (!m) return null;
+
+                let val = m[1].trim();
+                if (val === '~' || val === 'null' || val === '""' || val === "''" || val === '') {
+                    return null;
+                }
+                return val;
             };
 
             const getNested = (name) => {
                 const parts = name.split('.');
-                const parentRegex = new RegExp(`^${parts[0]}:[ \t]*\\n(?:[ \\t]+.*\\n)*`, 'm');
+                const parentRegex = new RegExp(`^${parts[0]}:[ \t]*\n(?:[ \t]+.*\n)*`, 'm');
                 const parentMatch = yamlStr.match(parentRegex);
                 if (!parentMatch) return null;
-                const childRegex = new RegExp(`^[ \t]+${parts[1]}:[ \\t]*(.*)$`, 'm');
+
+                // Allow spaces or comments after the value
+                const childRegex = new RegExp(`^[ \t]+${parts[1]}:[ \t]*(.*?)(?:[ \t]+#.*)?$`, 'm');
                 const childMatch = parentMatch[0].match(childRegex);
-                return childMatch ? childMatch[1].trim() : null;
+                if (!childMatch) return null;
+
+                let val = childMatch[1].trim();
+                if (val === '~' || val === 'null' || val === '""' || val === "''" || val === '') {
+                    return null;
+                }
+                return val;
             };
 
             const unquote = (str) => {
@@ -45,15 +70,15 @@ function getFrontmatter(filePath) {
             result.title = unquote(getField('title'));
             result.category = unquote(getField('category'));
 
-            // Check for both inline tags "[a, b]" and multi-line list tags
             const tagsInlineMatch = yamlStr.match(/^tags:[ \t]*\[(.*?)\]/m);
             if (tagsInlineMatch) {
                 result.tags = tagsInlineMatch[1].trim() === '' ? null : tagsInlineMatch[1].trim();
             } else {
-                 const tagsMultilineRegex = /^tags:[ \t]*\n((?:[ \\t]+-.*\n)*)/m;
+                 const tagsMultilineRegex = /^tags:[ \t]*\n((?:[ \t]+-.*(?:\n|$))*)/m;
                  const tagsMultilineMatch = yamlStr.match(tagsMultilineRegex);
                  if (tagsMultilineMatch) {
                       result.tags = tagsMultilineMatch[1].trim();
+                      if (result.tags === '') result.tags = null;
                  } else {
                       result.tags = null;
                  }
@@ -80,7 +105,6 @@ function checkFiles(directories) {
         const walkSync = (dir) => {
             const stat = fs.statSync(dir);
             if (!stat.isDirectory()) {
-                // Allows passing a direct file as an argument
                 processFile(dir);
                 return;
             }
@@ -98,12 +122,15 @@ function checkFiles(directories) {
         };
 
         const processFile = (filePath) => {
-             const normalizedPath = filePath.replace(/\\/g, '/');
              const fm = getFrontmatter(filePath);
              if (fm) {
                  let issue = false;
                  const reasons = [];
-                 let humanDecisionRequired = false;
+
+                 if (fm.__DUPLICATES && fm.__DUPLICATES.length > 0) {
+                     issue = true;
+                     reasons.push(`duplicate top-level keys found: ${fm.__DUPLICATES.join(', ')}`);
+                 }
 
                  const checkEmpty = (val) => {
                      if (val === undefined || val === null || val === '' || val === 'null' || val === 'TODO' || val === 'TODO:' || val === '[]') return true;
@@ -128,26 +155,13 @@ function checkFiles(directories) {
                      reasons.push('tags missing/empty');
                  }
 
-                 // License and attribution issues need human decision, they don't break the linter for the repo
-                 // (Except in tests directory where we want it to fail)
-                 const isTest = normalizedPath.includes('/tests/') || normalizedPath.startsWith('tests/');
                  if (checkEmpty(fm.license)) {
-                     if (isTest) {
-                         issue = true;
-                         reasons.push('license missing/empty');
-                     } else {
-                         humanDecisionRequired = true;
-                         reasons.push('license missing/empty (needs human decision)');
-                     }
+                     issue = true;
+                     reasons.push('license missing/empty');
                  }
                  if (checkEmpty(fm.attribution)) {
-                     if (isTest) {
-                         issue = true;
-                         reasons.push('attribution missing/empty');
-                     } else {
-                         humanDecisionRequired = true;
-                         reasons.push('attribution missing/empty (needs human decision)');
-                     }
+                     issue = true;
+                     reasons.push('attribution missing/empty');
                  }
 
                  if (issue) {
@@ -155,8 +169,6 @@ function checkFiles(directories) {
                      console.error(`File: ${filePath}`);
                      console.error(`Issues: ${reasons.join(', ')}`);
                      console.error();
-                 } else if (humanDecisionRequired) {
-                     console.log(`WARNING (Human Decision Required) in ${filePath}: ${reasons.join(', ')}`);
                  }
              } else {
                   console.error(`File: ${filePath}`);
@@ -173,11 +185,10 @@ function checkFiles(directories) {
         console.error(`Total hard issues found: ${count}`);
         process.exit(1);
     }
-    console.log("No hard issues found. (Only human-decision warnings if any)");
+    console.log("No hard issues found.");
     process.exit(0);
 }
 
-// Only execute if ran directly (e.g. node scripts/lint-prompts.mjs)
 const scriptPath = fileURLToPath(import.meta.url);
 if (process.argv[1] === scriptPath) {
     const args = process.argv.slice(2);

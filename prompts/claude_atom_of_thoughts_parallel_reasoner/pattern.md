@@ -24,6 +24,7 @@ red_team:
   notes: "declares output format without naming sections."
   probes_run: 4
   probes_static: true
+  probes_static: true
 psyche:
   applicable: false
   boundary: n/a
