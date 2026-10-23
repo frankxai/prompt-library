@@ -1,0 +1,16 @@
+{
+  "id": "chatgpt_instagram_carousel_script",
+  "title": "Instagram Carousel Script",
+  "category": "create",
+  "tags": [
+    "instagram",
+    "carousel",
+    "educational",
+    "visual-content"
+  ],
+  "model_targets": [
+    "gpt"
+  ],
+  "license": "original",
+  "path": "prompts/chatgpt_instagram_carousel_script/pattern.md"
+}

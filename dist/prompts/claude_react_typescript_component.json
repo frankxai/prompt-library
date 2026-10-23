@@ -1,0 +1,15 @@
+{
+  "id": "claude_react_typescript_component",
+  "title": "React TypeScript Component",
+  "category": "create",
+  "tags": [
+    "react",
+    "typescript",
+    "components"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_react_typescript_component/pattern.md"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "claude_high_converting_landing_page_copy",
+  "title": "High-Converting Landing Page Copy",
+  "category": "create",
+  "tags": [
+    "landing-page",
+    "copywriting",
+    "conversion",
+    "sales"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_high_converting_landing_page_copy/pattern.md"
+}

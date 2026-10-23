@@ -1,0 +1,15 @@
+{
+  "id": "audit_resume",
+  "title": "Audit Resume",
+  "category": "audit",
+  "tags": [
+    "career",
+    "resume",
+    "feedback"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/audit_resume/pattern.md"
+}

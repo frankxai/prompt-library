@@ -1,0 +1,17 @@
+{
+  "id": "cross_fitness_creator_content_system",
+  "title": "Fitness Creator Content System",
+  "category": "create",
+  "tags": [
+    "fitness",
+    "content-creation",
+    "social-media",
+    "coaching",
+    "creator"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cross_fitness_creator_content_system/pattern.md"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "claude_habit_design_workshop",
+  "title": "Habit Design Workshop",
+  "category": "create",
+  "tags": [
+    "habits",
+    "behavior-change",
+    "atomic-habits",
+    "self-improvement"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_habit_design_workshop/pattern.md"
+}

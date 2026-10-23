@@ -1,0 +1,16 @@
+{
+  "id": "claude_ai_output_evaluation_framework",
+  "title": "AI Output Evaluation Framework",
+  "category": "create",
+  "tags": [
+    "evaluation",
+    "quality",
+    "metrics",
+    "testing"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_ai_output_evaluation_framework/pattern.md"
+}

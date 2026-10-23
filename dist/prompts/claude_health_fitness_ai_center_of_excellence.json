@@ -1,0 +1,19 @@
+{
+  "id": "claude_health_fitness_ai_center_of_excellence",
+  "title": "Health & Fitness AI Center of Excellence",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "health",
+    "fitness",
+    "nutrition",
+    "training",
+    "recovery",
+    "longevity"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_health_fitness_ai_center_of_excellence/pattern.md"
+}

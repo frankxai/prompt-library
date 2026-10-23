@@ -1,0 +1,15 @@
+{
+  "id": "rate_argument",
+  "title": "Rate Argument",
+  "category": "rate",
+  "tags": [
+    "critical-thinking",
+    "rhetoric",
+    "evaluation"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/rate_argument/pattern.md"
+}

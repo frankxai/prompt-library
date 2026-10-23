@@ -1,0 +1,15 @@
+{
+  "id": "claude_market_research_framework",
+  "title": "Market Research Framework",
+  "category": "create",
+  "tags": [
+    "research",
+    "strategy",
+    "market"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_market_research_framework/pattern.md"
+}

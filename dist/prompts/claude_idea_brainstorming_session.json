@@ -1,0 +1,15 @@
+{
+  "id": "claude_idea_brainstorming_session",
+  "title": "Idea Brainstorming Session",
+  "category": "create",
+  "tags": [
+    "brainstorming",
+    "ideation",
+    "creativity"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_idea_brainstorming_session/pattern.md"
+}

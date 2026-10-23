@@ -1,0 +1,16 @@
+{
+  "id": "chatgpt_chatgpt_study_notes_generator",
+  "title": "ChatGPT Study Notes Generator",
+  "category": "create",
+  "tags": [
+    "chatgpt",
+    "study",
+    "notes",
+    "education"
+  ],
+  "model_targets": [
+    "gpt"
+  ],
+  "license": "original",
+  "path": "prompts/chatgpt_chatgpt_study_notes_generator/pattern.md"
+}

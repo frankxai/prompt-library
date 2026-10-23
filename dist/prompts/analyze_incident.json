@@ -1,0 +1,15 @@
+{
+  "id": "analyze_incident",
+  "title": "Analyze Incident",
+  "category": "analyze",
+  "tags": [
+    "ops",
+    "postmortem",
+    "reliability"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/analyze_incident/pattern.md"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "claude_founder_ai_intelligence_system",
+  "title": "Founder AI Intelligence System",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "founder",
+    "competitive-intelligence",
+    "business-strategy",
+    "startup",
+    "decision-support"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_founder_ai_intelligence_system/pattern.md"
+}

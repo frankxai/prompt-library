@@ -1,0 +1,15 @@
+{
+  "id": "analyze_prose",
+  "title": "Analyze Prose",
+  "category": "analyze",
+  "tags": [
+    "writing-analysis",
+    "critique",
+    "structured-output"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/analyze_prose/pattern.md"
+}

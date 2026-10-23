@@ -1,0 +1,16 @@
+{
+  "id": "claude_self_consistency_loop_generator",
+  "title": "Self-Consistency Loop Generator",
+  "category": "create",
+  "tags": [
+    "self-consistency",
+    "multi-pass",
+    "verification",
+    "reasoning-loops"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_self_consistency_loop_generator/pattern.md"
+}

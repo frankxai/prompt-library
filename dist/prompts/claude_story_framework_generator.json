@@ -1,0 +1,15 @@
+{
+  "id": "claude_story_framework_generator",
+  "title": "Story Framework Generator",
+  "category": "create",
+  "tags": [
+    "storytelling",
+    "narrative",
+    "copywriting"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_story_framework_generator/pattern.md"
+}

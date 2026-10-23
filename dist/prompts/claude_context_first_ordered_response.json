@@ -1,0 +1,16 @@
+{
+  "id": "claude_context_first_ordered_response",
+  "title": "Context-First Ordered Response",
+  "category": "create",
+  "tags": [
+    "context-first",
+    "attention-weighting",
+    "information-ordering",
+    "response-optimization"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_context_first_ordered_response/pattern.md"
+}

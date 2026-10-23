@@ -1,0 +1,16 @@
+{
+  "id": "cross_weekly_social_content_calendar",
+  "title": "Weekly Social Content Calendar",
+  "category": "create",
+  "tags": [
+    "content-calendar",
+    "planning",
+    "social-strategy",
+    "scheduling"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cross_weekly_social_content_calendar/pattern.md"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "extract_ideas",
+  "title": "Extract Ideas",
+  "category": "extract",
+  "tags": [
+    "extraction",
+    "ideation",
+    "structured-output"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/extract_ideas/pattern.md"
+}

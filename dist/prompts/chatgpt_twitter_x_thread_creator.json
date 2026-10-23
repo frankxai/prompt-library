@@ -1,0 +1,16 @@
+{
+  "id": "chatgpt_twitter_x_thread_creator",
+  "title": "Twitter/X Thread Creator",
+  "category": "create",
+  "tags": [
+    "twitter",
+    "thread",
+    "x",
+    "viral"
+  ],
+  "model_targets": [
+    "gpt"
+  ],
+  "license": "original",
+  "path": "prompts/chatgpt_twitter_x_thread_creator/pattern.md"
+}
