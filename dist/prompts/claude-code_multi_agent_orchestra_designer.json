@@ -1,0 +1,18 @@
+{
+  "id": "claude-code_multi_agent_orchestra_designer",
+  "title": "Multi-Agent Orchestra Designer",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "multi-agent",
+    "orchestration",
+    "agent-design",
+    "personal-ai",
+    "acos"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/claude-code_multi_agent_orchestra_designer/pattern.md"
+}

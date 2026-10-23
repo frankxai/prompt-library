@@ -1,0 +1,15 @@
+{
+  "id": "improve_prompt",
+  "title": "Improve Prompt",
+  "category": "improve",
+  "tags": [
+    "prompt-engineering",
+    "meta",
+    "rewriting"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/improve_prompt/pattern.md"
+}

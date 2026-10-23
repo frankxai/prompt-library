@@ -1,0 +1,15 @@
+{
+  "id": "cross_code_explainer",
+  "title": "Code Explainer",
+  "category": "create",
+  "tags": [
+    "learning",
+    "explanation",
+    "understanding"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cross_code_explainer/pattern.md"
+}

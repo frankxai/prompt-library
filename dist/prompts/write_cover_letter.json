@@ -1,0 +1,15 @@
+{
+  "id": "write_cover_letter",
+  "title": "Write Cover Letter",
+  "category": "create",
+  "tags": [
+    "career",
+    "writing",
+    "cover-letter"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/write_cover_letter/pattern.md"
+}

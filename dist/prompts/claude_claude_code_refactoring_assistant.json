@@ -1,0 +1,16 @@
+{
+  "id": "claude_claude_code_refactoring_assistant",
+  "title": "Claude Code Refactoring Assistant",
+  "category": "create",
+  "tags": [
+    "claude",
+    "refactoring",
+    "code-quality",
+    "architecture"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_claude_code_refactoring_assistant/pattern.md"
+}

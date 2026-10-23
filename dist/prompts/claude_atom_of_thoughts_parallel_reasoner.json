@@ -1,0 +1,17 @@
+{
+  "id": "claude_atom_of_thoughts_parallel_reasoner",
+  "title": "Atom-of-Thoughts Parallel Reasoner",
+  "category": "create",
+  "tags": [
+    "atom-of-thoughts",
+    "aot",
+    "parallel-reasoning",
+    "chain-of-thought",
+    "advanced-reasoning"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_atom_of_thoughts_parallel_reasoner/pattern.md"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "claude_enterprise_to_personal_ai_coe_translator",
+  "title": "Enterprise-to-Personal AI CoE Translator",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "enterprise-ai",
+    "personal-ai",
+    "framework-translation",
+    "ai-strategy"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_enterprise_to_personal_ai_coe_translator/pattern.md"
+}

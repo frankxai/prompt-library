@@ -1,0 +1,15 @@
+{
+  "id": "claude_blog_post_structure_generator",
+  "title": "Blog Post Structure Generator",
+  "category": "create",
+  "tags": [
+    "blog",
+    "content",
+    "structure"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_blog_post_structure_generator/pattern.md"
+}
