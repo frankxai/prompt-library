@@ -3,6 +3,7 @@ import path from 'path';
 
 // Helper to parse YAML frontmatter deterministically without external dependencies
 function parseFrontmatter(content, filepath) {
+  content = content.replace(/\r\n/g, '\n');
   const match = content.match(/^---\n([\s\S]*?)\n---/);
   if (!match) {
     throw new Error(`[${filepath}] Missing or invalid YAML frontmatter.`);
@@ -79,18 +80,71 @@ function parseFrontmatter(content, filepath) {
     }
   }
 
+  // Validate Types
+  const stringFields = [
+    'id', 'version', 'title', 'description', 'lane', 'category', 'created', 'updated'
+  ];
+  for (const field of stringFields) {
+    if (typeof data[field] !== 'string') {
+      throw new Error(`[${filepath}] Field ${field} must be a string.`);
+    }
+  }
+
+  const nestedStringFields = {
+    provenance: ['source', 'attribution', 'license']
+  };
+  for (const [parent, children] of Object.entries(nestedStringFields)) {
+    for (const child of children) {
+      if (typeof data[parent][child] !== 'string') {
+        throw new Error(`[${filepath}] Field ${parent}.${child} must be a string.`);
+      }
+    }
+  }
+
+  // Validate tags array
+  if (!Array.isArray(data.tags)) {
+    throw new Error(`[${filepath}] Field tags must be an array of strings.`);
+  }
+  for (const tag of data.tags) {
+    if (typeof tag !== 'string') {
+      throw new Error(`[${filepath}] Field tags must be an array of strings.`);
+    }
+  }
+
+  // Validate ID format
+  if (!/^[a-z0-9][a-z0-9_-]*$/.test(data.id)) {
+    throw new Error(`[${filepath}] Invalid ID format: ${data.id}. IDs must match ^[a-z0-9][a-z0-9_-]*$`);
+  }
+  if (data.id.includes('/') || data.id.includes('\\') || data.id.includes('..')) {
+    throw new Error(`[${filepath}] Invalid ID: ${data.id}. IDs cannot contain path separators or ..`);
+  }
+
   return data;
 }
 
 function parseValue(val) {
-  // Strip quotes
-  if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-    val = val.slice(1, -1);
+  // Check if it's quoted, if so, return as string (with escapes decoded if needed)
+  if (val.startsWith('"') && val.endsWith('"')) {
+    let unquoted = val.slice(1, -1);
+    // decode standard YAML escapes like \n, \"
+    unquoted = unquoted.replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+    return unquoted;
+  }
+  if (val.startsWith("'") && val.endsWith("'")) {
+    let unquoted = val.slice(1, -1);
+    // single quotes only escape single quotes '' -> '
+    unquoted = unquoted.replace(/''/g, "'");
+    return unquoted;
   }
 
   // Handle arrays like [structured-output, summarization]
   if (val.startsWith('[') && val.endsWith(']')) {
-    return val.slice(1, -1).split(',').map(s => s.trim().replace(/^['"]|['"]$/g, ''));
+    return val.slice(1, -1).split(',').map(s => {
+      s = s.trim();
+      if (s.startsWith('"') && s.endsWith('"')) return s.slice(1, -1).replace(/\\"/g, '"');
+      if (s.startsWith("'") && s.endsWith("'")) return s.slice(1, -1).replace(/''/g, "'");
+      return s;
+    });
   }
 
   // Handle booleans
@@ -133,10 +187,16 @@ function buildIndex() {
   const patternFiles = findPatternFiles(promptsDir);
   const prompts = [];
   const categoriesSet = new Set();
+  const seenIds = new Set();
 
   for (const file of patternFiles) {
     const content = fs.readFileSync(file, 'utf8');
     const data = parseFrontmatter(content, file);
+
+    if (seenIds.has(data.id)) {
+      throw new Error(`[${file}] Duplicate ID found: ${data.id}`);
+    }
+    seenIds.add(data.id);
 
     // Extract required values for the index
     const promptEntry = {
@@ -246,7 +306,13 @@ components:
 
   // Write individual prompts
   const promptsApiDir = path.join(distDir, 'prompts');
-  if (!fs.existsSync(promptsApiDir)) {
+  if (fs.existsSync(promptsApiDir)) {
+    // Clean stale files
+    const files = fs.readdirSync(promptsApiDir);
+    for (const file of files) {
+      fs.unlinkSync(path.join(promptsApiDir, file));
+    }
+  } else {
     fs.mkdirSync(promptsApiDir, { recursive: true });
   }
 
