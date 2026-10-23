@@ -1,0 +1,14 @@
+{
+  "id": "test_id",
+  "title": "Test",
+  "category": "extract",
+  "tags": [
+    "test",
+    "mock"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/test_id/pattern.md"
+}
