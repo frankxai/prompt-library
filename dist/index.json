@@ -1510,20 +1510,6 @@
     "path": "prompts/summarize_paper/pattern.md"
   },
   {
-    "id": "test_id",
-    "title": "Test",
-    "category": "extract",
-    "tags": [
-      "test",
-      "mock"
-    ],
-    "model_targets": [
-      "cross-lab"
-    ],
-    "license": "MIT",
-    "path": "prompts/test_id/pattern.md"
-  },
-  {
     "id": "write_cover_letter",
     "title": "Write Cover Letter",
     "category": "create",
