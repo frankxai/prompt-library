@@ -139,8 +139,37 @@ function parseValue(val) {
 
   // Handle arrays like [structured-output, summarization]
   if (val.startsWith('[') && val.endsWith(']')) {
-    return val.slice(1, -1).split(',').map(s => {
+    const inner = val.slice(1, -1).trim();
+    if (inner === '') return [];
+
+    // We need to parse correctly in case of commas inside quotes.
+    const items = [];
+    let currentItem = '';
+    let inDoubleQuotes = false;
+    let inSingleQuotes = false;
+
+    for (let i = 0; i < inner.length; i++) {
+      const char = inner[i];
+      if (char === '"' && !inSingleQuotes && (i === 0 || inner[i-1] !== '\\')) {
+        inDoubleQuotes = !inDoubleQuotes;
+        currentItem += char;
+      } else if (char === "'" && !inDoubleQuotes) {
+        inSingleQuotes = !inSingleQuotes;
+        currentItem += char;
+      } else if (char === ',' && !inDoubleQuotes && !inSingleQuotes) {
+        items.push(currentItem);
+        currentItem = '';
+      } else {
+        currentItem += char;
+      }
+    }
+    items.push(currentItem);
+
+    return items.map(s => {
       s = s.trim();
+      if (s.includes('[') || s.includes(']')) {
+        throw new Error("Unsupported array syntax or nested arrays: " + val);
+      }
       if (s.startsWith('"') && s.endsWith('"')) return s.slice(1, -1).replace(/\\"/g, '"');
       if (s.startsWith("'") && s.endsWith("'")) return s.slice(1, -1).replace(/''/g, "'");
       return s;
@@ -199,6 +228,8 @@ function buildIndex() {
     seenIds.add(data.id);
 
     // Extract required values for the index
+    // derive path from the actual scanned file
+    const relPath = path.relative(process.cwd(), file).split(path.sep).join('/');
     const promptEntry = {
       id: data.id,
       title: data.title,
@@ -206,7 +237,7 @@ function buildIndex() {
       tags: data.tags,
       model_targets: [data.lane],
       license: data.provenance.license,
-      path: `prompts/${data.id}/pattern.md`
+      path: relPath
     };
 
     prompts.push(promptEntry);
