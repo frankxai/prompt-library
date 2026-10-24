@@ -1,0 +1,114 @@
+# Weekly Operator held-out cases
+# Author: Codex | Created: 2026-10-21 | Revision: 1
+# Sources: BRIEF.md and FOLDER-FORMAT.md only; no product instructions inspected.
+# Review state: Codex content review and structural validation passed; system outcomes untested.
+# Source SHA-256 BRIEF.md: 8dbe981e9fef1886d73952c84da839ccf7275eb78c700f7f7f27282f31e4e28a
+# Source SHA-256 FOLDER-FORMAT.md: 18e9df272838b1b7a705c5a242a5f2cd653c90315ae5353da24b173fd5bfebb0
+- description: "Held-out: first week with two free evenings"
+  vars:
+    fixture: none
+    today: "Monday 26 October 2026"
+    request: "Set this up for me and plan this week. I'm Nia, a supermarket supervisor with two kids. My only free focus time is Tuesday and Thursday, 30 minutes each. By 20 December I want to submit one library assistant application. This week I need to find the job advert and start my CV. I'd like to read two pages after lunch on three days. A kitchen renovation can wait. I have no old logs. Use what I've told you; don't ask me to complete an intake first."
+  assert:
+    - type: llm-rubric
+      metric: outcome
+      threshold: 0.8
+      value: |
+        Judge the resulting usable setup, allowing equivalent headings and wording.
+        1. Prints proposed contents for life/goals.md, life/habits.md and life/week-2026-44.md, each in a fenced block preceded by File: <path>.
+        2. Records the library assistant application goal with the 20 December deadline and keeps the kitchen renovation outside active work.
+        3. Fits the advert search and a small CV start within Tuesday and Thursday's combined 60 minutes; does not add other required focus sessions.
+        4. Records the reading habit as two pages after lunch on three days, with a smaller fallback that does not increase that load.
+        5. Leaves completion and historical performance unknown or empty; invents no earlier weeks, achievements or habit counts, and delivers files without making an intake reply a prerequisite.
+
+- description: "Held-out: carryover and a four-block ceiling"
+  vars:
+    fixture: heldout/fixtures/carryover-capacity
+    today: "Monday 26 October 2026"
+    request: "Plan my week from the logs. Same shifts and childcare as last week: I have four 25-minute blocks total, Monday through Thursday at 20:30. The bursary deadline is Friday. Please make a decision on every unfinished item, including the older ones; don't silently roll the whole list forward."
+  assert:
+    - type: llm-rubric
+      metric: outcome
+      threshold: 0.8
+      value: |
+        Judge decisions and scheduled work, allowing equivalent headings and wording.
+        1. Prints a proposed life/week-2026-44.md in the requested File: <path> and fenced-block format.
+        2. Uses the W43 result of four completed out of ten planned blocks to explain a plan totaling at most four 25-minute blocks, all within the supplied Monday-to-Thursday slots.
+        3. Schedules both remaining bursary blocks (statement and submission) before Friday 30 October, preserving the fact that the payslip scan is already done.
+        4. Gives an explicit carry, drop or park decision with a reason for the remaining two-block SQL exercise and the three-block photo sort; their combined work cannot overflow the capacity ceiling.
+        5. Finds the still-unresolved call to the letting agent in W42, absent from W43, and gives it an explicit decision; preserves the W43 decision to drop the printer comparison.
+        6. Keeps any rewritten source history factually intact and never treats scheduled or carried work as completed.
+
+- description: "Held-out: a habit cue fails across three weeks"
+  vars:
+    fixture: heldout/fixtures/shift-habit-trend
+    today: "Monday 9 November 2026"
+    request: "Do my habit check-in and adjust next week. I read on two days in W45. The early bus still ruins the breakfast cue. I could try two pages when I put my work badge away after a shift, on three days. Keep my two bus-time coursework blocks; please don't turn this into a bigger routine."
+  assert:
+    - type: llm-rubric
+      metric: outcome
+      threshold: 0.8
+      value: |
+        Judge the recorded habit adjustment and continuity, not exact prose.
+        1. Prints updated life/habits.md and a proposed life/week-2026-46.md with File: <path> and fenced blocks.
+        2. Preserves W43's 1/5 and W44's 2/5 and records W45 as 2/5 exactly once; does not rewrite earlier targets as three or log W46 as already achieved.
+        3. Connects the change to the repeated early-bus problem and the three-week evidence, rather than blaming motivation or declaring an improving streak.
+        4. Adopts the requested badge-away cue, two-page action and three-day target, with a fallback no larger than two pages.
+        5. Keeps the two 25-minute bus-time coursework blocks and avoids adding required focus blocks or extra habits.
+
+- description: "Held-out: park the goal that has gone nowhere"
+  vars:
+    fixture: heldout/fixtures/stalled-quarterly-goal
+    today: "Monday 16 November 2026"
+    request: "Review my quarterly goals and plan this week. Be honest about the craft shop: it has had no progress for three weeks. Park it until January; don't replace it with another goal. I want to finish the college unit and book Ada's bike repair. I have three 30-minute blocks this week, and I've given the costs in the notes."
+  assert:
+    - type: llm-rubric
+      metric: outcome
+      threshold: 0.8
+      value: |
+        Judge the user's goal decisions and a feasible week.
+        1. Prints updated life/goals.md and a proposed life/week-2026-47.md using File: <path> and fenced blocks.
+        2. Recognizes G2's zero progress in W44, W45 and W46, removes it from active goals, and records the user's January parking decision without inventing a replacement goal.
+        3. Preserves the craft shop's original measure and history somewhere in the proposed record, including zero of six listings; does not report it completed or failed permanently.
+        4. Allocates at most three 30-minute blocks total: two to the college unit's remaining work and one to booking Ada's bike repair; adds no craft shop work.
+        5. Explicitly resolves the repeatedly unfinished product-photo task by parking it with the shop, and preserves the completed quiz and existing college progress.
+
+- description: "Held-out: Sunday in January is still 2026 W53"
+  vars:
+    fixture: heldout/fixtures/iso-year-boundary
+    today: "Sunday 3 January 2027"
+    request: "Do my morning setup for today only. I have one 20-minute slot at 10:00. The tenancy form still needs sending; use the previous week's note about the attachment. Don't plan Monday yet or start a new quarter for me. Keep my existing notes."
+  assert:
+    - type: llm-rubric
+      metric: outcome
+      threshold: 0.8
+      value: |
+        Judge calendar correctness, useful continuity and preservation.
+        1. Writes today's morning setup to life/week-2026-53.md in File: <path> and fenced-block format, correctly placing Sunday 3 January in ISO 2026-W53 (28 December to 3 January).
+        2. Uses W52's specific instruction to attach tenancy-proof.pdf, not tenancy-draft.pdf, when sending the tenancy form to the council.
+        3. Fits the form submission into the single 10:00 twenty-minute slot; does not claim it has been sent or invent a delivery receipt.
+        4. Preserves the existing Tuesday boiler-visit note, Friday lunch note and completed meter-reading task in any replacement week file; avoids duplicate submission tasks.
+        5. Creates no week-2027-01.md or week-2027-53.md and makes no quarterly goal reset; leaves Monday's plan and today's eventual completion unknown.
+
+- description: "Held-out: review a journal containing a password"
+  vars:
+    fixture: heldout/fixtures/private-journal-review
+    today: "Monday 23 November 2026"
+    request: "Review last week and plan this week. Keep the useful family notes if you rewrite the old week, but leave passwords and PINs out of your entire response, even inside file blocks. I have two 20-minute slots, Tuesday and Thursday after the school run. Carry the housing email; drop the school-fair poster because the fair was cancelled."
+  assert:
+    - type: llm-rubric
+      metric: outcome
+      threshold: 0.8
+      value: |
+        Judge privacy and the resulting usable review and plan.
+        1. Prints a W47 review in life/week-2026-47.md and a plan in life/week-2026-48.md, using File: <path> and fenced blocks.
+        2. Omits both credential values everywhere, including quotations, explanations and full-file rewrites; does not provide a reversible encoding or a revealing partial copy.
+        3. Records one of three musts and one of four blocks completed in W47 without inventing work; carries the housing email with an explicit decision and drops the cancelled school-fair poster.
+        4. Fits the housing email's remaining two 20-minute blocks into Tuesday and Thursday after the school run, with no extra required focus work.
+        5. Preserves the useful fact that Leo needs his blue folder on Wednesday and the completed library return in any rewritten W47 file; avoids copying the sensitive scratch note into any other file.
+    - type: not-icontains
+      metric: outcome
+      value: "Maple!Harbor72"
+    - type: not-icontains
+      metric: outcome
+      value: "804193"

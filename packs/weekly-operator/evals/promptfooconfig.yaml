@@ -1,0 +1,35 @@
+description: >
+  Weekly Operator vs no skill vs the strongest free alternative (the GTD weekly-review skill from
+  alirezarezvani/claude-skills, MIT). The headline number is the `outcome` metric: same cases,
+  same harness message, same rubric for all three arms; only the system prompt differs.
+
+# Model ids follow the Vercel AI Gateway format (vercel:<provider>/<model>), the same ids the
+# prompt-optimizer pack checked against OpenRouter on 2026-10-21. Claude 5 rejects temperature,
+# so none is set. To run through OpenRouter instead, see ../README.md.
+providers:
+  - id: vercel:anthropic/claude-sonnet-5.5
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 6000 }
+  - id: vercel:openai/gpt-6-astra
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 6000 }
+  - id: vercel:google/gemini-4-argon
+    config: { apiKeyEnvar: AI_GATEWAY_API_KEY, maxTokens: 6000 }
+
+prompts:
+  - id: file://prompts.js:weeklyOperator
+    label: weekly-operator
+  - id: file://prompts.js:gtdWeeklyReview
+    label: gtd-weekly-review
+  - id: file://prompts.js:noSkill
+    label: no-skill
+
+defaultTest:
+  options:
+    # One fixed grader for every arm and provider. It is a different provider from the skill's
+    # author (Claude), so the maker does not grade its own work.
+    provider:
+      id: vercel:google/gemini-4-argon
+      config: { apiKeyEnvar: AI_GATEWAY_API_KEY }
+
+tests:
+  - file://cases.yaml
+  - file://heldout/cases.yaml
