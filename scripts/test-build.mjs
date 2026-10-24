@@ -198,6 +198,37 @@ async function runTests() {
   if (testOutput12b.title !== 'Issue #1') throw new Error("Test 12b failed: " + JSON.stringify(testOutput12b.title));
   fs.rmSync(path.join(promptsDir, 'test12b'), { recursive: true, force: true });
 
+  // 13. An apostrophe inside a plain scalar is not a quote
+  console.log("Test 13: Apostrophe in plain scalar");
+  writePattern('test13', baseValid.replace('title: "Test"', "title: What's new # note"));
+  runBuild();
+  const testOutput13 = JSON.parse(fs.readFileSync(path.join(distPromptsDir, 'test_id.json'), 'utf8'));
+  if (testOutput13.title !== "What's new") throw new Error("Test 13 failed: " + JSON.stringify(testOutput13.title));
+  fs.rmSync(path.join(promptsDir, 'test13'), { recursive: true, force: true });
+
+  // 14. Unterminated quoted array items are rejected
+  console.log("Test 14: Unterminated quote in array");
+  writePattern('test14', baseValid.replace('tags: [test, mock]', 'tags: ["test, mock]'));
+  errOutput = runBuild(false);
+  if (!errOutput.includes("Unterminated quoted item")) throw new Error("Test 14 failed: " + errOutput);
+  fs.rmSync(path.join(promptsDir, 'test14'), { recursive: true, force: true });
+
+  // 15. Nested eval / red_team / psyche fields are type-checked
+  console.log("Test 15: Nested field types");
+  const badNested = [
+    ['test_count: 0', 'test_count: garbage', 'eval.test_count'],
+    ['score: 0.0', 'score: high', 'eval.score'],
+    ['status: pending', 'status: maybe', 'red_team.status'],
+    ['applicable: false', 'applicable: "yes"', 'psyche.applicable'],
+    ['risk: low', 'risk: extreme', 'psyche.risk']
+  ];
+  for (const [from, to, field] of badNested) {
+    writePattern('test15', baseValid.replace(from, to));
+    errOutput = runBuild(false);
+    if (!errOutput.includes(`Field ${field} must be`)) throw new Error(`Test 15 failed for ${field}: ` + errOutput);
+    fs.rmSync(path.join(promptsDir, 'test15'), { recursive: true, force: true });
+  }
+
   teardownTestProject();
   console.log("All tests passed!");
 }
