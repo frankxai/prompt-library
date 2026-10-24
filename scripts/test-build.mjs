@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -26,7 +26,7 @@ function runBuild(expectSuccess = true) {
   try {
     // Run the build script with CWD set to our temp test project dir
     const scriptPath = path.resolve(process.cwd(), 'scripts/build-index.mjs');
-    execSync(`node ${scriptPath}`, { cwd: testProjectDir, stdio: 'pipe' });
+    execFileSync(process.execPath, [scriptPath], { cwd: testProjectDir, stdio: 'pipe' });
     if (!expectSuccess) throw new Error("Expected build to fail, but it succeeded.");
   } catch (err) {
     if (expectSuccess) {
@@ -83,7 +83,7 @@ async function runTests() {
 
   // 2. Type validation
   console.log("Test 2: Type validation");
-  writePattern('test2', baseValid.replace('version: "1.0.0"', 'version: 1.0.0'));
+  writePattern('test2', baseValid.replace('version: "1.0.0"', 'version: 1.0'));
   let errOutput = runBuild(false);
   if (!errOutput.includes("must be a string")) throw new Error("Test 2 failed.");
   fs.rmSync(path.join(promptsDir, 'test2'), { recursive: true, force: true });
