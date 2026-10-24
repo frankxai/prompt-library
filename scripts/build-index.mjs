@@ -245,7 +245,7 @@ function buildIndex() {
   }
 
   // Ensure deterministic output by sorting by ID
-  prompts.sort((a, b) => a.id.localeCompare(b.id));
+  prompts.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 
   // Write index.json
   const indexJson = JSON.stringify(prompts, null, 2);

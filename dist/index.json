@@ -306,6 +306,89 @@
     "path": "prompts/check_plagiarism/pattern.md"
   },
   {
+    "id": "claude-code_agentic_workflow_architecture",
+    "title": "Agentic Workflow Architecture",
+    "category": "create",
+    "tags": [
+      "agentic",
+      "workflow",
+      "automation",
+      "orchestration"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_agentic_workflow_architecture/pattern.md"
+  },
+  {
+    "id": "claude-code_claude_code_project_setup",
+    "title": "Claude Code Project Setup",
+    "category": "create",
+    "tags": [
+      "claude-code",
+      "configuration",
+      "setup",
+      "CLAUDE.md"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_claude_code_project_setup/pattern.md"
+  },
+  {
+    "id": "claude-code_claude_md_generator_for_any_project",
+    "title": "CLAUDE.md Generator for Any Project",
+    "category": "create",
+    "tags": [
+      "CLAUDE.md",
+      "claude-code",
+      "setup",
+      "configuration",
+      "ai-development"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_claude_md_generator_for_any_project/pattern.md"
+  },
+  {
+    "id": "claude-code_mcp_server_architecture",
+    "title": "MCP Server Architecture",
+    "category": "create",
+    "tags": [
+      "mcp",
+      "protocol",
+      "integration",
+      "server"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_mcp_server_architecture/pattern.md"
+  },
+  {
+    "id": "claude-code_multi_agent_orchestra_designer",
+    "title": "Multi-Agent Orchestra Designer",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "multi-agent",
+      "orchestration",
+      "agent-design",
+      "personal-ai",
+      "acos"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_multi_agent_orchestra_designer/pattern.md"
+  },
+  {
     "id": "claude_ai_coe_maturity_self_assessment",
     "title": "AI CoE Maturity Self-Assessment",
     "category": "create",
@@ -886,89 +969,6 @@
     ],
     "license": "original",
     "path": "prompts/claude_youtube_video_script_framework/pattern.md"
-  },
-  {
-    "id": "claude-code_agentic_workflow_architecture",
-    "title": "Agentic Workflow Architecture",
-    "category": "create",
-    "tags": [
-      "agentic",
-      "workflow",
-      "automation",
-      "orchestration"
-    ],
-    "model_targets": [
-      "cross-lab"
-    ],
-    "license": "original",
-    "path": "prompts/claude-code_agentic_workflow_architecture/pattern.md"
-  },
-  {
-    "id": "claude-code_claude_code_project_setup",
-    "title": "Claude Code Project Setup",
-    "category": "create",
-    "tags": [
-      "claude-code",
-      "configuration",
-      "setup",
-      "CLAUDE.md"
-    ],
-    "model_targets": [
-      "cross-lab"
-    ],
-    "license": "original",
-    "path": "prompts/claude-code_claude_code_project_setup/pattern.md"
-  },
-  {
-    "id": "claude-code_claude_md_generator_for_any_project",
-    "title": "CLAUDE.md Generator for Any Project",
-    "category": "create",
-    "tags": [
-      "CLAUDE.md",
-      "claude-code",
-      "setup",
-      "configuration",
-      "ai-development"
-    ],
-    "model_targets": [
-      "cross-lab"
-    ],
-    "license": "original",
-    "path": "prompts/claude-code_claude_md_generator_for_any_project/pattern.md"
-  },
-  {
-    "id": "claude-code_mcp_server_architecture",
-    "title": "MCP Server Architecture",
-    "category": "create",
-    "tags": [
-      "mcp",
-      "protocol",
-      "integration",
-      "server"
-    ],
-    "model_targets": [
-      "cross-lab"
-    ],
-    "license": "original",
-    "path": "prompts/claude-code_mcp_server_architecture/pattern.md"
-  },
-  {
-    "id": "claude-code_multi_agent_orchestra_designer",
-    "title": "Multi-Agent Orchestra Designer",
-    "category": "create",
-    "tags": [
-      "ai-coe",
-      "multi-agent",
-      "orchestration",
-      "agent-design",
-      "personal-ai",
-      "acos"
-    ],
-    "model_targets": [
-      "cross-lab"
-    ],
-    "license": "original",
-    "path": "prompts/claude-code_multi_agent_orchestra_designer/pattern.md"
   },
   {
     "id": "compare_and_contrast",
