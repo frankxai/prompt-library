@@ -24,7 +24,6 @@ red_team:
   notes: "Touches psyche/inner work but category is not introspect/profile — recommend reclassification."
   probes_run: 4
   probes_static: true
-  probes_static: true
 psyche:
   applicable: false
   boundary: n/a
