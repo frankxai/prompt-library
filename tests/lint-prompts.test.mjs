@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import { execFileSync } from 'child_process';
+import { after } from 'node:test';
 
 const linterPath = path.resolve('scripts/lint-prompts.mjs');
 
@@ -18,6 +19,10 @@ function runLinter(dir) {
 
 test('linter rules', async (t) => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-prompts-test-'));
+
+  after(() => {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  });
 
   await t.test('passes when all rules are met', () => {
     const passDir = path.join(tempDir, 'pass_case');
@@ -73,5 +78,42 @@ category: another
     const result = runLinter(failDir);
     assert.strictEqual(result.code, 1, 'Exit code should be exactly 1');
     assert.match(result.stderr, /Duplicate top-level key 'category'/);
+  });
+
+  await t.test('fails when duplicate top-level keys are quoted', () => {
+    const failDir = path.join(tempDir, 'fail_dupes_quoted');
+    fs.mkdirSync(failDir, { recursive: true });
+    const content = `---
+title: "Title"
+category: extract
+tags: [tag1]
+license: MIT
+provenance: fabric
+"title": "Duplicate quoted title"
+---
+# Content`;
+    fs.writeFileSync(path.join(failDir, 'pattern.md'), content);
+
+    const result = runLinter(failDir);
+    assert.strictEqual(result.code, 1, 'Exit code should be exactly 1');
+    assert.match(result.stderr, /Duplicate top-level key 'title'/);
+  });
+
+  await t.test('fails when frontmatter closing delimiter is malformed', () => {
+    const failDir = path.join(tempDir, 'fail_malformed');
+    fs.mkdirSync(failDir, { recursive: true });
+    const content = `---
+title: "Valid title"
+category: extract
+tags: [tag1, tag2]
+license: MIT
+provenance: fabric
+---garbage
+# Content`;
+    fs.writeFileSync(path.join(failDir, 'pattern.md'), content);
+
+    const result = runLinter(failDir);
+    assert.strictEqual(result.code, 1, 'Exit code should be exactly 1');
+    assert.match(result.stderr, /Missing or malformed frontmatter/);
   });
 });

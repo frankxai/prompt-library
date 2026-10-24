@@ -37,7 +37,7 @@ for (const file of files) {
   // (1) normalizes CRLF to LF before parsing
   content = content.replace(/\r\n/g, '\n');
 
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  const match = content.match(/^---\n([\s\S]*?)\n---(?=\n|$)/);
   if (!match) {
     offendingFiles.add(file);
     diagnostics.push(`${file}: Missing or malformed frontmatter`);
@@ -64,9 +64,9 @@ for (const file of files) {
   const lines = frontmatter.split('\n');
   const topKeys = new Set();
   for (const line of lines) {
-    const topKeyMatch = line.match(/^([A-Za-z0-9_-]+):/);
+    const topKeyMatch = line.match(/^(?:'([^']+)'|"([^"]+)"|([A-Za-z0-9_-]+)):/);
     if (topKeyMatch) {
-      const k = topKeyMatch[1];
+      const k = topKeyMatch[1] || topKeyMatch[2] || topKeyMatch[3];
       if (topKeys.has(k)) {
         fileHasError = true;
         diagnostics.push(`${file}: Duplicate top-level key '${k}'`);
