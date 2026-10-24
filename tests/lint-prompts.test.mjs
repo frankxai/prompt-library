@@ -149,10 +149,33 @@ test('quoted license key as direct child of provenance passes', () => {
   assert.equal(lint(fixture('quotedlic', fm), 'prompts').status, 0);
 });
 
-test('flow mapping provenance with a license passes; without one fails', () => {
+test('flow mappings on required keys are rejected, even with a license inside quotes (exit exactly 1)', () => {
   const base = ['title: T', 'category: c', 'tags: [a]'];
-  assert.equal(lint(fixture('flowok', [...base, 'provenance: {source: x, license: MIT}']), 'prompts').status, 0);
-  const r = lint(fixture('flowbad', [...base, 'provenance: {source: x}']), 'prompts');
+  for (const [name, value] of [
+    ['flowquoted', 'provenance: {source: "x, license: MIT"}'],
+    ['flowreal', 'provenance: {source: x, license: MIT}'],
+  ]) {
+    const r = lint(fixture(name, [...base, value]), 'prompts');
+    assert.equal(r.status, 1);
+    assert.match(r.stderr, /flow mappings are not supported for provenance, use block style/);
+  }
+});
+
+test('provenance block scalar text is not parsed as keys (exit exactly 1)', () => {
+  const fm = ['title: T', 'category: c', 'tags: [a]', 'provenance: |', '  license: MIT'];
+  const r = lint(fixture('provblock', fm), 'prompts');
   assert.equal(r.status, 1);
   assert.match(r.stderr, /missing required key: license/);
+});
+
+test('block scalar without content is empty (exit exactly 1)', () => {
+  const fm = ['title: |', 'category: c', 'tags: [a]', 'license: MIT', 'provenance:', '  source: x'];
+  const r = lint(fixture('emptyblock', fm), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /empty value for required key: title/);
+});
+
+test('block scalar with content counts as non-empty', () => {
+  const fm = ['title: >-', '  Folded title', 'category: c', 'tags: [a]', 'provenance:', '  license: MIT'];
+  assert.equal(lint(fixture('fullblock', fm), 'prompts').status, 0);
 });

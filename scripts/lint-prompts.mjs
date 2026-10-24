@@ -52,12 +52,9 @@ function isEmptyValue(raw) {
   return v === '' || v === '""' || v === "''" || v === '~' || /^null$/i.test(v);
 }
 
-// Direct-child license key inside a flow mapping such as "{source: x, license: MIT}".
-function flowHasLicense(raw) {
-  const v = stripComment(raw).trim();
-  if (!v.startsWith('{') || !v.endsWith('}')) return false;
-  const m = /(?:^\{|,)\s*(?:"license"|'license'|license)\s*:\s*([^,}]*)/.exec(v);
-  return Boolean(m) && !isEmptyValue(m[1]);
+// YAML block scalar indicator: | or > with optional chomping (+/-) and indentation digit.
+function isBlockScalarIndicator(raw) {
+  return /^[|>](?:[+-]\d?|\d[+-]?)?$/.test(stripComment(raw).trim());
 }
 
 export function lintContent(rawText) {
@@ -74,13 +71,25 @@ export function lintContent(rawText) {
   let childIndent = null; // indentation of direct children of the current top-level key
   for (let i = 1; i < end; i++) {
     const line = lines[i];
-    if (line.trim() === '' || line.trim().startsWith('#')) continue;
+    if (line.trim() === '') continue;
+    const active = last !== null ? entries.get(last) : null;
+    if (active && active.blockScalar && /^\s/.test(line)) {
+      active.hasBlock = true; // block scalar text, never parsed as keys
+      continue;
+    }
+    if (line.trim().startsWith('#')) continue;
     const m = splitKey(line);
     if (m) {
       const key = m.key;
-      if (entries.has(key)) problems.push(`duplicate frontmatter key: ${key} (line ${i + 1})`);
-      else entries.set(key, { inline: !isEmptyValue(m.rest), hasBlock: false });
-      if (key === 'provenance' && flowHasLicense(m.rest)) provenanceLicense = true;
+      if (entries.has(key)) {
+        problems.push(`duplicate frontmatter key: ${key} (line ${i + 1})`);
+      } else {
+        const blockScalar = isBlockScalarIndicator(m.rest);
+        entries.set(key, { inline: !blockScalar && !isEmptyValue(m.rest), hasBlock: false, blockScalar });
+        if (REQUIRED_KEYS.includes(key) && stripComment(m.rest).trim().startsWith('{')) {
+          problems.push(`flow mappings are not supported for ${key}, use block style`);
+        }
+      }
       last = key;
       childIndent = null;
     } else if (/^\s+\S/.test(line) && last && entries.has(last)) {
@@ -101,7 +110,7 @@ export function lintContent(rawText) {
     if (!e) {
       if (key === 'license' && provenanceLicense) continue;
       problems.push(`missing required key: ${key}`);
-    } else if (!e.inline && !(key === 'provenance' && e.hasBlock)) {
+    } else if (!(e.blockScalar ? e.hasBlock : e.inline || (key === 'provenance' && e.hasBlock))) {
       problems.push(`empty value for required key: ${key}`);
     }
   }
