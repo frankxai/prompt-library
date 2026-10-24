@@ -14,8 +14,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const REQUIRED_KEYS = ['title', 'category', 'tags', 'license', 'provenance'];
-const TOP_KEY = /^("[^"]*"|'[^']*'|[A-Za-z0-9_-]+):(.*)$/;
-
 // Remove a trailing YAML comment (a # at the start or preceded by whitespace, outside quotes).
 function stripComment(value) {
   let quote = null;
@@ -32,8 +30,34 @@ function stripComment(value) {
   return value;
 }
 
-function unquoteKey(key) {
-  return /^(".*"|'.*')$/.test(key) ? key.slice(1, -1) : key;
+// Split "key: rest" at column 0. Keys may be quoted or contain dots/spaces; the key ends at the
+// first ':' followed by a space or end of line (outside quotes). Returns null for other lines.
+function splitKey(line) {
+  if (/^\s/.test(line) || line.startsWith('#') || line.startsWith('- ')) return null;
+  const q = line[0];
+  if (q === '"' || q === "'") {
+    const close = line.indexOf(q, 1);
+    if (close > 0 && line[close + 1] === ':' && (line.length === close + 2 || /\s/.test(line[close + 2]))) {
+      return { key: line.slice(1, close), rest: line.slice(close + 2) };
+    }
+    return null;
+  }
+  const m = /^(.*?):(?:\s(.*))?$/.exec(line);
+  return m ? { key: m[1].trim(), rest: m[2] ?? '' } : null;
+}
+
+// YAML treats these as empty: nothing, "", '', null, ~ (after comment removal).
+function isEmptyValue(raw) {
+  const v = stripComment(raw).trim();
+  return v === '' || v === '""' || v === "''" || v === '~' || /^null$/i.test(v);
+}
+
+// Direct-child license key inside a flow mapping such as "{source: x, license: MIT}".
+function flowHasLicense(raw) {
+  const v = stripComment(raw).trim();
+  if (!v.startsWith('{') || !v.endsWith('}')) return false;
+  const m = /(?:^\{|,)\s*(?:"license"|'license'|license)\s*:\s*([^,}]*)/.exec(v);
+  return Boolean(m) && !isEmptyValue(m[1]);
 }
 
 export function lintContent(rawText) {
@@ -50,22 +74,25 @@ export function lintContent(rawText) {
   let childIndent = null; // indentation of direct children of the current top-level key
   for (let i = 1; i < end; i++) {
     const line = lines[i];
-    const m = TOP_KEY.exec(line);
+    if (line.trim() === '' || line.trim().startsWith('#')) continue;
+    const m = splitKey(line);
     if (m) {
-      const key = unquoteKey(m[1]);
+      const key = m.key;
       if (entries.has(key)) problems.push(`duplicate frontmatter key: ${key} (line ${i + 1})`);
-      else entries.set(key, { inline: stripComment(m[2]).trim() !== '', hasBlock: false });
+      else entries.set(key, { inline: !isEmptyValue(m.rest), hasBlock: false });
+      if (key === 'provenance' && flowHasLicense(m.rest)) provenanceLicense = true;
       last = key;
       childIndent = null;
     } else if (/^\s+\S/.test(line) && last && entries.has(last)) {
-      if (line.trim().startsWith('#')) continue;
       entries.get(last).hasBlock = true;
       if (last === 'provenance') {
         const indent = line.length - line.trimStart().length;
         if (childIndent === null) childIndent = indent;
-        const lm = /^\s+license:(.*)$/.exec(line);
-        if (indent === childIndent && lm && stripComment(lm[1]).trim() !== '') provenanceLicense = true;
+        const lm = /^\s+(?:"license"|'license'|license):(?:\s(.*))?$/.exec(line);
+        if (indent === childIndent && lm && !isEmptyValue(lm[1] ?? '')) provenanceLicense = true;
       }
+    } else {
+      problems.push(`unsupported frontmatter line ${i + 1}: ${line.trim()}`);
     }
   }
 

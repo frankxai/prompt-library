@@ -119,3 +119,40 @@ test('quoted required key still satisfies the required-key check', () => {
   const r = lint(fixture('quotedok', ['"title": T', ...GOOD.slice(1)]), 'prompts');
   assert.equal(r.status, 0);
 });
+
+test('duplicate dotted or spaced keys are detected (exit exactly 1)', () => {
+  const r = lint(fixture('dotdup', [...GOOD, 'custom.field: a', 'custom.field: b']), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /duplicate frontmatter key: custom\.field/);
+  const r2 = lint(fixture('spacedup', [...GOOD, 'my key: a', 'my key: b']), 'prompts');
+  assert.equal(r2.status, 1);
+  assert.match(r2.stderr, /duplicate frontmatter key: my key/);
+});
+
+for (const [name, value] of [['dq', '""'], ['sq', "''"], ['null', 'null'], ['tilde', '~']]) {
+  test(`title: ${value} counts as empty (exit exactly 1)`, () => {
+    const r = lint(fixture(`emptyval-${name}`, [`title: ${value}`, ...GOOD.slice(1)]), 'prompts');
+    assert.equal(r.status, 1);
+    assert.match(r.stderr, /empty value for required key: title/);
+  });
+}
+
+test('license: null under provenance does not satisfy license (exit exactly 1)', () => {
+  const fm = ['title: T', 'category: c', 'tags: [a]', 'provenance:', '  license: null'];
+  const r = lint(fixture('nulllic', fm), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /missing required key: license/);
+});
+
+test('quoted license key as direct child of provenance passes', () => {
+  const fm = ['title: T', 'category: c', 'tags: [a]', 'provenance:', '  source: x', '  "license": MIT'];
+  assert.equal(lint(fixture('quotedlic', fm), 'prompts').status, 0);
+});
+
+test('flow mapping provenance with a license passes; without one fails', () => {
+  const base = ['title: T', 'category: c', 'tags: [a]'];
+  assert.equal(lint(fixture('flowok', [...base, 'provenance: {source: x, license: MIT}']), 'prompts').status, 0);
+  const r = lint(fixture('flowbad', [...base, 'provenance: {source: x}']), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /missing required key: license/);
+});
