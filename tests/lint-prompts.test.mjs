@@ -89,3 +89,33 @@ test('missing target directory exits exactly 1', () => {
   assert.equal(r.status, 1);
   assert.match(r.stderr, /target directory not found/);
 });
+
+test('comment-only value counts as empty (exit exactly 1)', () => {
+  const fm = ['title: # TODO', 'category: c', 'tags: [a]', 'license: MIT', 'provenance:', '  source: x'];
+  const r = lint(fixture('comment', fm), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /prompts\/p1\/pattern\.md: empty value for required key: title/);
+});
+
+test('hash inside a quoted value is not a comment', () => {
+  const r = lint(fixture('hashquote', ['title: "Issue #1"', ...GOOD.slice(1)]), 'prompts');
+  assert.equal(r.status, 0);
+});
+
+test('license nested under another provenance key does not count (exit exactly 1)', () => {
+  const fm = ['title: T', 'category: c', 'tags: [a]', 'provenance:', '  source:', '    license: MIT'];
+  const r = lint(fixture('nestedlic', fm), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /prompts\/p1\/pattern\.md: missing required key: license/);
+});
+
+test('quoted key duplicates an unquoted key (exit exactly 1)', () => {
+  const r = lint(fixture('quoteddup', [...GOOD, '"title": Again']), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /prompts\/p1\/pattern\.md: duplicate frontmatter key: title/);
+});
+
+test('quoted required key still satisfies the required-key check', () => {
+  const r = lint(fixture('quotedok', ['"title": T', ...GOOD.slice(1)]), 'prompts');
+  assert.equal(r.status, 0);
+});

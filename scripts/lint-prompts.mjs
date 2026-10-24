@@ -14,7 +14,27 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const REQUIRED_KEYS = ['title', 'category', 'tags', 'license', 'provenance'];
-const TOP_KEY = /^([A-Za-z0-9_-]+):(.*)$/;
+const TOP_KEY = /^("[^"]*"|'[^']*'|[A-Za-z0-9_-]+):(.*)$/;
+
+// Remove a trailing YAML comment (a # at the start or preceded by whitespace, outside quotes).
+function stripComment(value) {
+  let quote = null;
+  for (let i = 0; i < value.length; i++) {
+    const c = value[i];
+    if (quote) {
+      if (c === quote) quote = null;
+    } else if (c === '"' || c === "'") {
+      quote = c;
+    } else if (c === '#' && (i === 0 || /\s/.test(value[i - 1]))) {
+      return value.slice(0, i);
+    }
+  }
+  return value;
+}
+
+function unquoteKey(key) {
+  return /^(".*"|'.*')$/.test(key) ? key.slice(1, -1) : key;
+}
 
 export function lintContent(rawText) {
   const text = rawText.replace(/\r\n/g, '\n').replace(/^﻿/, '');
@@ -27,17 +47,25 @@ export function lintContent(rawText) {
   const entries = new Map(); // key -> { inline, hasBlock }
   let last = null;
   let provenanceLicense = false;
+  let childIndent = null; // indentation of direct children of the current top-level key
   for (let i = 1; i < end; i++) {
     const line = lines[i];
     const m = TOP_KEY.exec(line);
     if (m) {
-      const key = m[1];
+      const key = unquoteKey(m[1]);
       if (entries.has(key)) problems.push(`duplicate frontmatter key: ${key} (line ${i + 1})`);
-      else entries.set(key, { inline: m[2].trim() !== '', hasBlock: false });
+      else entries.set(key, { inline: stripComment(m[2]).trim() !== '', hasBlock: false });
       last = key;
+      childIndent = null;
     } else if (/^\s+\S/.test(line) && last && entries.has(last)) {
-      if (!line.trim().startsWith('#')) entries.get(last).hasBlock = true;
-      if (last === 'provenance' && /^\s+license:\s*\S/.test(line)) provenanceLicense = true;
+      if (line.trim().startsWith('#')) continue;
+      entries.get(last).hasBlock = true;
+      if (last === 'provenance') {
+        const indent = line.length - line.trimStart().length;
+        if (childIndent === null) childIndent = indent;
+        const lm = /^\s+license:(.*)$/.exec(line);
+        if (indent === childIndent && lm && stripComment(lm[1]).trim() !== '') provenanceLicense = true;
+      }
     }
   }
 
