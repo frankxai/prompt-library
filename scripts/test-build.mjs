@@ -153,6 +153,28 @@ async function runTests() {
   if (!errOutput.includes("Unsupported array syntax")) throw new Error("Test 7c failed.");
   fs.rmSync(path.join(promptsDir, 'test7c'), { recursive: true, force: true });
 
+  // 8. Block scalars are rejected with a clear error
+  console.log("Test 8: Block scalars rejected");
+  writePattern('test8', baseValid.replace('title: "Test"', 'title: >\n  folded text'));
+  errOutput = runBuild(false);
+  if (!errOutput.includes("block scalars") || !errOutput.includes("title")) throw new Error("Test 8 failed: " + errOutput);
+  fs.rmSync(path.join(promptsDir, 'test8'), { recursive: true, force: true });
+
+  // 9. Escapes decode in a single pass ("C:\\new" is C:\new, not C:<newline>ew)
+  console.log("Test 9: Single-pass escape decoding");
+  writePattern('test9', baseValid.replace('title: "Test"', 'title: "C:\\\\new"'));
+  runBuild();
+  const testOutput9 = JSON.parse(fs.readFileSync(path.join(distPromptsDir, 'test_id.json'), 'utf8'));
+  if (testOutput9.title !== 'C:\\new') throw new Error("Test 9 failed: " + JSON.stringify(testOutput9.title));
+  fs.rmSync(path.join(promptsDir, 'test9'), { recursive: true, force: true });
+
+  // 10. Non-string array items are rejected
+  console.log("Test 10: Non-string tags rejected");
+  writePattern('test10', baseValid.replace('tags: [test, mock]', 'tags: [123, true]'));
+  errOutput = runBuild(false);
+  if (!errOutput.includes("tags must be an array of strings")) throw new Error("Test 10 failed: " + errOutput);
+  fs.rmSync(path.join(promptsDir, 'test10'), { recursive: true, force: true });
+
   teardownTestProject();
   console.log("All tests passed!");
 }

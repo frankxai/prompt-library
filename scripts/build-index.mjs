@@ -27,6 +27,7 @@ function parseFrontmatter(content, filepath) {
       const nestedMatch = line.match(/^  ([a-zA-Z0-9_]+):\s*(.*)$/);
       if (nestedMatch) {
         let val = nestedMatch[2].trim();
+        rejectBlockScalar(val, `${currentKey}.${nestedMatch[1]}`, filepath);
         val = parseValue(val);
         currentDict[nestedMatch[1]] = val;
       }
@@ -36,6 +37,7 @@ function parseFrontmatter(content, filepath) {
       if (topMatch) {
         currentKey = topMatch[1];
         let val = topMatch[2].trim();
+        rejectBlockScalar(val, currentKey, filepath);
 
         if (val === '') {
           // It's a dictionary starting
@@ -122,13 +124,31 @@ function parseFrontmatter(content, filepath) {
   return data;
 }
 
+function rejectBlockScalar(val, key, filepath) {
+  if (/^[>|][+-]?[0-9]?$/.test(val)) {
+    throw new Error(`[${filepath}] Field ${key}: block scalars (${val}) are not supported; use a quoted single-line string.`);
+  }
+}
+
+const ESCAPES = { n: '\n', t: '\t', r: '\r', '"': '"', '\\': '\\', '/': '/' };
+function decodeDoubleQuoted(str) {
+  // Single left-to-right pass so "C:\\new" stays a backslash followed by "new".
+  return str.replace(/\\(.)/g, (m, c) => (Object.prototype.hasOwnProperty.call(ESCAPES, c) ? ESCAPES[c] : m));
+}
+
+function parseScalar(val) {
+  if (val === 'true') return true;
+  if (val === 'false') return false;
+  if (!isNaN(val) && val !== '') return Number(val);
+  return val;
+}
+
 function parseValue(val) {
   // Check if it's quoted, if so, return as string (with escapes decoded if needed)
   if (val.startsWith('"') && val.endsWith('"')) {
     let unquoted = val.slice(1, -1);
     // decode standard YAML escapes like \n, \"
-    unquoted = unquoted.replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-    return unquoted;
+    return decodeDoubleQuoted(unquoted);
   }
   if (val.startsWith("'") && val.endsWith("'")) {
     let unquoted = val.slice(1, -1);
@@ -170,9 +190,9 @@ function parseValue(val) {
       if (s.includes('[') || s.includes(']')) {
         throw new Error("Unsupported array syntax or nested arrays: " + val);
       }
-      if (s.startsWith('"') && s.endsWith('"')) return s.slice(1, -1).replace(/\\"/g, '"');
+      if (s.startsWith('"') && s.endsWith('"')) return decodeDoubleQuoted(s.slice(1, -1));
       if (s.startsWith("'") && s.endsWith("'")) return s.slice(1, -1).replace(/''/g, "'");
-      return s;
+      return parseScalar(s);
     });
   }
 
