@@ -175,6 +175,29 @@ async function runTests() {
   if (!errOutput.includes("tags must be an array of strings")) throw new Error("Test 10 failed: " + errOutput);
   fs.rmSync(path.join(promptsDir, 'test10'), { recursive: true, force: true });
 
+  // 11. Backslash parity in quoted array items: "C:\\" closes the quote
+  console.log("Test 11: Backslash parity in array quotes");
+  writePattern('test11', baseValid.replace('tags: [test, mock]', 'tags: ["C:\\\\", mock]'));
+  runBuild();
+  const testOutput11 = JSON.parse(fs.readFileSync(path.join(distPromptsDir, 'test_id.json'), 'utf8'));
+  if (JSON.stringify(testOutput11.tags) !== JSON.stringify(['C:\\', 'mock'])) throw new Error("Test 11 failed: " + JSON.stringify(testOutput11.tags));
+  fs.rmSync(path.join(promptsDir, 'test11'), { recursive: true, force: true });
+
+  // 12. Trailing comments are not exported as metadata
+  console.log("Test 12: Inline comments stripped");
+  writePattern('test12', baseValid.replace('title: "Test"', 'title: "Test" # note'));
+  runBuild();
+  const testOutput12 = JSON.parse(fs.readFileSync(path.join(distPromptsDir, 'test_id.json'), 'utf8'));
+  if (testOutput12.title !== 'Test') throw new Error("Test 12 failed: " + JSON.stringify(testOutput12.title));
+  fs.rmSync(path.join(promptsDir, 'test12'), { recursive: true, force: true });
+
+  // 12b. A # inside quotes is kept
+  writePattern('test12b', baseValid.replace('title: "Test"', 'title: "Issue #1" # note'));
+  runBuild();
+  const testOutput12b = JSON.parse(fs.readFileSync(path.join(distPromptsDir, 'test_id.json'), 'utf8'));
+  if (testOutput12b.title !== 'Issue #1') throw new Error("Test 12b failed: " + JSON.stringify(testOutput12b.title));
+  fs.rmSync(path.join(promptsDir, 'test12b'), { recursive: true, force: true });
+
   teardownTestProject();
   console.log("All tests passed!");
 }
