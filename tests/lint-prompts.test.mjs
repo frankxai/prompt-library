@@ -3,13 +3,13 @@ import assert from 'node:assert';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 
 const linterPath = path.resolve('scripts/lint-prompts.mjs');
 
 function runLinter(dir) {
   try {
-    const output = execSync(`node ${linterPath} ${dir}`, { encoding: 'utf8', stdio: 'pipe' });
+    const output = execFileSync(process.execPath, [linterPath, dir], { encoding: 'utf8', stdio: 'pipe' });
     return { code: 0, stdout: output, stderr: '' };
   } catch (error) {
     return { code: error.status, stdout: error.stdout, stderr: error.stderr };
@@ -26,7 +26,7 @@ test('linter rules', async (t) => {
 title: "Valid title"
 category: extract
 tags: [tag1, tag2]
-  license: MIT
+license: MIT
 provenance: fabric
 ---
 # Content`;
@@ -63,7 +63,7 @@ tags:
 title: "Title"
 category: extract
 tags: [tag1]
-  license: MIT
+license: MIT
 provenance: fabric
 category: another
 ---

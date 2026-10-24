@@ -20,7 +20,13 @@ let searchDir = path.join(process.cwd(), 'prompts');
 if (args.length > 0) {
   searchDir = path.resolve(args[0]);
 }
-const files = fs.existsSync(searchDir) ? findFiles(searchDir) : [];
+
+if (!fs.existsSync(searchDir)) {
+  console.error(`Directory not found: ${searchDir}`);
+  process.exit(1);
+}
+
+const files = findFiles(searchDir);
 
 let hasErrors = false;
 const offendingFiles = new Set();
@@ -45,8 +51,9 @@ for (const file of files) {
   // (2) requires the frontmatter keys title, category, tags, license, provenance to be present and non-empty on the same line
   const requiredKeys = ['title', 'category', 'tags', 'license', 'provenance'];
   for (const key of requiredKeys) {
-    // using [ \t]* to avoid matching newlines in \s
-    const regex = new RegExp(`^[ \t]*${key}:[ \t]*\\S.*$`, 'm');
+    // using ^${key}: to strictly match start of line (no indentation).
+    // using (?!#) to reject comment-only values.
+    const regex = new RegExp(`^${key}:[ \\t]*(?!#)\\S.*$`, 'm');
     if (!regex.test(frontmatter)) {
       fileHasError = true;
       diagnostics.push(`${file}: Missing required key '${key}' or it is empty on the same line`);
