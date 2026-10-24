@@ -20,7 +20,8 @@ A pattern PR is accepted when ALL of these are true:
 - [ ] If `lane: gemini`, pattern places system prompt at top (Gemini doctrine).
 - [ ] If `lane: oss`, pattern documents required chat template.
 - [ ] If `category: introspect` or `profile`, the pattern includes the boundary disclosure + crisis routing.
-- [ ] CI passes: schema validation, promptfoo evals, brand-voice gate, attribution check.
+- [ ] CI enforces: attribution + license check on new patterns.
+- [ ] Reviewers check: schema shape, brand-voice phrases, promptfoo results when available.
 
 ## Step-by-step
 
@@ -133,11 +134,11 @@ Maintainer merges. `@prompt-librarian` may auto-route into rankings.
 
 When you open a PR that touches `prompts/**`, GitHub Actions runs the [`eval-on-pr`](./.github/workflows/eval-on-pr.yaml) workflow:
 
-- **Schema validation** — every changed `pattern.md` is checked for a valid frontmatter shape against `prompt-engine/schema/pattern.schema.json`.
+- **Schema validation** — currently only lists changed `pattern.md` files and exits 0. Frontmatter validation against `prompt-engine/schema/pattern.schema.json` is planned but not yet wired (see the `TODO` in the workflow).
 - **Attribution check** — every *new* pattern must declare `provenance.attribution` and `provenance.license`. PRs that strip attribution fail this gate.
 - **Optional `promptfoo` run** — runs only when a maintainer has configured `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` as repo secrets. Forks and external contributors get a green check without burning maintainer API credit; maintainers can re-run the workflow with secrets attached when they want a live signal.
 
-The PR is mergeable when schema + attribution checks pass. `promptfoo` is informational — it does not block the merge.
+The PR is mergeable when the attribution/license check on newly added patterns passes. `promptfoo` is informational — it does not block the merge.
 
 ## Questions?
 
