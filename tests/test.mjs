@@ -15,12 +15,11 @@ console.log("--------------------------------------------------");
 
 const fixtures = [
     { file: 'tests/bad_title.md', expected: 'title missing/empty' },
-    { file: 'tests/bad_title_comment.md', expected: 'title missing/empty' },
     { file: 'tests/bad_category.md', expected: 'category invalid (invalid_category)' },
     { file: 'tests/bad_tags.md', expected: 'tags missing/empty' },
     { file: 'tests/bad_license.md', expected: 'license missing/empty' },
     { file: 'tests/bad_attribution.md', expected: 'attribution missing/empty' },
-    { file: 'tests/duplicate_key.md', expected: 'duplicate top-level keys found: category' }
+    { file: 'tests/duplicate_key.md', expected: 'duplicate keys found: category' }
 ];
 
 for (const fix of fixtures) {

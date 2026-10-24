@@ -19,23 +19,52 @@ function getFrontmatter(filePath) {
 
             const lines = yamlStr.split('\n');
             const seenKeys = new Set();
+            let currentParent = null;
+
             for (const line of lines) {
-                const keyMatch = line.match(/^([a-zA-Z0-9_]+):/);
+                // Determine indentation
+                const indentMatch = line.match(/^([ \t]*)/);
+                const indent = indentMatch ? indentMatch[1].length : 0;
+
+                const keyMatch = line.match(/^[ \t]*([a-zA-Z0-9_]+):/);
                 if (keyMatch) {
                     const key = keyMatch[1];
-                    if (seenKeys.has(key)) {
-                        result.__DUPLICATES.push(key);
+
+                    if (indent === 0) {
+                         currentParent = key;
+                         if (seenKeys.has(key)) {
+                             result.__DUPLICATES.push(key);
+                         }
+                         seenKeys.add(key);
+                    } else {
+                         // Nested key
+                         const fullKey = currentParent ? `${currentParent}.${key}` : key;
+                         if (seenKeys.has(fullKey)) {
+                             result.__DUPLICATES.push(fullKey);
+                         }
+                         seenKeys.add(fullKey);
                     }
-                    seenKeys.add(key);
+                } else if (indent === 0 && line.trim() !== '') {
+                     currentParent = null; // reset parent if we see something else at root that's not a key
                 }
             }
 
             const getField = (name) => {
-                const regex = new RegExp(`^${name}:[ \t]*(.*?)(?:[ \t]+#.*)?$`, 'm');
+                const regex = new RegExp(`^${name}:[ \t]*(.*?)[ \t]*(?:#.*)?$`, 'm');
                 const m = yamlStr.match(regex);
                 if (!m) return null;
 
                 let val = m[1].trim();
+                // Special case where the entire value was a comment and we matched an empty group before it
+                if (val === '') {
+                     // Need to double check if the original matched group contained the #
+                     // JavaScript regex doesn't support positive lookbehinds in all environments, so we do it manually
+                     const lineMatch = yamlStr.match(new RegExp(`^${name}:[ \t]*(.*)$`, 'm'));
+                     if (lineMatch && lineMatch[1].trim().startsWith('#')) {
+                         return null;
+                     }
+                }
+
                 if (val === '~' || val === 'null' || val === '""' || val === "''" || val === '') {
                     return null;
                 }
@@ -49,12 +78,18 @@ function getFrontmatter(filePath) {
                 const parentMatch = yamlStr.match(parentRegex);
                 if (!parentMatch) return null;
 
-                // Allow spaces or comments after the value, and do not strictly require \n
-                const childRegex = new RegExp(`^[ \t]+${parts[1]}:[ \t]*(.*?)(?:[ \t]+#.*)?(?:\n|$)`, 'm');
+                const childRegex = new RegExp(`^[ \t]+${parts[1]}:[ \t]*(.*?)[ \t]*(?:#.*)?(?:\n|$)`, 'm');
                 const childMatch = parentMatch[0].match(childRegex);
                 if (!childMatch) return null;
 
                 let val = childMatch[1].trim();
+                if (val === '') {
+                     const lineMatch = parentMatch[0].match(new RegExp(`^[ \t]+${parts[1]}:[ \t]*(.*)$`, 'm'));
+                     if (lineMatch && lineMatch[1].trim().startsWith('#')) {
+                         return null;
+                     }
+                }
+
                 if (val === '~' || val === 'null' || val === '""' || val === "''" || val === '') {
                     return null;
                 }
@@ -134,7 +169,7 @@ function checkFiles(directories) {
 
                  if (fm.__DUPLICATES && fm.__DUPLICATES.length > 0) {
                      issue = true;
-                     reasons.push(`duplicate top-level keys found: ${fm.__DUPLICATES.join(', ')}`);
+                     reasons.push(`duplicate keys found: ${fm.__DUPLICATES.join(', ')}`);
                  }
 
                  const checkEmpty = (val) => {
