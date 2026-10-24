@@ -149,16 +149,43 @@ test('quoted license key as direct child of provenance passes', () => {
   assert.equal(lint(fixture('quotedlic', fm), 'prompts').status, 0);
 });
 
-test('flow mappings on required keys are rejected, even with a license inside quotes (exit exactly 1)', () => {
+test('flow mapping provenance with a real license passes', () => {
   const base = ['title: T', 'category: c', 'tags: [a]'];
-  for (const [name, value] of [
-    ['flowquoted', 'provenance: {source: "x, license: MIT"}'],
-    ['flowreal', 'provenance: {source: x, license: MIT}'],
-  ]) {
-    const r = lint(fixture(name, [...base, value]), 'prompts');
-    assert.equal(r.status, 1);
-    assert.match(r.stderr, /flow mappings are not supported for provenance, use block style/);
-  }
+  assert.equal(lint(fixture('flowok', [...base, 'provenance: {source: x, license: MIT}']), 'prompts').status, 0);
+});
+
+test('license text inside a quoted flow value does not count (exit exactly 1)', () => {
+  const base = ['title: T', 'category: c', 'tags: [a]'];
+  const r = lint(fixture('flowquoted', [...base, 'provenance: {source: "x, license: MIT"}']), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /missing required key: license/);
+});
+
+test('nested license with an empty block scalar does not count (exit exactly 1)', () => {
+  const fm = ['title: T', 'category: c', 'tags: [a]', 'provenance:', '  source: x', '  license: |'];
+  const r = lint(fixture('nestedblock', fm), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /missing required key: license/);
+});
+
+test('top-level license: null is empty (exit exactly 1)', () => {
+  const fm = ['title: T', 'category: c', 'tags: [a]', 'license: null', 'provenance:', '  source: x'];
+  const r = lint(fixture('toplevelnull', fm), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /empty value for required key: license/);
+});
+
+test('empty tags array is empty (exit exactly 1)', () => {
+  const fm = ['title: T', 'category: c', 'tags: []', 'license: MIT', 'provenance:', '  source: x'];
+  const r = lint(fixture('emptytags', fm), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /empty value for required key: tags/);
+});
+
+test('invalid YAML (unterminated quote) is reported with exit exactly 1', () => {
+  const r = lint(fixture('badyaml', ['title: "T', ...GOOD.slice(1)]), 'prompts');
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /prompts\/p1\/pattern\.md: invalid YAML frontmatter/);
 });
 
 test('provenance block scalar text is not parsed as keys (exit exactly 1)', () => {

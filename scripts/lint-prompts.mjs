@@ -1,60 +1,41 @@
 #!/usr/bin/env node
-// Prompt frontmatter linter. No dependencies.
+// Prompt frontmatter linter. Depends only on the `yaml` package (see package.json).
 // Usage: node scripts/lint-prompts.mjs [promptsDir]   (default: ./prompts)
 // Rules:
 //   1. CRLF is normalized to LF before parsing.
-//   2. title, category, tags, license, provenance must be present and non-empty.
-//      "Non-empty" means a value on the same line as the key, or (for the block
-//      mapping `provenance:`) at least one indented line directly under it.
-//      A key followed straight away by another key (or the closing ---) is empty.
-//      `license` is accepted as a top-level key or as `provenance.license`.
-//   3. Duplicate top-level keys are rejected.
+//   2. title, category, tags, license, provenance must be present and non-empty on the parsed
+//      values: not null, not a blank string, and not an empty array/mapping. `license` is
+//      accepted as a top-level key or as `provenance.license` (a direct child of the mapping).
+//   3. Duplicate keys are rejected (the parser runs with uniqueKeys); any other YAML error is reported.
+//   4. Every offending file is listed with its relative path and reason.
 // Exit 0 when clean, 1 on any violation or if the target directory is missing.
 import fs from 'node:fs';
 import path from 'node:path';
+import YAML from 'yaml';
 
 const REQUIRED_KEYS = ['title', 'category', 'tags', 'license', 'provenance'];
-// Remove a trailing YAML comment (a # at the start or preceded by whitespace, outside quotes).
-function stripComment(value) {
-  let quote = null;
-  for (let i = 0; i < value.length; i++) {
-    const c = value[i];
-    if (quote) {
-      if (c === quote) quote = null;
-    } else if (c === '"' || c === "'") {
-      quote = c;
-    } else if (c === '#' && (i === 0 || /\s/.test(value[i - 1]))) {
-      return value.slice(0, i);
-    }
+
+function isEmpty(value) {
+  if (value === null || value === undefined) return true;
+  if (typeof value === 'string') return value.trim() === '';
+  if (Array.isArray(value)) return value.length === 0;
+  if (typeof value === 'object') return Object.keys(value).length === 0;
+  return false;
+}
+
+function isPlainObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function describeYamlError(err, yamlText) {
+  if (err.code === 'DUPLICATE_KEY' && err.linePos?.[0]) {
+    const lineNo = err.linePos[0].line;
+    const line = yamlText.split('\n')[lineNo - 1] ?? '';
+    const m = /^\s*("[^"]*"|'[^']*'|.*?)\s*:(?:\s|$)/.exec(line);
+    const key = (m ? m[1] : line.trim()).replace(/^(["'])(.*)\1$/, '$2');
+    return `duplicate frontmatter key: ${key} (line ${lineNo + 1})`;
   }
-  return value;
-}
-
-// Split "key: rest" at column 0. Keys may be quoted or contain dots/spaces; the key ends at the
-// first ':' followed by a space or end of line (outside quotes). Returns null for other lines.
-function splitKey(line) {
-  if (/^\s/.test(line) || line.startsWith('#') || line.startsWith('- ')) return null;
-  const q = line[0];
-  if (q === '"' || q === "'") {
-    const close = line.indexOf(q, 1);
-    if (close > 0 && line[close + 1] === ':' && (line.length === close + 2 || /\s/.test(line[close + 2]))) {
-      return { key: line.slice(1, close), rest: line.slice(close + 2) };
-    }
-    return null;
-  }
-  const m = /^(.*?):(?:\s(.*))?$/.exec(line);
-  return m ? { key: m[1].trim(), rest: m[2] ?? '' } : null;
-}
-
-// YAML treats these as empty: nothing, "", '', null, ~ (after comment removal).
-function isEmptyValue(raw) {
-  const v = stripComment(raw).trim();
-  return v === '' || v === '""' || v === "''" || v === '~' || /^null$/i.test(v);
-}
-
-// YAML block scalar indicator: | or > with optional chomping (+/-) and indentation digit.
-function isBlockScalarIndicator(raw) {
-  return /^[|>](?:[+-]\d?|\d[+-]?)?$/.test(stripComment(raw).trim());
+  return `invalid YAML frontmatter: ${err.message.split('\n')[0]}`;
 }
 
 export function lintContent(rawText) {
@@ -64,53 +45,20 @@ export function lintContent(rawText) {
   const end = lines.findIndex((l, i) => i > 0 && l.trim() === '---');
   if (end === -1) return ['unterminated frontmatter (no closing ---)'];
 
-  const problems = [];
-  const entries = new Map(); // key -> { inline, hasBlock }
-  let last = null;
-  let provenanceLicense = false;
-  let childIndent = null; // indentation of direct children of the current top-level key
-  for (let i = 1; i < end; i++) {
-    const line = lines[i];
-    if (line.trim() === '') continue;
-    const active = last !== null ? entries.get(last) : null;
-    if (active && active.blockScalar && /^\s/.test(line)) {
-      active.hasBlock = true; // block scalar text, never parsed as keys
-      continue;
-    }
-    if (line.trim().startsWith('#')) continue;
-    const m = splitKey(line);
-    if (m) {
-      const key = m.key;
-      if (entries.has(key)) {
-        problems.push(`duplicate frontmatter key: ${key} (line ${i + 1})`);
-      } else {
-        const blockScalar = isBlockScalarIndicator(m.rest);
-        entries.set(key, { inline: !blockScalar && !isEmptyValue(m.rest), hasBlock: false, blockScalar });
-        if (REQUIRED_KEYS.includes(key) && stripComment(m.rest).trim().startsWith('{')) {
-          problems.push(`flow mappings are not supported for ${key}, use block style`);
-        }
-      }
-      last = key;
-      childIndent = null;
-    } else if (/^\s+\S/.test(line) && last && entries.has(last)) {
-      entries.get(last).hasBlock = true;
-      if (last === 'provenance') {
-        const indent = line.length - line.trimStart().length;
-        if (childIndent === null) childIndent = indent;
-        const lm = /^\s+(?:"license"|'license'|license):(?:\s(.*))?$/.exec(line);
-        if (indent === childIndent && lm && !isEmptyValue(lm[1] ?? '')) provenanceLicense = true;
-      }
-    } else {
-      problems.push(`unsupported frontmatter line ${i + 1}: ${line.trim()}`);
-    }
-  }
+  const yamlText = lines.slice(1, end).join('\n');
+  const doc = YAML.parseDocument(yamlText, { uniqueKeys: true });
+  if (doc.errors.length > 0) return doc.errors.map((e) => describeYamlError(e, yamlText));
+  const data = doc.toJS();
+  if (!isPlainObject(data)) return ['frontmatter must be a YAML mapping'];
 
+  const problems = [];
   for (const key of REQUIRED_KEYS) {
-    const e = entries.get(key);
-    if (!e) {
-      if (key === 'license' && provenanceLicense) continue;
+    if (key === 'license' && !Object.hasOwn(data, 'license')) {
+      const nested = isPlainObject(data.provenance) ? data.provenance.license : undefined;
+      if (isEmpty(nested)) problems.push('missing required key: license');
+    } else if (!Object.hasOwn(data, key)) {
       problems.push(`missing required key: ${key}`);
-    } else if (!(e.blockScalar ? e.hasBlock : e.inline || (key === 'provenance' && e.hasBlock))) {
+    } else if (isEmpty(data[key])) {
       problems.push(`empty value for required key: ${key}`);
     }
   }
