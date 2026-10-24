@@ -1,0 +1,16 @@
+{
+  "id": "claude_shadow_work_exploration",
+  "title": "Shadow Work Exploration",
+  "category": "create",
+  "tags": [
+    "shadow-work",
+    "healing",
+    "psychology",
+    "integration"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_shadow_work_exploration/pattern.md"
+}

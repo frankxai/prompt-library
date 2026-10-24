@@ -1,0 +1,15 @@
+{
+  "id": "answer_eli5",
+  "title": "Answer ELI5",
+  "category": "create",
+  "tags": [
+    "explanation",
+    "pedagogy",
+    "simplification"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/answer_eli5/pattern.md"
+}

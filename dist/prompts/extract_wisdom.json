@@ -1,0 +1,15 @@
+{
+  "id": "extract_wisdom",
+  "title": "Extract Wisdom",
+  "category": "extract",
+  "tags": [
+    "structured-output",
+    "summarization",
+    "knowledge-distillation"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/extract_wisdom/pattern.md"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "compare_and_contrast",
+  "title": "Compare and Contrast",
+  "category": "analyze",
+  "tags": [
+    "comparison",
+    "structured-output",
+    "evaluation"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/compare_and_contrast/pattern.md"
+}

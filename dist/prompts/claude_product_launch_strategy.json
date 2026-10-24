@@ -1,0 +1,16 @@
+{
+  "id": "claude_product_launch_strategy",
+  "title": "Product Launch Strategy",
+  "category": "rate",
+  "tags": [
+    "launch",
+    "strategy",
+    "planning",
+    "sales"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_product_launch_strategy/pattern.md"
+}

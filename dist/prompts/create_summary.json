@@ -1,0 +1,14 @@
+{
+  "id": "create_summary",
+  "title": "Create Summary",
+  "category": "create",
+  "tags": [
+    "summarization",
+    "structured-output"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/create_summary/pattern.md"
+}

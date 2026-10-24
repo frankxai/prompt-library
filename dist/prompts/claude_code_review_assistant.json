@@ -1,0 +1,15 @@
+{
+  "id": "claude_code_review_assistant",
+  "title": "Code Review Assistant",
+  "category": "analyze",
+  "tags": [
+    "review",
+    "debugging",
+    "quality"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_code_review_assistant/pattern.md"
+}

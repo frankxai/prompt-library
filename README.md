@@ -169,6 +169,27 @@ See [`ATTRIBUTION.md`](./ATTRIBUTION.md) for the full provenance map.
 
 ---
 
+## Use as an API
+
+The prompt library can be consumed as a community API v0 without a server, served directly from `raw.githubusercontent.com`.
+
+You can fetch the master index, the category list, or an individual prompt's metadata.
+
+```bash
+# Get all prompts (id, title, category, tags, model_targets, license, path)
+curl https://raw.githubusercontent.com/frankxai/prompt-library/main/dist/index.json
+
+# Get list of categories
+curl https://raw.githubusercontent.com/frankxai/prompt-library/main/dist/categories.json
+
+# Get a specific prompt by ID
+curl https://raw.githubusercontent.com/frankxai/prompt-library/main/dist/prompts/extract_wisdom.json
+```
+
+See the [OpenAPI spec](https://raw.githubusercontent.com/frankxai/prompt-library/main/dist/openapi.yaml) for full details.
+
+---
+
 ## Rankings
 
 Two ranking views:

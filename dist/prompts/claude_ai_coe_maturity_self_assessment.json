@@ -1,0 +1,17 @@
+{
+  "id": "claude_ai_coe_maturity_self_assessment",
+  "title": "AI CoE Maturity Self-Assessment",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "assessment",
+    "maturity-model",
+    "self-evaluation",
+    "ai-strategy"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_ai_coe_maturity_self_assessment/pattern.md"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "create_quiz",
+  "title": "Create Quiz",
+  "category": "create",
+  "tags": [
+    "education",
+    "assessment",
+    "learning"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/create_quiz/pattern.md"
+}

@@ -1,0 +1,1542 @@
+[
+  {
+    "id": "analyze_claims",
+    "title": "Analyze Claims",
+    "category": "analyze",
+    "tags": [
+      "critical-thinking",
+      "fact-checking",
+      "epistemics"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/analyze_claims/pattern.md"
+  },
+  {
+    "id": "analyze_incident",
+    "title": "Analyze Incident",
+    "category": "analyze",
+    "tags": [
+      "ops",
+      "postmortem",
+      "reliability"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/analyze_incident/pattern.md"
+  },
+  {
+    "id": "analyze_logs",
+    "title": "Analyze Logs",
+    "category": "analyze",
+    "tags": [
+      "ops",
+      "observability",
+      "triage"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/analyze_logs/pattern.md"
+  },
+  {
+    "id": "analyze_paper",
+    "title": "Analyze Paper",
+    "category": "analyze",
+    "tags": [
+      "research",
+      "paper-review",
+      "structured-output"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/analyze_paper/pattern.md"
+  },
+  {
+    "id": "analyze_prose",
+    "title": "Analyze Prose",
+    "category": "analyze",
+    "tags": [
+      "writing-analysis",
+      "critique",
+      "structured-output"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/analyze_prose/pattern.md"
+  },
+  {
+    "id": "analyze_threat_report",
+    "title": "Analyze Threat Report",
+    "category": "analyze",
+    "tags": [
+      "security",
+      "threat-intel",
+      "structured-output"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/analyze_threat_report/pattern.md"
+  },
+  {
+    "id": "answer_eli5",
+    "title": "Answer ELI5",
+    "category": "create",
+    "tags": [
+      "explanation",
+      "pedagogy",
+      "simplification"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/answer_eli5/pattern.md"
+  },
+  {
+    "id": "answer_interview_question",
+    "title": "Answer Interview Question",
+    "category": "create",
+    "tags": [
+      "career",
+      "interview",
+      "communication"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/answer_interview_question/pattern.md"
+  },
+  {
+    "id": "audit_resume",
+    "title": "Audit Resume",
+    "category": "audit",
+    "tags": [
+      "career",
+      "resume",
+      "feedback"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/audit_resume/pattern.md"
+  },
+  {
+    "id": "audit_security_config",
+    "title": "Audit Security Config",
+    "category": "audit",
+    "tags": [
+      "security",
+      "devops",
+      "review"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/audit_security_config/pattern.md"
+  },
+  {
+    "id": "chatgpt_chatgpt_business_email_writer",
+    "title": "ChatGPT Business Email Writer",
+    "category": "create",
+    "tags": [
+      "chatgpt",
+      "email",
+      "business",
+      "professional"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_chatgpt_business_email_writer/pattern.md"
+  },
+  {
+    "id": "chatgpt_chatgpt_resume_cv_optimizer",
+    "title": "ChatGPT Resume & CV Optimizer",
+    "category": "create",
+    "tags": [
+      "chatgpt",
+      "resume",
+      "career",
+      "job-search"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_chatgpt_resume_cv_optimizer/pattern.md"
+  },
+  {
+    "id": "chatgpt_chatgpt_study_notes_generator",
+    "title": "ChatGPT Study Notes Generator",
+    "category": "create",
+    "tags": [
+      "chatgpt",
+      "study",
+      "notes",
+      "education"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_chatgpt_study_notes_generator/pattern.md"
+  },
+  {
+    "id": "chatgpt_chatgpt_weekly_meal_planner",
+    "title": "ChatGPT Weekly Meal Planner",
+    "category": "create",
+    "tags": [
+      "chatgpt",
+      "meal-planning",
+      "nutrition",
+      "health"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_chatgpt_weekly_meal_planner/pattern.md"
+  },
+  {
+    "id": "chatgpt_content_repurposing_engine",
+    "title": "Content Repurposing Engine",
+    "category": "create",
+    "tags": [
+      "repurposing",
+      "content",
+      "multi-platform"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_content_repurposing_engine/pattern.md"
+  },
+  {
+    "id": "chatgpt_instagram_carousel_script",
+    "title": "Instagram Carousel Script",
+    "category": "create",
+    "tags": [
+      "instagram",
+      "carousel",
+      "educational",
+      "visual-content"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_instagram_carousel_script/pattern.md"
+  },
+  {
+    "id": "chatgpt_social_media_content_strategy",
+    "title": "Social Media Content Strategy",
+    "category": "rate",
+    "tags": [
+      "social-media",
+      "marketing",
+      "content"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_social_media_content_strategy/pattern.md"
+  },
+  {
+    "id": "chatgpt_twitter_x_thread_creator",
+    "title": "Twitter/X Thread Creator",
+    "category": "create",
+    "tags": [
+      "twitter",
+      "thread",
+      "x",
+      "viral"
+    ],
+    "model_targets": [
+      "gpt"
+    ],
+    "license": "original",
+    "path": "prompts/chatgpt_twitter_x_thread_creator/pattern.md"
+  },
+  {
+    "id": "check_grammar",
+    "title": "Check Grammar",
+    "category": "check",
+    "tags": [
+      "editing",
+      "grammar",
+      "proofreading"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/check_grammar/pattern.md"
+  },
+  {
+    "id": "check_plagiarism",
+    "title": "Check Plagiarism",
+    "category": "check",
+    "tags": [
+      "editing",
+      "integrity",
+      "comparison"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/check_plagiarism/pattern.md"
+  },
+  {
+    "id": "claude-code_agentic_workflow_architecture",
+    "title": "Agentic Workflow Architecture",
+    "category": "create",
+    "tags": [
+      "agentic",
+      "workflow",
+      "automation",
+      "orchestration"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_agentic_workflow_architecture/pattern.md"
+  },
+  {
+    "id": "claude-code_claude_code_project_setup",
+    "title": "Claude Code Project Setup",
+    "category": "create",
+    "tags": [
+      "claude-code",
+      "configuration",
+      "setup",
+      "CLAUDE.md"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_claude_code_project_setup/pattern.md"
+  },
+  {
+    "id": "claude-code_claude_md_generator_for_any_project",
+    "title": "CLAUDE.md Generator for Any Project",
+    "category": "create",
+    "tags": [
+      "CLAUDE.md",
+      "claude-code",
+      "setup",
+      "configuration",
+      "ai-development"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_claude_md_generator_for_any_project/pattern.md"
+  },
+  {
+    "id": "claude-code_mcp_server_architecture",
+    "title": "MCP Server Architecture",
+    "category": "create",
+    "tags": [
+      "mcp",
+      "protocol",
+      "integration",
+      "server"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_mcp_server_architecture/pattern.md"
+  },
+  {
+    "id": "claude-code_multi_agent_orchestra_designer",
+    "title": "Multi-Agent Orchestra Designer",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "multi-agent",
+      "orchestration",
+      "agent-design",
+      "personal-ai",
+      "acos"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/claude-code_multi_agent_orchestra_designer/pattern.md"
+  },
+  {
+    "id": "claude_ai_coe_maturity_self_assessment",
+    "title": "AI CoE Maturity Self-Assessment",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "assessment",
+      "maturity-model",
+      "self-evaluation",
+      "ai-strategy"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_ai_coe_maturity_self_assessment/pattern.md"
+  },
+  {
+    "id": "claude_ai_output_evaluation_framework",
+    "title": "AI Output Evaluation Framework",
+    "category": "create",
+    "tags": [
+      "evaluation",
+      "quality",
+      "metrics",
+      "testing"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_ai_output_evaluation_framework/pattern.md"
+  },
+  {
+    "id": "claude_annual_goal_setting_system",
+    "title": "Annual Goal Setting System",
+    "category": "create",
+    "tags": [
+      "goals",
+      "planning",
+      "annual-review",
+      "productivity"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_annual_goal_setting_system/pattern.md"
+  },
+  {
+    "id": "claude_atom_of_thoughts_parallel_reasoner",
+    "title": "Atom-of-Thoughts Parallel Reasoner",
+    "category": "create",
+    "tags": [
+      "atom-of-thoughts",
+      "aot",
+      "parallel-reasoning",
+      "chain-of-thought",
+      "advanced-reasoning"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_atom_of_thoughts_parallel_reasoner/pattern.md"
+  },
+  {
+    "id": "claude_blog_post_structure_generator",
+    "title": "Blog Post Structure Generator",
+    "category": "create",
+    "tags": [
+      "blog",
+      "content",
+      "structure"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_blog_post_structure_generator/pattern.md"
+  },
+  {
+    "id": "claude_claude_code_refactoring_assistant",
+    "title": "Claude Code Refactoring Assistant",
+    "category": "create",
+    "tags": [
+      "claude",
+      "refactoring",
+      "code-quality",
+      "architecture"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_claude_code_refactoring_assistant/pattern.md"
+  },
+  {
+    "id": "claude_code_review_assistant",
+    "title": "Code Review Assistant",
+    "category": "analyze",
+    "tags": [
+      "review",
+      "debugging",
+      "quality"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_code_review_assistant/pattern.md"
+  },
+  {
+    "id": "claude_context_first_ordered_response",
+    "title": "Context-First Ordered Response",
+    "category": "create",
+    "tags": [
+      "context-first",
+      "attention-weighting",
+      "information-ordering",
+      "response-optimization"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_context_first_ordered_response/pattern.md"
+  },
+  {
+    "id": "claude_contract_style_system_prompt",
+    "title": "Contract-Style System Prompt",
+    "category": "create",
+    "tags": [
+      "contract-style",
+      "system-prompt",
+      "legal-precision",
+      "enterprise",
+      "behavior-specification"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_contract_style_system_prompt/pattern.md"
+  },
+  {
+    "id": "claude_creator_ai_operations_manual_generator",
+    "title": "Creator AI Operations Manual Generator",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "creator-ops",
+      "content-pipeline",
+      "workflow-design",
+      "operations-manual"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_creator_ai_operations_manual_generator/pattern.md"
+  },
+  {
+    "id": "claude_deep_self_discovery_journaling",
+    "title": "Deep Self-Discovery Journaling",
+    "category": "create",
+    "tags": [
+      "journaling",
+      "self-discovery",
+      "reflection",
+      "inner-work"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_deep_self_discovery_journaling/pattern.md"
+  },
+  {
+    "id": "claude_email_nurture_sequence",
+    "title": "Email Nurture Sequence",
+    "category": "create",
+    "tags": [
+      "email-marketing",
+      "nurture",
+      "automation",
+      "conversion"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_email_nurture_sequence/pattern.md"
+  },
+  {
+    "id": "claude_enterprise_to_personal_ai_coe_translator",
+    "title": "Enterprise-to-Personal AI CoE Translator",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "enterprise-ai",
+      "personal-ai",
+      "framework-translation",
+      "ai-strategy"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_enterprise_to_personal_ai_coe_translator/pattern.md"
+  },
+  {
+    "id": "claude_explicit_scope_discipline_prompt",
+    "title": "Explicit Scope Discipline Prompt",
+    "category": "create",
+    "tags": [
+      "scope-discipline",
+      "anti-drift",
+      "focus-maintenance",
+      "task-boundaries"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_explicit_scope_discipline_prompt/pattern.md"
+  },
+  {
+    "id": "claude_founder_ai_intelligence_system",
+    "title": "Founder AI Intelligence System",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "founder",
+      "competitive-intelligence",
+      "business-strategy",
+      "startup",
+      "decision-support"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_founder_ai_intelligence_system/pattern.md"
+  },
+  {
+    "id": "claude_habit_design_workshop",
+    "title": "Habit Design Workshop",
+    "category": "create",
+    "tags": [
+      "habits",
+      "behavior-change",
+      "atomic-habits",
+      "self-improvement"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_habit_design_workshop/pattern.md"
+  },
+  {
+    "id": "claude_health_fitness_ai_center_of_excellence",
+    "title": "Health & Fitness AI Center of Excellence",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "health",
+      "fitness",
+      "nutrition",
+      "training",
+      "recovery",
+      "longevity"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_health_fitness_ai_center_of_excellence/pattern.md"
+  },
+  {
+    "id": "claude_high_converting_landing_page_copy",
+    "title": "High-Converting Landing Page Copy",
+    "category": "create",
+    "tags": [
+      "landing-page",
+      "copywriting",
+      "conversion",
+      "sales"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_high_converting_landing_page_copy/pattern.md"
+  },
+  {
+    "id": "claude_idea_brainstorming_session",
+    "title": "Idea Brainstorming Session",
+    "category": "create",
+    "tags": [
+      "brainstorming",
+      "ideation",
+      "creativity"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_idea_brainstorming_session/pattern.md"
+  },
+  {
+    "id": "claude_ikigai_discovery_session",
+    "title": "Ikigai Discovery Session",
+    "category": "create",
+    "tags": [
+      "ikigai",
+      "purpose",
+      "career",
+      "life-design"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_ikigai_discovery_session/pattern.md"
+  },
+  {
+    "id": "claude_learning_path_generator",
+    "title": "Learning Path Generator",
+    "category": "create",
+    "tags": [
+      "skill-development",
+      "planning",
+      "education"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_learning_path_generator/pattern.md"
+  },
+  {
+    "id": "claude_linkedin_thought_leadership_post",
+    "title": "LinkedIn Thought Leadership Post",
+    "category": "create",
+    "tags": [
+      "linkedin",
+      "thought-leadership",
+      "personal-brand",
+      "engagement"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_linkedin_thought_leadership_post/pattern.md"
+  },
+  {
+    "id": "claude_manifestation_intention_setting",
+    "title": "Manifestation & Intention Setting",
+    "category": "create",
+    "tags": [
+      "manifestation",
+      "intention",
+      "law-of-attraction",
+      "visualization"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_manifestation_intention_setting/pattern.md"
+  },
+  {
+    "id": "claude_market_research_framework",
+    "title": "Market Research Framework",
+    "category": "create",
+    "tags": [
+      "research",
+      "strategy",
+      "market"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_market_research_framework/pattern.md"
+  },
+  {
+    "id": "claude_meta_prompting_v2_generator",
+    "title": "Meta-Prompting v2 Generator",
+    "category": "create",
+    "tags": [
+      "meta-prompting",
+      "prompt-generation",
+      "template-creator",
+      "ai-to-ai"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_meta_prompting_v2_generator/pattern.md"
+  },
+  {
+    "id": "claude_personal_ai_center_of_excellence_blueprint",
+    "title": "Personal AI Center of Excellence Blueprint",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "personal-ai",
+      "systems-design",
+      "life-design",
+      "ai-strategy",
+      "center-of-excellence"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_personal_ai_center_of_excellence_blueprint/pattern.md"
+  },
+  {
+    "id": "claude_personalized_meditation_guide",
+    "title": "Personalized Meditation Guide",
+    "category": "improve",
+    "tags": [
+      "meditation",
+      "mindfulness",
+      "presence",
+      "inner-peace"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_personalized_meditation_guide/pattern.md"
+  },
+  {
+    "id": "claude_product_launch_strategy",
+    "title": "Product Launch Strategy",
+    "category": "rate",
+    "tags": [
+      "launch",
+      "strategy",
+      "planning",
+      "sales"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_product_launch_strategy/pattern.md"
+  },
+  {
+    "id": "claude_production_prompt_engineering_system",
+    "title": "Production Prompt Engineering System",
+    "category": "create",
+    "tags": [
+      "prompt-engineering",
+      "production",
+      "system-design",
+      "llm"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_production_prompt_engineering_system/pattern.md"
+  },
+  {
+    "id": "claude_rag_pipeline_architecture",
+    "title": "RAG Pipeline Architecture",
+    "category": "create",
+    "tags": [
+      "rag",
+      "retrieval",
+      "vector-search",
+      "llm"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_rag_pipeline_architecture/pattern.md"
+  },
+  {
+    "id": "claude_react_typescript_component",
+    "title": "React TypeScript Component",
+    "category": "create",
+    "tags": [
+      "react",
+      "typescript",
+      "components"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_react_typescript_component/pattern.md"
+  },
+  {
+    "id": "claude_research_paper_summarizer_for_practitioners",
+    "title": "Research Paper Summarizer for Practitioners",
+    "category": "summarize",
+    "tags": [
+      "research",
+      "papers",
+      "science",
+      "evidence",
+      "learning"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_research_paper_summarizer_for_practitioners/pattern.md"
+  },
+  {
+    "id": "claude_self_consistency_loop_generator",
+    "title": "Self-Consistency Loop Generator",
+    "category": "create",
+    "tags": [
+      "self-consistency",
+      "multi-pass",
+      "verification",
+      "reasoning-loops"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_self_consistency_loop_generator/pattern.md"
+  },
+  {
+    "id": "claude_shadow_work_exploration",
+    "title": "Shadow Work Exploration",
+    "category": "create",
+    "tags": [
+      "shadow-work",
+      "healing",
+      "psychology",
+      "integration"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_shadow_work_exploration/pattern.md"
+  },
+  {
+    "id": "claude_story_framework_generator",
+    "title": "Story Framework Generator",
+    "category": "create",
+    "tags": [
+      "storytelling",
+      "narrative",
+      "copywriting"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_story_framework_generator/pattern.md"
+  },
+  {
+    "id": "claude_youtube_video_script_framework",
+    "title": "YouTube Video Script Framework",
+    "category": "create",
+    "tags": [
+      "youtube",
+      "video-script",
+      "content-creation",
+      "tutorial"
+    ],
+    "model_targets": [
+      "claude"
+    ],
+    "license": "original",
+    "path": "prompts/claude_youtube_video_script_framework/pattern.md"
+  },
+  {
+    "id": "compare_and_contrast",
+    "title": "Compare and Contrast",
+    "category": "analyze",
+    "tags": [
+      "comparison",
+      "structured-output",
+      "evaluation"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/compare_and_contrast/pattern.md"
+  },
+  {
+    "id": "create_5_sentence_summary",
+    "title": "Create 5-Sentence Summary",
+    "category": "create",
+    "tags": [
+      "summarization",
+      "compression"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/create_5_sentence_summary/pattern.md"
+  },
+  {
+    "id": "create_micro_summary",
+    "title": "Create Micro Summary",
+    "category": "create",
+    "tags": [
+      "summarization",
+      "social",
+      "compression"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/create_micro_summary/pattern.md"
+  },
+  {
+    "id": "create_outline",
+    "title": "Create Outline",
+    "category": "create",
+    "tags": [
+      "writing",
+      "structure",
+      "planning"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/create_outline/pattern.md"
+  },
+  {
+    "id": "create_quiz",
+    "title": "Create Quiz",
+    "category": "create",
+    "tags": [
+      "education",
+      "assessment",
+      "learning"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/create_quiz/pattern.md"
+  },
+  {
+    "id": "create_summary",
+    "title": "Create Summary",
+    "category": "create",
+    "tags": [
+      "summarization",
+      "structured-output"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/create_summary/pattern.md"
+  },
+  {
+    "id": "cross_advanced_gratitude_practice",
+    "title": "Advanced Gratitude Practice",
+    "category": "create",
+    "tags": [
+      "gratitude",
+      "abundance",
+      "positivity",
+      "mindset"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_advanced_gratitude_practice/pattern.md"
+  },
+  {
+    "id": "cross_ai_coe_weekly_operations_review",
+    "title": "AI CoE Weekly Operations Review",
+    "category": "analyze",
+    "tags": [
+      "ai-coe",
+      "weekly-review",
+      "operations",
+      "self-assessment",
+      "continuous-improvement"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_ai_coe_weekly_operations_review/pattern.md"
+  },
+  {
+    "id": "cross_ai_pair_programming_session",
+    "title": "AI Pair Programming Session",
+    "category": "create",
+    "tags": [
+      "pair-programming",
+      "workflow",
+      "productivity",
+      "coding"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_ai_pair_programming_session/pattern.md"
+  },
+  {
+    "id": "cross_ai_video_script_generator",
+    "title": "AI Video Script Generator",
+    "category": "create",
+    "tags": [
+      "video",
+      "script",
+      "youtube",
+      "content-creation",
+      "production"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_ai_video_script_generator/pattern.md"
+  },
+  {
+    "id": "cross_code_explainer",
+    "title": "Code Explainer",
+    "category": "create",
+    "tags": [
+      "learning",
+      "explanation",
+      "understanding"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_code_explainer/pattern.md"
+  },
+  {
+    "id": "cross_concept_explainer_feynman_technique",
+    "title": "Concept Explainer (Feynman Technique)",
+    "category": "create",
+    "tags": [
+      "education",
+      "understanding",
+      "feynman"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_concept_explainer_feynman_technique/pattern.md"
+  },
+  {
+    "id": "cross_family_ai_center_of_excellence",
+    "title": "Family AI Center of Excellence",
+    "category": "create",
+    "tags": [
+      "ai-coe",
+      "family",
+      "education",
+      "parenting",
+      "digital-safety",
+      "family-ai"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_family_ai_center_of_excellence/pattern.md"
+  },
+  {
+    "id": "cross_fitness_creator_content_system",
+    "title": "Fitness Creator Content System",
+    "category": "create",
+    "tags": [
+      "fitness",
+      "content-creation",
+      "social-media",
+      "coaching",
+      "creator"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_fitness_creator_content_system/pattern.md"
+  },
+  {
+    "id": "cross_headline_variation_generator",
+    "title": "Headline Variation Generator",
+    "category": "create",
+    "tags": [
+      "headlines",
+      "copywriting",
+      "a/b-testing",
+      "conversion"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_headline_variation_generator/pattern.md"
+  },
+  {
+    "id": "cross_meeting_notes_processor",
+    "title": "Meeting Notes Processor",
+    "category": "create",
+    "tags": [
+      "meetings",
+      "notes",
+      "organization"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_meeting_notes_processor/pattern.md"
+  },
+  {
+    "id": "cross_morning_routine_designer",
+    "title": "Morning Routine Designer",
+    "category": "create",
+    "tags": [
+      "morning-routine",
+      "productivity",
+      "wellness",
+      "habits"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_morning_routine_designer/pattern.md"
+  },
+  {
+    "id": "cross_professional_email_writer",
+    "title": "Professional Email Writer",
+    "category": "create",
+    "tags": [
+      "email",
+      "communication",
+      "professional"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_professional_email_writer/pattern.md"
+  },
+  {
+    "id": "cross_system_prompt_designer",
+    "title": "System Prompt Designer",
+    "category": "create",
+    "tags": [
+      "system-prompt",
+      "prompt-design",
+      "ai-behavior",
+      "llm"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_system_prompt_designer/pattern.md"
+  },
+  {
+    "id": "cross_text_rewriter_improver",
+    "title": "Text Rewriter & Improver",
+    "category": "improve",
+    "tags": [
+      "editing",
+      "rewriting",
+      "improvement"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_text_rewriter_improver/pattern.md"
+  },
+  {
+    "id": "cross_voice_ai_product_narrator",
+    "title": "Voice AI Product Narrator",
+    "category": "create",
+    "tags": [
+      "voice-ai",
+      "narration",
+      "elevenlabs",
+      "audio",
+      "production"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_voice_ai_product_narrator/pattern.md"
+  },
+  {
+    "id": "cross_weekly_planning_session",
+    "title": "Weekly Planning Session",
+    "category": "create",
+    "tags": [
+      "planning",
+      "organization",
+      "time-management"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_weekly_planning_session/pattern.md"
+  },
+  {
+    "id": "cross_weekly_social_content_calendar",
+    "title": "Weekly Social Content Calendar",
+    "category": "create",
+    "tags": [
+      "content-calendar",
+      "planning",
+      "social-strategy",
+      "scheduling"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cross_weekly_social_content_calendar/pattern.md"
+  },
+  {
+    "id": "cursor_cursor_rules_file_generator",
+    "title": "Cursor Rules File Generator",
+    "category": "create",
+    "tags": [
+      "cursor",
+      "rules",
+      "configuration",
+      "ai-coding"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "original",
+    "path": "prompts/cursor_cursor_rules_file_generator/pattern.md"
+  },
+  {
+    "id": "extract_ideas",
+    "title": "Extract Ideas",
+    "category": "extract",
+    "tags": [
+      "extraction",
+      "ideation",
+      "structured-output"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/extract_ideas/pattern.md"
+  },
+  {
+    "id": "extract_insights",
+    "title": "Extract Insights",
+    "category": "extract",
+    "tags": [
+      "extraction",
+      "insight",
+      "pattern-recognition"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/extract_insights/pattern.md"
+  },
+  {
+    "id": "extract_quotes",
+    "title": "Extract Quotes",
+    "category": "extract",
+    "tags": [
+      "extraction",
+      "quotes",
+      "citation"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/extract_quotes/pattern.md"
+  },
+  {
+    "id": "extract_wisdom",
+    "title": "Extract Wisdom",
+    "category": "extract",
+    "tags": [
+      "structured-output",
+      "summarization",
+      "knowledge-distillation"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/extract_wisdom/pattern.md"
+  },
+  {
+    "id": "improve_prompt",
+    "title": "Improve Prompt",
+    "category": "improve",
+    "tags": [
+      "prompt-engineering",
+      "meta",
+      "rewriting"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/improve_prompt/pattern.md"
+  },
+  {
+    "id": "improve_writing",
+    "title": "Improve Writing",
+    "category": "improve",
+    "tags": [
+      "editing",
+      "rewriting",
+      "clarity"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/improve_writing/pattern.md"
+  },
+  {
+    "id": "rate_argument",
+    "title": "Rate Argument",
+    "category": "rate",
+    "tags": [
+      "critical-thinking",
+      "rhetoric",
+      "evaluation"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/rate_argument/pattern.md"
+  },
+  {
+    "id": "rate_content",
+    "title": "Rate Content",
+    "category": "rate",
+    "tags": [
+      "evaluation",
+      "feedback",
+      "rubric"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/rate_content/pattern.md"
+  },
+  {
+    "id": "summarize",
+    "title": "Summarize",
+    "category": "summarize",
+    "tags": [
+      "summarization",
+      "structured-output"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/summarize/pattern.md"
+  },
+  {
+    "id": "summarize_micro",
+    "title": "Summarize Micro",
+    "category": "summarize",
+    "tags": [
+      "summarization",
+      "compression"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/summarize_micro/pattern.md"
+  },
+  {
+    "id": "summarize_paper",
+    "title": "Summarize Paper",
+    "category": "summarize",
+    "tags": [
+      "research",
+      "paper-summary",
+      "structured-output"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "MIT",
+    "path": "prompts/summarize_paper/pattern.md"
+  },
+  {
+    "id": "write_cover_letter",
+    "title": "Write Cover Letter",
+    "category": "create",
+    "tags": [
+      "career",
+      "writing",
+      "cover-letter"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/write_cover_letter/pattern.md"
+  },
+  {
+    "id": "write_essay",
+    "title": "Write Essay",
+    "category": "create",
+    "tags": [
+      "writing",
+      "essay",
+      "long-form"
+    ],
+    "model_targets": [
+      "cross-lab"
+    ],
+    "license": "CC0",
+    "path": "prompts/write_essay/pattern.md"
+  }
+]

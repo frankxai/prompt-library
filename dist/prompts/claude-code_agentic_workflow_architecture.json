@@ -1,0 +1,16 @@
+{
+  "id": "claude-code_agentic_workflow_architecture",
+  "title": "Agentic Workflow Architecture",
+  "category": "create",
+  "tags": [
+    "agentic",
+    "workflow",
+    "automation",
+    "orchestration"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/claude-code_agentic_workflow_architecture/pattern.md"
+}

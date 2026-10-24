@@ -1,0 +1,18 @@
+{
+  "id": "cross_family_ai_center_of_excellence",
+  "title": "Family AI Center of Excellence",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "family",
+    "education",
+    "parenting",
+    "digital-safety",
+    "family-ai"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cross_family_ai_center_of_excellence/pattern.md"
+}

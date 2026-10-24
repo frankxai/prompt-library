@@ -1,0 +1,16 @@
+{
+  "id": "claude_deep_self_discovery_journaling",
+  "title": "Deep Self-Discovery Journaling",
+  "category": "create",
+  "tags": [
+    "journaling",
+    "self-discovery",
+    "reflection",
+    "inner-work"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_deep_self_discovery_journaling/pattern.md"
+}

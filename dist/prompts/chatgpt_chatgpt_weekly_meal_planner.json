@@ -1,0 +1,16 @@
+{
+  "id": "chatgpt_chatgpt_weekly_meal_planner",
+  "title": "ChatGPT Weekly Meal Planner",
+  "category": "create",
+  "tags": [
+    "chatgpt",
+    "meal-planning",
+    "nutrition",
+    "health"
+  ],
+  "model_targets": [
+    "gpt"
+  ],
+  "license": "original",
+  "path": "prompts/chatgpt_chatgpt_weekly_meal_planner/pattern.md"
+}
