@@ -82,6 +82,26 @@ function parseFrontmatter(content, filepath) {
     }
   }
 
+  // Validate nested field types. dist/openapi.yaml declares only the public index fields, so these
+  // rules follow what the prompts actually use: numeric score/test_count, boolean applicable,
+  // string dates/boundary, and small enums for red_team.status and psyche.risk.
+  const isDateOrNull = (v) => v === null || typeof v === 'string';
+  const nestedChecks = [
+    ['eval', 'score', (v) => v === null || typeof v === 'number', 'a number or null'],
+    ['eval', 'last_run', isDateOrNull, 'a date string or null'],
+    ['eval', 'test_count', (v) => Number.isInteger(v) && v >= 0, 'a non-negative integer'],
+    ['red_team', 'status', (v) => ['pending', 'pass', 'warn', 'fail'].includes(v), 'one of pending, pass, warn, fail'],
+    ['red_team', 'audited', isDateOrNull, 'a date string or null'],
+    ['psyche', 'applicable', (v) => typeof v === 'boolean', 'a boolean'],
+    ['psyche', 'boundary', (v) => typeof v === 'string', 'a string'],
+    ['psyche', 'risk', (v) => ['low', 'medium', 'high'].includes(v), 'one of low, medium, high']
+  ];
+  for (const [parent, child, ok, expected] of nestedChecks) {
+    if (!ok(data[parent][child])) {
+      throw new Error(`[${filepath}] Field ${parent}.${child} must be ${expected}, got ${JSON.stringify(data[parent][child])}.`);
+    }
+  }
+
   // Validate Types
   const stringFields = [
     'id', 'version', 'title', 'description', 'lane', 'category', 'created', 'updated'
@@ -143,6 +163,14 @@ function isEscaped(str, index) {
   return n % 2 === 1;
 }
 
+// A quote opens a quoted scalar only at a scalar boundary: the first non-space character of the
+// value, or right after "[" or "," (flow sequence item). An apostrophe inside "What's new" does not.
+function atScalarBoundary(str, index) {
+  let j = index - 1;
+  while (j >= 0 && /\s/.test(str[j])) j--;
+  return j < 0 || str[j] === '[' || str[j] === ',';
+}
+
 // Strip a trailing YAML comment: a # at the start or preceded by whitespace, outside quotes.
 function stripComment(val) {
   let quote = null;
@@ -152,7 +180,7 @@ function stripComment(val) {
       if (c === '"' && !isEscaped(val, i)) quote = null;
     } else if (quote === "'") {
       if (c === "'") quote = null; // '' re-opens on the next character
-    } else if (c === '"' || c === "'") {
+    } else if ((c === '"' || c === "'") && atScalarBoundary(val, i)) {
       quote = c;
     } else if (c === '#' && (i === 0 || /\s/.test(val[i - 1]))) {
       return val.slice(0, i).trim();
@@ -162,6 +190,7 @@ function stripComment(val) {
 }
 
 function parseScalar(val) {
+  if (val === 'null' || val === '~') return null;
   if (val === 'true') return true;
   if (val === 'false') return false;
   if (!isNaN(val) && val !== '') return Number(val);
@@ -195,10 +224,10 @@ function parseValue(val) {
 
     for (let i = 0; i < inner.length; i++) {
       const char = inner[i];
-      if (char === '"' && !inSingleQuotes && !isEscaped(inner, i)) {
+      if (char === '"' && !inSingleQuotes && !isEscaped(inner, i) && (inDoubleQuotes || currentItem.trim() === '')) {
         inDoubleQuotes = !inDoubleQuotes;
         currentItem += char;
-      } else if (char === "'" && !inDoubleQuotes) {
+      } else if (char === "'" && !inDoubleQuotes && (inSingleQuotes || currentItem.trim() === '')) {
         inSingleQuotes = !inSingleQuotes;
         currentItem += char;
       } else if (char === ',' && !inDoubleQuotes && !inSingleQuotes) {
@@ -207,6 +236,9 @@ function parseValue(val) {
       } else {
         currentItem += char;
       }
+    }
+    if (inDoubleQuotes || inSingleQuotes) {
+      throw new Error("Unterminated quoted item in array: " + val);
     }
     items.push(currentItem);
 
@@ -221,14 +253,7 @@ function parseValue(val) {
     });
   }
 
-  // Handle booleans
-  if (val === 'true') return true;
-  if (val === 'false') return false;
-
-  // Handle numbers
-  if (!isNaN(val) && val !== '') return Number(val);
-
-  return val;
+  return parseScalar(val);
 }
 
 function findPatternFiles(dir) {
