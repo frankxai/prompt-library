@@ -150,14 +150,15 @@ async function runTests() {
   console.log("Test 7c: Invalid array syntax");
   writePattern('test7c', baseValid.replace('tags: [test, mock]', 'tags: [test, [mock]]'));
   errOutput = runBuild(false);
-  if (!errOutput.includes("Unsupported array syntax")) throw new Error("Test 7c failed.");
+  if (!errOutput.includes("tags must be an array of strings")) throw new Error("Test 7c failed.");
   fs.rmSync(path.join(promptsDir, 'test7c'), { recursive: true, force: true });
 
-  // 8. Block scalars are rejected with a clear error
-  console.log("Test 8: Block scalars rejected");
-  writePattern('test8', baseValid.replace('title: "Test"', 'title: >\n  folded text'));
-  errOutput = runBuild(false);
-  if (!errOutput.includes("block scalars") || !errOutput.includes("title")) throw new Error("Test 8 failed: " + errOutput);
+  // 8. Block scalars are parsed correctly
+  console.log("Test 8: Folded block scalars are parsed by the YAML parser");
+  writePattern("test8", baseValid.replace('title: "Test"', "title: >-\n  folded\n  text"));
+  runBuild();
+  const testOutput8 = JSON.parse(fs.readFileSync(path.join(distPromptsDir, "test_id.json"), "utf8"));
+  if (testOutput8.title !== "folded text") throw new Error("Test 8 failed: " + JSON.stringify(testOutput8.title));
   fs.rmSync(path.join(promptsDir, 'test8'), { recursive: true, force: true });
 
   // 9. Escapes decode in a single pass ("C:\\new" is C:\new, not C:<newline>ew)
@@ -210,7 +211,7 @@ async function runTests() {
   console.log("Test 14: Unterminated quote in array");
   writePattern('test14', baseValid.replace('tags: [test, mock]', 'tags: ["test, mock]'));
   errOutput = runBuild(false);
-  if (!errOutput.includes("Unterminated quoted item")) throw new Error("Test 14 failed: " + errOutput);
+  if (!errOutput.includes("Invalid YAML frontmatter")) throw new Error("Test 14 failed: " + errOutput);
   fs.rmSync(path.join(promptsDir, 'test14'), { recursive: true, force: true });
 
   // 15. Nested eval / red_team / psyche fields are type-checked
@@ -228,6 +229,34 @@ async function runTests() {
     if (!errOutput.includes(`Field ${field} must be`)) throw new Error(`Test 15 failed for ${field}: ` + errOutput);
     fs.rmSync(path.join(promptsDir, 'test15'), { recursive: true, force: true });
   }
+
+  // 16. YAML parser behaviours
+  console.log("Test 16: YAML parser cases");
+  const readTest = () => JSON.parse(fs.readFileSync(path.join(distPromptsDir, 'test_id.json'), 'utf8'));
+  writePattern('test16a', baseValid.replace('title: "Test"', "title: 'It''s #1'"));
+  runBuild();
+  if (readTest().title !== "It's #1") throw new Error("Test 16a failed: " + JSON.stringify(readTest().title));
+  fs.rmSync(path.join(promptsDir, 'test16a'), { recursive: true, force: true });
+
+  writePattern('test16b', baseValid.replace('tags: [test, mock]', 'tags: ["[draft]", mock]'));
+  runBuild();
+  if (JSON.stringify(readTest().tags) !== JSON.stringify(['[draft]', 'mock'])) throw new Error("Test 16b failed: " + JSON.stringify(readTest().tags));
+  fs.rmSync(path.join(promptsDir, 'test16b'), { recursive: true, force: true });
+
+  writePattern('test16c', baseValid.replace('tags: [test, mock]', 'tags: ["test, mock]'));
+  errOutput = runBuild(false);
+  if (!errOutput.includes("Invalid YAML frontmatter")) throw new Error("Test 16c failed: " + errOutput);
+  fs.rmSync(path.join(promptsDir, 'test16c'), { recursive: true, force: true });
+
+  writePattern('test16d', baseValid + '\ntitle: "Again"');
+  errOutput = runBuild(false);
+  if (!errOutput.includes("Invalid YAML frontmatter")) throw new Error("Test 16d failed: " + errOutput);
+  fs.rmSync(path.join(promptsDir, 'test16d'), { recursive: true, force: true });
+
+  writePattern('test16e', baseValid.replace('title: "Test"', "title: What's new # note"));
+  runBuild();
+  if (readTest().title !== "What's new") throw new Error("Test 16e failed: " + JSON.stringify(readTest().title));
+  fs.rmSync(path.join(promptsDir, 'test16e'), { recursive: true, force: true });
 
   teardownTestProject();
   console.log("All tests passed!");

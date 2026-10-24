@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import YAML from 'yaml';
 
-// Helper to parse YAML frontmatter deterministically without external dependencies
+// Parse YAML frontmatter with the `yaml` package, then validate the resulting JS values.
 function parseFrontmatter(content, filepath) {
   content = content.replace(/\r\n/g, '\n');
   const match = content.match(/^---\n([\s\S]*?)\n---/);
@@ -9,46 +10,15 @@ function parseFrontmatter(content, filepath) {
     throw new Error(`[${filepath}] Missing or invalid YAML frontmatter.`);
   }
 
-  const yamlRaw = match[1];
-  const data = {};
-
-  // A simple, recursive line-by-line parser tailored for this specific schema
-  const lines = yamlRaw.split('\n');
-
-  let currentKey = null;
-  let currentDict = null;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.trim() === '' || line.trim().startsWith('#')) continue;
-
-    // Check for nested properties (2 spaces indent)
-    if (line.startsWith('  ') && currentKey) {
-      const nestedMatch = line.match(/^  ([a-zA-Z0-9_]+):\s*(.*)$/);
-      if (nestedMatch) {
-        let val = stripComment(nestedMatch[2]);
-        rejectBlockScalar(val, `${currentKey}.${nestedMatch[1]}`, filepath);
-        val = parseValue(val);
-        currentDict[nestedMatch[1]] = val;
-      }
-    } else {
-      // Top level properties
-      const topMatch = line.match(/^([a-zA-Z0-9_]+):\s*(.*)$/);
-      if (topMatch) {
-        currentKey = topMatch[1];
-        let val = stripComment(topMatch[2]);
-        rejectBlockScalar(val, currentKey, filepath);
-
-        if (val === '') {
-          // It's a dictionary starting
-          currentDict = {};
-          data[currentKey] = currentDict;
-        } else {
-          currentDict = null;
-          data[currentKey] = parseValue(val);
-        }
-      }
-    }
+  // uniqueKeys rejects duplicate keys; any parse error (bad quotes, unterminated flow collections,
+  // alias problems) is reported with the file name.
+  const doc = YAML.parseDocument(match[1], { uniqueKeys: true });
+  if (doc.errors.length > 0) {
+    throw new Error(`[${filepath}] Invalid YAML frontmatter: ${doc.errors.map((e) => e.message.split('\n')[0]).join('; ')}`);
+  }
+  const data = doc.toJS();
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) {
+    throw new Error(`[${filepath}] Frontmatter must be a YAML mapping.`);
   }
 
   // Ensure all required fields are present
@@ -72,7 +42,7 @@ function parseFrontmatter(content, filepath) {
   };
 
   for (const [parent, children] of Object.entries(nestedRequired)) {
-    if (!data[parent]) {
+    if (!data[parent] || typeof data[parent] !== 'object' || Array.isArray(data[parent])) {
       throw new Error(`[${filepath}] Missing required frontmatter object: ${parent}`);
     }
     for (const child of children) {
@@ -143,119 +113,6 @@ function parseFrontmatter(content, filepath) {
 
   return data;
 }
-
-function rejectBlockScalar(val, key, filepath) {
-  if (/^[>|][+-]?[0-9]?$/.test(val)) {
-    throw new Error(`[${filepath}] Field ${key}: block scalars (${val}) are not supported; use a quoted single-line string.`);
-  }
-}
-
-const ESCAPES = { n: '\n', t: '\t', r: '\r', '"': '"', '\\': '\\', '/': '/' };
-function decodeDoubleQuoted(str) {
-  // Single left-to-right pass so "C:\\new" stays a backslash followed by "new".
-  return str.replace(/\\(.)/g, (m, c) => (Object.prototype.hasOwnProperty.call(ESCAPES, c) ? ESCAPES[c] : m));
-}
-
-// A character is escaped only when preceded by an odd number of backslashes.
-function isEscaped(str, index) {
-  let n = 0;
-  for (let i = index - 1; i >= 0 && str[i] === '\\'; i--) n++;
-  return n % 2 === 1;
-}
-
-// A quote opens a quoted scalar only at a scalar boundary: the first non-space character of the
-// value, or right after "[" or "," (flow sequence item). An apostrophe inside "What's new" does not.
-function atScalarBoundary(str, index) {
-  let j = index - 1;
-  while (j >= 0 && /\s/.test(str[j])) j--;
-  return j < 0 || str[j] === '[' || str[j] === ',';
-}
-
-// Strip a trailing YAML comment: a # at the start or preceded by whitespace, outside quotes.
-function stripComment(val) {
-  let quote = null;
-  for (let i = 0; i < val.length; i++) {
-    const c = val[i];
-    if (quote === '"') {
-      if (c === '"' && !isEscaped(val, i)) quote = null;
-    } else if (quote === "'") {
-      if (c === "'") quote = null; // '' re-opens on the next character
-    } else if ((c === '"' || c === "'") && atScalarBoundary(val, i)) {
-      quote = c;
-    } else if (c === '#' && (i === 0 || /\s/.test(val[i - 1]))) {
-      return val.slice(0, i).trim();
-    }
-  }
-  return val.trim();
-}
-
-function parseScalar(val) {
-  if (val === 'null' || val === '~') return null;
-  if (val === 'true') return true;
-  if (val === 'false') return false;
-  if (!isNaN(val) && val !== '') return Number(val);
-  return val;
-}
-
-function parseValue(val) {
-  // Check if it's quoted, if so, return as string (with escapes decoded if needed)
-  if (val.startsWith('"') && val.endsWith('"') && val.length > 1 && !isEscaped(val, val.length - 1)) {
-    let unquoted = val.slice(1, -1);
-    // decode standard YAML escapes like \n, \"
-    return decodeDoubleQuoted(unquoted);
-  }
-  if (val.startsWith("'") && val.endsWith("'")) {
-    let unquoted = val.slice(1, -1);
-    // single quotes only escape single quotes '' -> '
-    unquoted = unquoted.replace(/''/g, "'");
-    return unquoted;
-  }
-
-  // Handle arrays like [structured-output, summarization]
-  if (val.startsWith('[') && val.endsWith(']')) {
-    const inner = val.slice(1, -1).trim();
-    if (inner === '') return [];
-
-    // We need to parse correctly in case of commas inside quotes.
-    const items = [];
-    let currentItem = '';
-    let inDoubleQuotes = false;
-    let inSingleQuotes = false;
-
-    for (let i = 0; i < inner.length; i++) {
-      const char = inner[i];
-      if (char === '"' && !inSingleQuotes && !isEscaped(inner, i) && (inDoubleQuotes || currentItem.trim() === '')) {
-        inDoubleQuotes = !inDoubleQuotes;
-        currentItem += char;
-      } else if (char === "'" && !inDoubleQuotes && (inSingleQuotes || currentItem.trim() === '')) {
-        inSingleQuotes = !inSingleQuotes;
-        currentItem += char;
-      } else if (char === ',' && !inDoubleQuotes && !inSingleQuotes) {
-        items.push(currentItem);
-        currentItem = '';
-      } else {
-        currentItem += char;
-      }
-    }
-    if (inDoubleQuotes || inSingleQuotes) {
-      throw new Error("Unterminated quoted item in array: " + val);
-    }
-    items.push(currentItem);
-
-    return items.map(s => {
-      s = s.trim();
-      if (s.includes('[') || s.includes(']')) {
-        throw new Error("Unsupported array syntax or nested arrays: " + val);
-      }
-      if (s.startsWith('"') && s.endsWith('"')) return decodeDoubleQuoted(s.slice(1, -1));
-      if (s.startsWith("'") && s.endsWith("'")) return s.slice(1, -1).replace(/''/g, "'");
-      return parseScalar(s);
-    });
-  }
-
-  return parseScalar(val);
-}
-
 function findPatternFiles(dir) {
   let results = [];
   const list = fs.readdirSync(dir);
