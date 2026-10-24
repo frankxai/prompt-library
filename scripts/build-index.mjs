@@ -26,7 +26,7 @@ function parseFrontmatter(content, filepath) {
     if (line.startsWith('  ') && currentKey) {
       const nestedMatch = line.match(/^  ([a-zA-Z0-9_]+):\s*(.*)$/);
       if (nestedMatch) {
-        let val = nestedMatch[2].trim();
+        let val = stripComment(nestedMatch[2]);
         rejectBlockScalar(val, `${currentKey}.${nestedMatch[1]}`, filepath);
         val = parseValue(val);
         currentDict[nestedMatch[1]] = val;
@@ -36,7 +36,7 @@ function parseFrontmatter(content, filepath) {
       const topMatch = line.match(/^([a-zA-Z0-9_]+):\s*(.*)$/);
       if (topMatch) {
         currentKey = topMatch[1];
-        let val = topMatch[2].trim();
+        let val = stripComment(topMatch[2]);
         rejectBlockScalar(val, currentKey, filepath);
 
         if (val === '') {
@@ -136,6 +136,31 @@ function decodeDoubleQuoted(str) {
   return str.replace(/\\(.)/g, (m, c) => (Object.prototype.hasOwnProperty.call(ESCAPES, c) ? ESCAPES[c] : m));
 }
 
+// A character is escaped only when preceded by an odd number of backslashes.
+function isEscaped(str, index) {
+  let n = 0;
+  for (let i = index - 1; i >= 0 && str[i] === '\\'; i--) n++;
+  return n % 2 === 1;
+}
+
+// Strip a trailing YAML comment: a # at the start or preceded by whitespace, outside quotes.
+function stripComment(val) {
+  let quote = null;
+  for (let i = 0; i < val.length; i++) {
+    const c = val[i];
+    if (quote === '"') {
+      if (c === '"' && !isEscaped(val, i)) quote = null;
+    } else if (quote === "'") {
+      if (c === "'") quote = null; // '' re-opens on the next character
+    } else if (c === '"' || c === "'") {
+      quote = c;
+    } else if (c === '#' && (i === 0 || /\s/.test(val[i - 1]))) {
+      return val.slice(0, i).trim();
+    }
+  }
+  return val.trim();
+}
+
 function parseScalar(val) {
   if (val === 'true') return true;
   if (val === 'false') return false;
@@ -145,7 +170,7 @@ function parseScalar(val) {
 
 function parseValue(val) {
   // Check if it's quoted, if so, return as string (with escapes decoded if needed)
-  if (val.startsWith('"') && val.endsWith('"')) {
+  if (val.startsWith('"') && val.endsWith('"') && val.length > 1 && !isEscaped(val, val.length - 1)) {
     let unquoted = val.slice(1, -1);
     // decode standard YAML escapes like \n, \"
     return decodeDoubleQuoted(unquoted);
@@ -170,7 +195,7 @@ function parseValue(val) {
 
     for (let i = 0; i < inner.length; i++) {
       const char = inner[i];
-      if (char === '"' && !inSingleQuotes && (i === 0 || inner[i-1] !== '\\')) {
+      if (char === '"' && !inSingleQuotes && !isEscaped(inner, i)) {
         inDoubleQuotes = !inDoubleQuotes;
         currentItem += char;
       } else if (char === "'" && !inDoubleQuotes) {
