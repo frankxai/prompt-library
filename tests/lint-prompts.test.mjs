@@ -237,3 +237,13 @@ test('ordinary YAML aliases remain valid', () => {
     'provenance: {source: original, license: MIT}'];
   assert.equal(lint(fixture('alias-valid', fm), 'prompts').status, 0);
 });
+
+test('an indented delimiter in a title block scalar remains content', () => {
+  const fm = ['title: |-', '  ---', ...GOOD.slice(1)];
+  assert.equal(lint(fixture('title-delimiter', fm), 'prompts').status, 0);
+});
+
+test('an indented delimiter in a provenance block scalar remains content', () => {
+  const fm = [...GOOD.slice(0, 3), 'provenance:', '  source: |-', '    ---', '  license: MIT'];
+  assert.equal(lint(fixture('provenance-delimiter', fm), 'prompts').status, 0);
+});

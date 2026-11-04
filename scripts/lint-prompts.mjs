@@ -42,7 +42,7 @@ export function lintContent(rawText) {
   const text = rawText.replace(/\r\n/g, '\n').replace(/^﻿/, '');
   const lines = text.split('\n');
   if (lines[0].trim() !== '---') return ['missing frontmatter (file must start with ---)'];
-  const end = lines.findIndex((l, i) => i > 0 && l.trim() === '---');
+  const end = lines.findIndex((l, i) => i > 0 && /^---[ \t]*$/.test(l));
   if (end === -1) return ['unterminated frontmatter (no closing ---)'];
 
   const yamlText = lines.slice(1, end).join('\n');
