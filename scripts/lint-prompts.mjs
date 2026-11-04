@@ -48,7 +48,12 @@ export function lintContent(rawText) {
   const yamlText = lines.slice(1, end).join('\n');
   const doc = YAML.parseDocument(yamlText, { uniqueKeys: true });
   if (doc.errors.length > 0) return doc.errors.map((e) => describeYamlError(e, yamlText));
-  const data = doc.toJS();
+  let data;
+  try {
+    data = doc.toJS();
+  } catch (error) {
+    return [describeYamlError(error, yamlText)];
+  }
   if (!isPlainObject(data)) return ['frontmatter must be a YAML mapping'];
 
   const problems = [];

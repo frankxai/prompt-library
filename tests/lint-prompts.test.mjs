@@ -206,3 +206,34 @@ test('block scalar with content counts as non-empty', () => {
   const fm = ['title: >-', '  Folded title', 'category: c', 'tags: [a]', 'provenance:', '  license: MIT'];
   assert.equal(lint(fixture('fullblock', fm), 'prompts').status, 0);
 });
+
+for (const [name, extra, message] of [
+  ['unresolved', ['extra: *missing'], /Unresolved alias/],
+  ['excessive', [
+    'a: &a [one]',
+    `b: &b [${Array(11).fill('*a').join(', ')}]`,
+    `c: &c [${Array(11).fill('*b').join(', ')}]`,
+    'extra: *c',
+  ], /Excessive alias count/],
+]) {
+  test(`${name} alias reports its file and continues to another invalid file`, () => {
+    const dir = fixture(`alias-${name}`, [...GOOD, ...extra]);
+    const second = path.join(dir, 'prompts', 'p2');
+    fs.mkdirSync(second);
+    fs.writeFileSync(path.join(second, 'pattern.md'),
+      ['---', ...GOOD.filter((line) => !line.startsWith('category:')), '---', 'Body'].join('\n'));
+    const r = lint(dir, 'prompts');
+    assert.equal(r.status, 1);
+    assert.match(r.stderr, /2 file\(s\) failed/);
+    assert.match(r.stderr, /prompts\/p1\/pattern\.md: invalid YAML frontmatter:/);
+    assert.match(r.stderr, message);
+    assert.match(r.stderr, /prompts\/p2\/pattern\.md: missing required key: category/);
+    assert.doesNotMatch(r.stderr, /\n\s+at /);
+  });
+}
+
+test('ordinary YAML aliases remain valid', () => {
+  const fm = ['title: T', 'category: c', 'tags: &tags [a]', 'extra: *tags',
+    'provenance: {source: original, license: MIT}'];
+  assert.equal(lint(fixture('alias-valid', fm), 'prompts').status, 0);
+});
