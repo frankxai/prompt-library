@@ -247,3 +247,14 @@ test('an indented delimiter in a provenance block scalar remains content', () =>
   const fm = [...GOOD.slice(0, 3), 'provenance:', '  source: |-', '    ---', '  license: MIT'];
   assert.equal(lint(fixture('provenance-delimiter', fm), 'prompts').status, 0);
 });
+
+for (const key of ['license', '"license"']) {
+  test(`a flow-mapping duplicate ${key} reports the nested key`, () => {
+    const fm = ['title: T', 'category: c', 'tags: [a]',
+      `provenance: {source: original, license: MIT, ${key}: CC0}`];
+    const r = lint(fixture(`flow-duplicate-${key === 'license' ? 'plain' : 'quoted'}`, fm), 'prompts');
+    assert.equal(r.status, 1);
+    assert.match(r.stderr, /prompts\/p1\/pattern\.md: duplicate frontmatter key: license \(line 5\)/);
+    assert.doesNotMatch(r.stderr, /duplicate frontmatter key: provenance/);
+  });
+}

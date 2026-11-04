@@ -30,7 +30,7 @@ function isPlainObject(value) {
 function describeYamlError(err, yamlText) {
   if (err.code === 'DUPLICATE_KEY' && err.linePos?.[0]) {
     const lineNo = err.linePos[0].line;
-    const line = yamlText.split('\n')[lineNo - 1] ?? '';
+    const line = (yamlText.split('\n')[lineNo - 1] ?? '').slice(err.linePos[0].col - 1);
     const m = /^\s*("[^"]*"|'[^']*'|.*?)\s*:(?:\s|$)/.exec(line);
     const key = (m ? m[1] : line.trim()).replace(/^(["'])(.*)\1$/, '$2');
     return `duplicate frontmatter key: ${key} (line ${lineNo + 1})`;
