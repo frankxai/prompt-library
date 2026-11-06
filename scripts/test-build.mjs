@@ -258,6 +258,14 @@ async function runTests() {
   if (readTest().title !== "What's new") throw new Error("Test 16e failed: " + JSON.stringify(readTest().title));
   fs.rmSync(path.join(promptsDir, 'test16e'), { recursive: true, force: true });
 
+  // 17. A closing fence must be a standalone --- line: `---bad: ignored` inside
+  // the frontmatter must not truncate it and hide a duplicate key behind it.
+  console.log("Test 17: Closing fence must be standalone");
+  writePattern('test17', baseValid + '\n---bad: ignored\ntitle: "Again"');
+  errOutput = runBuild(false);
+  if (!errOutput.includes("Invalid YAML frontmatter")) throw new Error("Test 17 failed: " + errOutput);
+  fs.rmSync(path.join(promptsDir, 'test17'), { recursive: true, force: true });
+
   teardownTestProject();
   console.log("All tests passed!");
 }

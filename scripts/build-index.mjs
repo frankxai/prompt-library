@@ -5,7 +5,7 @@ import YAML from 'yaml';
 // Parse YAML frontmatter with the `yaml` package, then validate the resulting JS values.
 function parseFrontmatter(content, filepath) {
   content = content.replace(/\r\n/g, '\n');
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  const match = content.match(/^---\n([\s\S]*?)\n---[ \t]*(?:\n|$)/);
   if (!match) {
     throw new Error(`[${filepath}] Missing or invalid YAML frontmatter.`);
   }
