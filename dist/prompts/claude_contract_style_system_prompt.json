@@ -1,0 +1,17 @@
+{
+  "id": "claude_contract_style_system_prompt",
+  "title": "Contract-Style System Prompt",
+  "category": "create",
+  "tags": [
+    "contract-style",
+    "system-prompt",
+    "legal-precision",
+    "enterprise",
+    "behavior-specification"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_contract_style_system_prompt/pattern.md"
+}

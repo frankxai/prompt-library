@@ -1,0 +1,14 @@
+{
+  "id": "summarize",
+  "title": "Summarize",
+  "category": "summarize",
+  "tags": [
+    "summarization",
+    "structured-output"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/summarize/pattern.md"
+}

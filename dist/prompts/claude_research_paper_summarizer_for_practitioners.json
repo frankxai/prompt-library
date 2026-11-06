@@ -1,0 +1,17 @@
+{
+  "id": "claude_research_paper_summarizer_for_practitioners",
+  "title": "Research Paper Summarizer for Practitioners",
+  "category": "summarize",
+  "tags": [
+    "research",
+    "papers",
+    "science",
+    "evidence",
+    "learning"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_research_paper_summarizer_for_practitioners/pattern.md"
+}

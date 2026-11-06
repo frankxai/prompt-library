@@ -1,0 +1,15 @@
+{
+  "id": "improve_writing",
+  "title": "Improve Writing",
+  "category": "improve",
+  "tags": [
+    "editing",
+    "rewriting",
+    "clarity"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/improve_writing/pattern.md"
+}

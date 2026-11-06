@@ -1,0 +1,15 @@
+{
+  "id": "chatgpt_social_media_content_strategy",
+  "title": "Social Media Content Strategy",
+  "category": "rate",
+  "tags": [
+    "social-media",
+    "marketing",
+    "content"
+  ],
+  "model_targets": [
+    "gpt"
+  ],
+  "license": "original",
+  "path": "prompts/chatgpt_social_media_content_strategy/pattern.md"
+}

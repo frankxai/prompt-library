@@ -1,0 +1,14 @@
+{
+  "id": "create_5_sentence_summary",
+  "title": "Create 5-Sentence Summary",
+  "category": "create",
+  "tags": [
+    "summarization",
+    "compression"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/create_5_sentence_summary/pattern.md"
+}

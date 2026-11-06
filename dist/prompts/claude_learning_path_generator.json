@@ -1,0 +1,15 @@
+{
+  "id": "claude_learning_path_generator",
+  "title": "Learning Path Generator",
+  "category": "create",
+  "tags": [
+    "skill-development",
+    "planning",
+    "education"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_learning_path_generator/pattern.md"
+}

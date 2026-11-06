@@ -1,0 +1,15 @@
+{
+  "id": "answer_interview_question",
+  "title": "Answer Interview Question",
+  "category": "create",
+  "tags": [
+    "career",
+    "interview",
+    "communication"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/answer_interview_question/pattern.md"
+}

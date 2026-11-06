@@ -1,0 +1,15 @@
+{
+  "id": "analyze_paper",
+  "title": "Analyze Paper",
+  "category": "analyze",
+  "tags": [
+    "research",
+    "paper-review",
+    "structured-output"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/analyze_paper/pattern.md"
+}

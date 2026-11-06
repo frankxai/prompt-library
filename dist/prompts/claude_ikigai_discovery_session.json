@@ -1,0 +1,16 @@
+{
+  "id": "claude_ikigai_discovery_session",
+  "title": "Ikigai Discovery Session",
+  "category": "create",
+  "tags": [
+    "ikigai",
+    "purpose",
+    "career",
+    "life-design"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_ikigai_discovery_session/pattern.md"
+}

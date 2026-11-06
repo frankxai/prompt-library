@@ -1,0 +1,16 @@
+{
+  "id": "claude_meta_prompting_v2_generator",
+  "title": "Meta-Prompting v2 Generator",
+  "category": "create",
+  "tags": [
+    "meta-prompting",
+    "prompt-generation",
+    "template-creator",
+    "ai-to-ai"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_meta_prompting_v2_generator/pattern.md"
+}

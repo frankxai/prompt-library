@@ -1,0 +1,16 @@
+{
+  "id": "claude_personalized_meditation_guide",
+  "title": "Personalized Meditation Guide",
+  "category": "improve",
+  "tags": [
+    "meditation",
+    "mindfulness",
+    "presence",
+    "inner-peace"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_personalized_meditation_guide/pattern.md"
+}

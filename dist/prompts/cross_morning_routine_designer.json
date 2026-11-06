@@ -1,0 +1,16 @@
+{
+  "id": "cross_morning_routine_designer",
+  "title": "Morning Routine Designer",
+  "category": "create",
+  "tags": [
+    "morning-routine",
+    "productivity",
+    "wellness",
+    "habits"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cross_morning_routine_designer/pattern.md"
+}

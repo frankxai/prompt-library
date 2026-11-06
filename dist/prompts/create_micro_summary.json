@@ -1,0 +1,15 @@
+{
+  "id": "create_micro_summary",
+  "title": "Create Micro Summary",
+  "category": "create",
+  "tags": [
+    "summarization",
+    "social",
+    "compression"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/create_micro_summary/pattern.md"
+}

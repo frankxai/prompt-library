@@ -1,0 +1,16 @@
+{
+  "id": "claude_rag_pipeline_architecture",
+  "title": "RAG Pipeline Architecture",
+  "category": "create",
+  "tags": [
+    "rag",
+    "retrieval",
+    "vector-search",
+    "llm"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_rag_pipeline_architecture/pattern.md"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "check_grammar",
+  "title": "Check Grammar",
+  "category": "check",
+  "tags": [
+    "editing",
+    "grammar",
+    "proofreading"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "CC0",
+  "path": "prompts/check_grammar/pattern.md"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "claude_personal_ai_center_of_excellence_blueprint",
+  "title": "Personal AI Center of Excellence Blueprint",
+  "category": "create",
+  "tags": [
+    "ai-coe",
+    "personal-ai",
+    "systems-design",
+    "life-design",
+    "ai-strategy",
+    "center-of-excellence"
+  ],
+  "model_targets": [
+    "claude"
+  ],
+  "license": "original",
+  "path": "prompts/claude_personal_ai_center_of_excellence_blueprint/pattern.md"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "chatgpt_chatgpt_resume_cv_optimizer",
+  "title": "ChatGPT Resume & CV Optimizer",
+  "category": "create",
+  "tags": [
+    "chatgpt",
+    "resume",
+    "career",
+    "job-search"
+  ],
+  "model_targets": [
+    "gpt"
+  ],
+  "license": "original",
+  "path": "prompts/chatgpt_chatgpt_resume_cv_optimizer/pattern.md"
+}

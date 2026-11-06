@@ -1,0 +1,15 @@
+{
+  "id": "create_outline",
+  "title": "Create Outline",
+  "category": "create",
+  "tags": [
+    "writing",
+    "structure",
+    "planning"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "MIT",
+  "path": "prompts/create_outline/pattern.md"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "cursor_cursor_rules_file_generator",
+  "title": "Cursor Rules File Generator",
+  "category": "create",
+  "tags": [
+    "cursor",
+    "rules",
+    "configuration",
+    "ai-coding"
+  ],
+  "model_targets": [
+    "cross-lab"
+  ],
+  "license": "original",
+  "path": "prompts/cursor_cursor_rules_file_generator/pattern.md"
+}
